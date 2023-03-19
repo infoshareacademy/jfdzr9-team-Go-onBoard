@@ -20,13 +20,13 @@ function AddActivity() {
     const activityRef = collection(database, "activities");
     const newActivity = {
       etap_id: etapRef.current.value,
-      comment: commentRef.current.value,
+      comment: Boolean(commentRef.current.value),
       description: descRef.current.value,
       id_course: courseRef.current.value,
       link: linkRef.current.value,
       name: nameRef.current.value,
-      set: setRef.current.value,
-      sort: sortRef.current.value,
+      set: parseInt(setRef.current.value),
+      sort: parseInt(sortRef.current.value),
       test: testRef.current.value,
       type: typeRef.current.value,
     };
