@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 
-import { database } from "../firebase";
+import { database } from "../firebase.config";
 import { collection, doc, setDoc } from "firebase/firestore";
 
 function AddActivity() {
@@ -42,9 +42,7 @@ function AddActivity() {
 
   return (
     <div>
-      <form
-        onSubmit={onSubmit}
-        style={{ display: "flex", flexDirection: "column" }}>
+      <form onSubmit={onSubmit} style={{ display: "flex", flexDirection: "column" }}>
         <label htmlFor="Name">etap</label>
         <input ref={etapRef} />
         <label htmlFor="Name">course</label>
