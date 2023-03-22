@@ -1,6 +1,11 @@
-import AddActivity from "./adminControl/addActivity";
+import AddActivity from "./adminControl/AddActivity";
 import "./App.css";
+import { HomePageLayout } from "./pages/Homepage";
 
 export const App = () => {
-  return <AddActivity />;
+  return (
+    <>
+      <HomePageLayout />
+    </>
+  );
 };
