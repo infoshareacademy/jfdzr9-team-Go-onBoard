@@ -1,43 +1,56 @@
 import React, { useState, useEffect } from "react";
 import { database } from "../../firebase";
 import { collection, getDocs } from "firebase/firestore";
+import * as allIcons from "@tabler/icons-react";
+import ActivitiesDetail from "./ActivitiesDetail";
 
-function Activites(props) {
-  const [activites, setActivites] = useState([]);
+function Activities(props) {
+  const [activities, setActivities] = useState([]);
+  const [activitiesId, setActivitiesId] = useState(null);
+
   const etap = props.etapsID;
   useEffect(() => {
-    const getActivites = async () => {
-      const activitesRef = collection(database, "activities");
-      const activitesData = await getDocs(activitesRef);
-      const activitesArray = [];
-      activitesData.forEach((doc) => {
-        activitesArray.push({
+    const getActivities = async () => {
+      const activitiesRef = collection(database, "activities");
+      const activitiesData = await getDocs(activitiesRef);
+      const activitiesArray = [];
+      activitiesData.forEach((doc) => {
+        activitiesArray.push({
           id: doc.id,
           name: doc.data().name,
           type: doc.data().type,
           etap_id: doc.data().etap_id,
+          sort: doc.data().sort,
         });
       });
-      setActivites(activitesArray);
+      setActivities(activitiesArray);
     };
-    getActivites();
+    getActivities();
   }, []);
-  console.log(props);
+
+  const sortedActivities = [...activities].sort((a, b) => a.sort - b.sort); // clone the activities array and sort it by the "sort" value from firebase
   return (
     <div>
-      {activites
+      {sortedActivities
         .filter((activit) => activit.etap_id === etap)
-        .map((filteredEtap) => (
-          <button key={filteredEtap.id}>
-            <span>{filteredEtap.name}</span>
-            <img
-              src={filteredEtap.type}
-              alt={filteredEtap.name}
-            />
-          </button>
-        ))}
+        .map((filteredEtap) => {
+          const Icon = allIcons[filteredEtap.type]; // create icon from @tabler/icons-react
+          return (
+            <button
+              onClick={() => setActivitiesId(filteredEtap.id)}
+              key={filteredEtap.id}>
+              <span>{filteredEtap.name}</span>
+
+              <span>
+                <Icon size={26} />
+              </span>
+            </button>
+          );
+        })}
+      {/* Hihde details  before button click  */}
+      {activitiesId && <ActivitiesDetail activitiesId={activitiesId} />}
     </div>
   );
 }
 
-export default Activites;
+export default Activities;
