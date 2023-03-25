@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { database } from "../../firebase";
 import { collection, getDocs } from "firebase/firestore";
 import Activites from "../activities/Activities";
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 function Etaps() {
   const [etaps, setEtaps] = useState([]);
@@ -13,38 +14,41 @@ function Etaps() {
       const etapsRef = collection(database, "etaps");
       const etapsData = await getDocs(etapsRef);
       const etapsArray = [];
-      etapsData.forEach((doc) => {
-        etapsArray.push({
+      etapsData.forEach(async (doc) => {
+        const etap = {
           id: doc.id,
           name: doc.data().name,
-          icon: doc.data().icon,
+
           sort: doc.data().sort,
-        });
+        };
+        etapsArray.push(etap);
       });
       setEtaps(etapsArray);
     };
     getEtaps();
   }, []);
 
-  const sortedEtaps = [...etaps].sort((a, b) => a.sort - b.sort); // clone the etaps array and sort it by the "sort" value from firebase
+  const sortedEtaps = [...etaps].sort((a, b) => a.sort - b.sort);
 
   return (
     <div>
       {sortedEtaps.map((etap) => {
-        const Icon = allIcons[etap.icon]; // create icon from @tabler/icons-react
         return (
           <button
             id={etap.id}
             onClick={() => setEtapId(etap.id)}
             key={etap.id}>
             <span>
-              <Icon size={26} />
+              <img
+                src={etap.icon}
+                className="icons"
+              />
+
               {etap.name}
             </span>
           </button>
         );
       })}
-      {/* Hihde activities list before button click  */}
       {etapId && <Activites etapsID={etapId} />}
     </div>
   );

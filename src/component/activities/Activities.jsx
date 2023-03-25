@@ -7,8 +7,8 @@ import ActivitiesDetail from "./ActivitiesDetail";
 function Activities(props) {
   const [activities, setActivities] = useState([]);
   const [activitiesId, setActivitiesId] = useState(null);
-
   const etap = props.etapsID;
+
   useEffect(() => {
     const getActivities = async () => {
       const activitiesRef = collection(database, "activities");

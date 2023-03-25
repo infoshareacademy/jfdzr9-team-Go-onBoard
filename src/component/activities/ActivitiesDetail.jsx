@@ -10,14 +10,12 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import * as allIcons from "@tabler/icons-react";
+import ConfirmActivity from "../button/ConfirmActivity";
 
 function ActivitiesDetail(props) {
   const [activitiesDetail, setActivitiesDetail] = useState([]);
-  const [activityChecked, setActivityChecked] = useState(false); // flag for check button
-  const [checkedActivityId, setCheckedActivityId] = useState(null); // state to track the checked activity
 
   const userCommentRef = useRef();
-  const userResultRef = useRef();
   const dateRef = useRef();
 
   const activiti = props.activitiesId;
@@ -61,33 +59,17 @@ function ActivitiesDetail(props) {
     });
   }
 
-  function checkActivity(e) {
-    e.preventDefault();
-    const checkRef = collection(database, "user_activities");
-    const newCheck = {
-      result: Boolean(userResultRef.current.value),
-      check_date: serverTimestamp(),
-      user_activity_id: activiti,
-    };
-    setDoc(doc(checkRef), newCheck)
-      .then(() => {
-        setActivityChecked(true);
-        setCheckedActivityId(activiti); // set the checked activity id
-      })
-      .catch(() => console.log("Error"));
-    userResultRef.current.value = ""; // reset the input value after submitting
-  }
-
   return (
     <div>
       {activitiesDetail
         .filter((detail) => detail.id === activiti)
         .map((filteredEtap) => {
           const Icon = allIcons[filteredEtap.type]; // create icon from @tabler/icons-react
-          const isDisabled = checkedActivityId === activiti; // Check if this activity is disabled
 
           return (
-            <div key={filteredEtap.id}>
+            <div
+              style={{ display: "flex", flexDirection: "column" }}
+              key={filteredEtap.id}>
               <span>{filteredEtap.name}</span>
               <span>{filteredEtap.description}</span>
               <span>
@@ -101,13 +83,7 @@ function ActivitiesDetail(props) {
                   <button type="submit">Zapisz NOTATKE</button>
                 </form>
               )}
-              <form onSubmit={checkActivity}>
-                <button
-                  type="submit"
-                  disabled={isDisabled}>
-                  Zapisz krok
-                </button>
-              </form>
+              <ConfirmActivity activitiesId={activiti} />
             </div>
           );
         })}
