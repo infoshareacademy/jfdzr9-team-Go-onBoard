@@ -28,6 +28,10 @@ function Activities(props) {
     getActivities();
   }, []);
 
+  useEffect(() => {
+    setActivitiesId(null); // Reset activitiesId state when etap prop changes
+  }, [etap]);
+
   const sortedActivities = [...activities].sort((a, b) => a.sort - b.sort); // clone the activities array and sort it by the "sort" value from firebase
   return (
     <div>
@@ -47,7 +51,7 @@ function Activities(props) {
             </button>
           );
         })}
-      {/* Hihde details  before button click  */}
+      {/* Hide details before button click  */}
       {activitiesId && <ActivitiesDetail activitiesId={activitiesId} />}
     </div>
   );

@@ -1,9 +1,7 @@
-import * as allIcons from "@tabler/icons-react";
 import React, { useState, useEffect } from "react";
 import { database } from "../../firebase";
 import { collection, getDocs } from "firebase/firestore";
 import Activites from "../activities/Activities";
-import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 function Etaps() {
   const [etaps, setEtaps] = useState([]);
