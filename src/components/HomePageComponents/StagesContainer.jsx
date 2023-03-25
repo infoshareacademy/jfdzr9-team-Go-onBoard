@@ -9,13 +9,13 @@ import { getStorage, ref, getDownloadURL } from "firebase/storage";
 export const StagesContainer = () => {
   const [stagesName, setStagesName] = useState([]);
   const [imageUrl, setImageUrl] = useState([]);
+  const [isImagesLoaded, setIsImagesLoaded] = useState(false);
 
   const getStagesName = async () => {
     const userCollerction = collection(database, "etaps");
     const querySnapshot = await getDocs(userCollerction);
-    const stages = querySnapshot.docs.map((doc, index) => ({
+    const stages = querySnapshot.docs.map((doc) => ({
       id: doc.id,
-      icon: `icon${index + 1}.svg`,
       ...doc.data(),
     }));
     setStagesName(stages);
@@ -43,12 +43,14 @@ export const StagesContainer = () => {
       Promise.all(promises)
         .then((urls) => {
           setImageUrl(urls);
+          setIsImagesLoaded(true);
         })
         .catch((error) => {
           console.error(error);
         });
     }
   }, [stagesName]);
+  const sortedStages = [...stagesName].sort((a, b) => a.sort - b.sort);
 
   // useEffect(() => {
   //   if (stagesName.length > 0) {
@@ -70,12 +72,15 @@ export const StagesContainer = () => {
     <>
       <div className="stages-container">
         <div className="stages-bloks">
-          {stagesName.map(({ id, course_id, icon, name, sort }, index) => (
-            <span key={id} className="etaps">
-              <img src={imageUrl[index]} alt={icon} className="icons" />
-              <span>{name} </span> <span>{course_id}</span> <span>{sort}</span>
-            </span>
-          ))}
+          {sortedStages.map(({ id, course_id, icon, name, sort }) => {
+            const imageUrlForStage = imageUrl[stagesName.findIndex((stage) => stage.id === id)];
+            return (
+              <span key={id} className="etaps">
+                <img src={imageUrlForStage} alt={icon} className="icons" />
+                <span>{name} </span> <span>{course_id}</span> <span>{sort}</span>
+              </span>
+            );
+          })}
         </div>
       </div>
     </>

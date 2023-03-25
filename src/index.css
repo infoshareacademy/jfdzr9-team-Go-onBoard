@@ -201,7 +201,8 @@ img:hover {
   width: 696px;
   height: 28px;
 
-  background: #ffffff;
+  background: #d7baba;
+  color: black;
   /* Shadow field */
   box-shadow: 8px 8px 24px rgba(2, 2, 70, 0.05);
   border-radius: 24px;
