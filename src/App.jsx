@@ -1,6 +1,7 @@
-import AddActivity from "./adminControl/addActivity";
 import "./App.css";
+import Process from "./pages/Processpage";
+// import AddActivity from "./adminControl/AddActivity";
 
 export const App = () => {
-  return <AddActivity />;
+  return <Process />;
 };
