@@ -44,7 +44,7 @@ const Signup = () => {
         </div>
         <div>
           <p>
-            <Link to="/">Rejestracja</Link>
+            <Link to="/">Logowanie</Link>
           </p>
           <p>
             <Link to="/signpassword">Nie pamietam hasla</Link>
