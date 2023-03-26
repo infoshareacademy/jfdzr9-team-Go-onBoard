@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { database } from "../../firebase";
+import { database } from "../../utils/firebase/firebase.config";
 import { collection, getDocs } from "firebase/firestore";
 import Activites from "../activities/Activities";
 
@@ -16,7 +16,6 @@ function Etaps() {
         const etap = {
           id: doc.id,
           name: doc.data().name,
-
           sort: doc.data().sort,
         };
         etapsArray.push(etap);

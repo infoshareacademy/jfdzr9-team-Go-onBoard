@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { database } from "../../firebase";
+import { database } from "../../utils/firebase/firebase.config";
 import { collection, getDocs } from "firebase/firestore";
 import * as allIcons from "@tabler/icons-react";
 import ActivitiesDetail from "./ActivitiesDetail";

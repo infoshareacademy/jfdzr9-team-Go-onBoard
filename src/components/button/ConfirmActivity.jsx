@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { database } from "../../firebase";
+import { database } from "../../utils/firebase/firebase.config";
 import {
   collection,
   query,
@@ -17,7 +17,6 @@ const ConfirmActivity = (props) => {
   const [hasMounted, setHasMounted] = useState(false); // flag to indicate whether the component has mounted
 
   const activiti = props.activitiesId;
-  //   const userResultRef = useRef();
 
   // Fetch the user_activities collection and check if there's a document with a true value for the result field
   useEffect(() => {
