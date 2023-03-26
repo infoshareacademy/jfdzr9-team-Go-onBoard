@@ -1,9 +1,9 @@
 import { async } from "@firebase/util";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { UserAuth } from "../RequireAuth/context/AuthContext";
+import { UserAuth } from "./context/AuthContext";
 
-const Signup = () => {
+export const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -54,5 +54,3 @@ const Signup = () => {
     </>
   );
 };
-
-export default Signup;
