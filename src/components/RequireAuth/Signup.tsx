@@ -1,5 +1,4 @@
-import { async } from "@firebase/util";
-import React, { useState } from "react";
+import { useState, FormEvent } from "react";
 import { Link } from "react-router-dom";
 import { UserAuth } from "./context/AuthContext";
 
@@ -8,15 +7,15 @@ export const Signup = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const { createUser } = UserAuth;
+  const { createUser } = UserAuth();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
     try {
       await createUser(email, password);
-    } catch (e) {
-      setError(e.messege);
+    } catch (e: any) {
+      setError(e.message);
       console.log(e.message);
     }
   };
@@ -29,19 +28,23 @@ export const Signup = () => {
         <form onSubmit={handleSubmit}>
           <div>
             <label>Email</label>
-            <input onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Pleace enter your email" />
+            <input
+              onChange={(e) => setEmail(e.target.value)}
+              type="email"
+              placeholder="Please enter your email"
+            />
           </div>
-        </form>
-        <form>
           <div>
             <label>Password</label>
-            <input onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Pleace enter your password" />
-            <p></p>
+            <input
+              onChange={(e) => setPassword(e.target.value)}
+              type="password"
+              placeholder="Please enter your password"
+            />
+            <p>{error}</p>
           </div>
+          <button type="submit">Zarejestruj</button>
         </form>
-        <div>
-          <button>Zaloguj</button>
-        </div>
         <div>
           <p>
             <Link to="/">Logowanie</Link>
