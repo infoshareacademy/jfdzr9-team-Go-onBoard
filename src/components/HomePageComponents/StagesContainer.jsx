@@ -6,10 +6,10 @@ import { useEffect } from "react";
 import { getApp } from "firebase/app";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
+//fetch stages collection from firebase//
 export const StagesContainer = () => {
   const [stagesName, setStagesName] = useState([]);
   const [imageUrl, setImageUrl] = useState([]);
-  // const [isImagesLoaded, setIsImagesLoaded] = useState(false);
 
   const getStagesName = async () => {
     const userCollerction = collection(database, "etaps");
@@ -18,11 +18,12 @@ export const StagesContainer = () => {
       id: doc.id,
       ...doc.data(),
     }));
-    // setStagesName(stages);
 
+    //fetch svg icons from firebase storage//
     const firebaseApp = getApp();
     const storage = getStorage(firebaseApp);
 
+    //using promise all to fetch all stages and svg icons before rendering whole page//
     const ImageUrls = await Promise.all(
       stages.map(async (stage) => {
         const imageName = stage.icon;
@@ -42,37 +43,9 @@ export const StagesContainer = () => {
   useEffect(() => {
     getStagesName();
   }, []);
-  // useEffect(() => {
-  //   if (stagesName.length > 0)
-  //     });
 
-  //     Promise.all(promises)
-  //       .then((urls) => {
-  //         setImageUrl(urls);
-  //         // setIsImagesLoaded(true);
-  //       })
-  //       .catch((error) => {
-  //         console.error(error);
-  //       });
-  //   }
-  // }, [stagesName]);
+  //stage sorting by "sort" key in firebase//
   const sortedStages = [...stagesName].sort((a, b) => a.sort - b.sort);
-
-  // useEffect(() => {
-  //   if (stagesName.length > 0) {
-  //     const firebaseApp = getApp();
-  //     const storage = getStorage(firebaseApp);
-
-  //     const imageRefs = stagesName.map((stage) => ref(storage, stage.icon));
-  //     Promise.all(imageRefs.map((imageRef) => getDownloadURL(imageRef)))
-  //       .then((urls) => {
-  //         setImageUrl(urls);
-  //       })
-  //       .catch((error) => {
-  //         console.error(error);
-  //       });
-  //   }
-  // }, [stagesName]);
 
   return (
     <>
