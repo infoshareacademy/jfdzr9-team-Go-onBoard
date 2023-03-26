@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { database } from "../../utils/firebase/firebase.config";
 import {
   collection,
@@ -10,13 +10,19 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 
-const ConfirmActivity = (props) => {
-  const [activityChecked, setActivityChecked] = useState(false); // flag for check button
-  const [checkedActivityId, setCheckedActivityId] = useState(null); // state to track the checked activity
-  const [isDisabled, setIsDisabled] = useState(true); // state to disable the button if the activity has already been checked
-  const [hasMounted, setHasMounted] = useState(false); // flag to indicate whether the component has mounted
+interface ConfirmActivityProps {
+  activitiesId: string;
+}
 
-  const activiti = props.activitiesId;
+const ConfirmActivity: React.FC<ConfirmActivityProps> = (props) => {
+  const [activityChecked, setActivityChecked] = useState<boolean>(false); // flag for check button
+  const [checkedActivityId, setCheckedActivityId] = useState<string | null>(
+    null
+  ); // state to track the checked activity
+  const [isDisabled, setIsDisabled] = useState<boolean>(true); // state to disable the button if the activity has already been checked
+  const [hasMounted, setHasMounted] = useState<boolean>(false); // flag to indicate whether the component has mounted
+
+  const activiti: string = props.activitiesId;
 
   // Fetch the user_activities collection and check if there's a document with a true value for the result field
   useEffect(() => {
@@ -33,7 +39,7 @@ const ConfirmActivity = (props) => {
     fetchData();
   }, [activiti]);
 
-  function checkActivity(e) {
+  function checkActivity(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     e.preventDefault();
     const checkRef = collection(database, "user_activities");
     const newCheck = {

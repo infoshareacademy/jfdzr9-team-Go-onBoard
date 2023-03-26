@@ -9,10 +9,20 @@ import {
   updateDoc,
 } from "firebase/firestore";
 
-const CommentActivity = (props) => {
+interface UserComment {
+  comment: string;
+  user_activity_id: string;
+  create: any;
+}
+
+interface Props {
+  activitiesId: string;
+}
+
+const CommentActivity: React.FC<Props> = (props) => {
   const activiti = props.activitiesId; //props from ActivitiesDetail
 
-  const userCommentRef = useRef();
+  const userCommentRef = useRef<HTMLInputElement>(null);
   const [hasCommented, setHasCommented] = useState(false); //state to check if user add comment
 
   useEffect(() => {
@@ -24,12 +34,14 @@ const CommentActivity = (props) => {
       if (docSnapshot.exists()) {
         setHasCommented(true);
         const commentData = docSnapshot.data();
-        userCommentRef.current.value = commentData.comment;
+        if (userCommentRef.current) {
+          userCommentRef.current.value = commentData?.comment;
+        }
       }
     });
   }, [activiti]);
 
-  function addComment(e) {
+  function addComment(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const commentRef = collection(database, "user_comment");
     const userCommentDocRef = doc(commentRef, `${activiti}`);
@@ -38,13 +50,13 @@ const CommentActivity = (props) => {
     getDoc(userCommentDocRef).then((docSnapshot) => {
       if (docSnapshot.exists()) {
         // document already exists, update the comment field
-        updateDoc(userCommentDocRef, { comment: userCommentRef.current.value })
+        updateDoc(userCommentDocRef, { comment: userCommentRef.current?.value })
           .then(() => console.log("Comment updated successfully"))
           .catch(() => console.log("Error updating comment"));
       } else {
         // document doesn't exist, create a new one
-        const newComment = {
-          comment: userCommentRef.current.value,
+        const newComment: UserComment = {
+          comment: userCommentRef.current?.value ?? "",
           user_activity_id: activiti,
           create: serverTimestamp(),
 
