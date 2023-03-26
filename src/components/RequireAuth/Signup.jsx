@@ -25,7 +25,7 @@ const Signup = () => {
     <>
       <div>
         <h3>GO! onBoard</h3>
-        <h1>Zaloguj sie</h1>
+        <h1>Zarejestruj się</h1>
         <form onSubmit={handleSubmit}>
           <div>
             <label>Email</label>
