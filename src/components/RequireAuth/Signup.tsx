@@ -2,6 +2,10 @@ import { useState, FormEvent } from "react";
 import { Link } from "react-router-dom";
 import { UserAuth } from "./context/AuthContext";
 
+interface CreateUserError {
+  message: string;
+}
+
 export const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
