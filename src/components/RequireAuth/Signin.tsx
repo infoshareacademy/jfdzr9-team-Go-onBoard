@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 
 export const Signin = () => {
@@ -6,20 +5,26 @@ export const Signin = () => {
     <>
       <div>
         <h3>GO! onBoard</h3>
-        <h1>Zarejestruj się</h1>
+        <h1>Zaloguj się</h1>
         <form>
           <div>
             <label>Email</label>
-            <input type="email" placeholder="Pleace enter your email" />
+            <input
+              type="email"
+              placeholder="Pleace enter your email"
+            />
           </div>
           <div>
             <label>Password</label>
-            <input type="password" placeholder="Pleace enter your password" />
+            <input
+              type="password"
+              placeholder="Pleace enter your password"
+            />
             <p></p>
           </div>
         </form>
         <div>
-          <button>Zarejestruj</button>
+          <button>Zaloguj</button>
         </div>
         <div>
           <p>

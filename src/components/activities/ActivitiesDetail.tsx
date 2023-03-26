@@ -1,12 +1,24 @@
 import React, { useState, useEffect, useRef } from "react";
 import { database } from "../../utils/firebase/firebase.config";
 import { collection, getDocs } from "firebase/firestore";
-import * as allIcons from "@tabler/icons-react";
+// import * as allIcons from "@tabler/icons-react";
 import ConfirmActivity from "../button/ConfirmActivity";
 import CommentActivity from "./Comment";
 
-function ActivitiesDetail(props) {
-  const [activitiesDetail, setActivitiesDetail] = useState([]);
+interface Activity {
+  id: string;
+  name: string;
+  description: string;
+  type: string;
+  comment?: string;
+}
+
+interface Props {
+  activitiesId: string;
+}
+
+function ActivitiesDetail(props: Props) {
+  const [activitiesDetail, setActivitiesDetail] = useState<Activity[]>([]);
 
   const activiti = props.activitiesId;
 
@@ -17,7 +29,7 @@ function ActivitiesDetail(props) {
       const activitiesArray = activitiesData.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
-      }));
+      })) as Activity[];
       setActivitiesDetail(activitiesArray);
     };
     getActivities();
@@ -28,7 +40,7 @@ function ActivitiesDetail(props) {
       {activitiesDetail
         .filter((detail) => detail.id === activiti)
         .map((filteredEtap) => {
-          const Icon = allIcons[filteredEtap.type]; // create icon from @tabler/icons-react
+          // const Icon = allIcons[filteredEtap.type]; // create icon from @tabler/icons-react
 
           return (
             <div
@@ -36,9 +48,9 @@ function ActivitiesDetail(props) {
               key={filteredEtap.id}>
               <span>{filteredEtap.name}</span>
               <span>{filteredEtap.description}</span>
-              <span>
+              {/* <span>
                 <Icon size={26} />
-              </span>
+              </span> */}
               <button>kliknij zeby obejrzec</button>
               {filteredEtap.comment && (
                 <CommentActivity activitiesId={activiti} />
