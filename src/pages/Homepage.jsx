@@ -1,11 +1,15 @@
-import "./../index.css";
-import { WelcomeContainer } from "../components/HomePageComponents/WelcomeContainer";
 import { StagesContainer } from "../components/HomePageComponents/StagesContainer";
+import { WelcomeContainer } from "../components/HomePageComponents/WelcomeContainer";
+import "./../index.css";
+import { Link } from "react-router-dom";
 
 export const HomePageLayout = () => {
   return (
     <>
       <div className="up-container">
+        <button>
+          <Link to="/signup">BACK</Link>
+        </button>
         <WelcomeContainer />
         <div className="calendar">
           <h1>Calendar under construction</h1>
