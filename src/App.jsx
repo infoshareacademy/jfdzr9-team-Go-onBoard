@@ -1,7 +1,5 @@
 import React from "react";
-import { ReactDOM } from "react-dom";
-import { createBrowserRouter, Route, RouterProvider, createRoutesFromElements, Routes } from "react-router-dom";
-import AddActivity from "./adminControl/AddActivity";
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
 
 function App() {
