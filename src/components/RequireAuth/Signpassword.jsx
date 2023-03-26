@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Signpassword = () => {
+export const Signpassword = () => {
   return (
     <>
       <div>
@@ -28,5 +28,3 @@ const Signpassword = () => {
     </>
   );
 };
-
-export default Signpassword;
