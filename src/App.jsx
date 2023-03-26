@@ -6,6 +6,7 @@ import { error } from "console";
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
+import 'button'
 //import {firebase} from 'firebase/app';
 /*import { database}  from 'firebase/database';*/
 // simport 'firebase/database';
