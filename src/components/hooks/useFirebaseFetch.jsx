@@ -17,6 +17,6 @@ export const useFirebaseFetch = (collectionName) => {
 
   useEffect(() => {
     fetchData();
-  }, [data]);
+  }, [collectionName]);
   return data;
 };
