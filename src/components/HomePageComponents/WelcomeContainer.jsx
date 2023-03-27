@@ -1,25 +1,9 @@
 import "../../index.css";
-import { database } from "../../utils/firebase/firebase.config";
-import { collection, getDocs } from "firebase/firestore";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useFirebaseFetch } from "../hooks/useFirebaseFetch";
 
 export const WelcomeContainer = () => {
-  const [userName, setUserName] = useState([]);
-
-  const getUserName = async () => {
-    const userCollerction = collection(database, "users");
-    const querySnapshot = await getDocs(userCollerction);
-    const users = querySnapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-    setUserName(users);
-  };
-
-  useEffect(() => {
-    getUserName();
-  }, []);
+  const userName = useFirebaseFetch("users");
+  const greetingText = useFirebaseFetch("courses");
 
   return (
     <div className="greetingsContainer">
@@ -30,8 +14,9 @@ export const WelcomeContainer = () => {
         ))}
       </h2>
       <div>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe fuga, iure sunt enim distinctio accusamus. Aliquam hic minima a, possimus nobis dicta delectus. Provident
-        odio officiis voluptas alias soluta est?
+        {greetingText.map(({ id, greeting }) => (
+          <p key={id}>{greeting}</p>
+        ))}
       </div>
     </div>
   );
