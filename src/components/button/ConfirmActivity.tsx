@@ -11,7 +11,11 @@ import {
 } from "firebase/firestore";
 
 interface ConfirmActivityProps {
-  activitiesId: string;
+  confirmActivityProps: {
+    activitiesId: string | null;
+    etap_id: string;
+    onActivityConfirmation: (newActivityId: string) => void;
+  };
 }
 
 const ConfirmActivity: React.FC<ConfirmActivityProps> = (props) => {
@@ -22,7 +26,8 @@ const ConfirmActivity: React.FC<ConfirmActivityProps> = (props) => {
   const [isDisabled, setIsDisabled] = useState<boolean>(true); // state to disable the button if the activity has already been checked
   const [hasMounted, setHasMounted] = useState<boolean>(false); // flag to indicate whether the component has mounted
 
-  const activiti: string = props.activitiesId;
+  const activiti: string = props.confirmActivityProps.activitiesId || "";
+  const etap_id: string = props.confirmActivityProps.etap_id;
 
   // Fetch the user_activities collection and check if there's a document with a true value for the result field
   useEffect(() => {
@@ -46,12 +51,14 @@ const ConfirmActivity: React.FC<ConfirmActivityProps> = (props) => {
       result: true, // set the result field to true
       check_date: serverTimestamp(),
       user_activity_id: activiti,
+      etap_id: etap_id,
     };
     setDoc(doc(checkRef), newCheck)
       .then(() => {
         setActivityChecked(true);
         setCheckedActivityId(activiti); // set the checked activity id
         setIsDisabled(true); // disable the button
+        props.confirmActivityProps.onActivityConfirmation(activiti);
       })
       .catch(() => console.log("Error"));
   }

@@ -1,84 +1,141 @@
 import { useState, useEffect } from "react";
-import { database } from "../../utils/firebase/firebase.config.jsx";
-import {
-  collection,
-  getDocs,
-  DocumentData,
-  query,
-  where,
-  onSnapshot,
-} from "firebase/firestore";
-import Activites from "../activities/Activities";
+import { database } from "../../utils/firebase/firebase.config"; // import storage
+import { collection, getDocs } from "firebase/firestore";
+import { ref, getDownloadURL, getStorage } from "firebase/storage";
+import { getApp } from "firebase/app";
+import Activities from "../activities/Activities";
 
-interface IEtap {
+interface Etap {
   id: string;
   name: string;
   sort: number;
+  icon: string;
 }
 
 function Etaps() {
-  const [etaps, setEtaps] = useState<IEtap[]>([]);
+  const [etaps, setEtaps] = useState<Etap[]>([]);
   const [etapId, setEtapId] = useState<string | null>(null);
-  const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(false);
+  const [activitiesByEtap, setActivitiesByEtap] = useState<
+    Record<string, { etap_id: string; id: string }[]>
+  >({});
+  const [userActivityIds, setUserActivityIds] = useState<string[]>([]);
 
   useEffect(() => {
-    const getEtaps = async (): Promise<void> => {
+    async function getEtaps() {
       const etapsRef = collection(database, "etaps");
       const etapsData = await getDocs(etapsRef);
 
-      const etapsArray: IEtap[] = [];
-      etapsData.forEach((doc: DocumentData) => {
-        const etap: IEtap = {
+      const activitiesRef = collection(database, "activities");
+      const activitiesData = await getDocs(activitiesRef);
+      const activitiesByEtap = activitiesData.docs.reduce<
+        Record<string, { etap_id: string; id: string }[]>
+      >((acc, doc) => {
+        const etapId = doc.data().etap_id;
+
+        if (!acc[etapId]) {
+          acc[etapId] = [];
+        }
+
+        acc[etapId].push({
+          etap_id: etapId,
           id: doc.id,
-          name: doc.data().name,
-          sort: doc.data().sort,
-        };
-        etapsArray.push(etap);
-      });
+        });
+
+        return acc;
+      }, {});
+
+      console.log("activityBYETAP", activitiesByEtap);
+
+      setActivitiesByEtap(activitiesByEtap);
+      //make array from user_activities with etpaid and activityid
+      const userActivitiesRef = collection(database, "user_activities");
+      const useractivitiesData = await getDocs(userActivitiesRef);
+      const userActivityIds = useractivitiesData.docs.map(
+        (doc) => doc.data().user_activity_id
+      );
+
+      console.log("userActivityIds", userActivityIds);
+
+      setUserActivityIds(userActivityIds);
+
+      //icon part, take from storage and push in button
+      const etapsArray: Etap[] = await Promise.all(
+        etapsData.docs.map(async (doc) => {
+          const etap = {
+            id: doc.id,
+            name: doc.data().name,
+            sort: doc.data().sort,
+            icon: "",
+          };
+
+          const firebaseApp = getApp();
+          const storage = getStorage(firebaseApp);
+
+          const iconRef = ref(storage, doc.data().icon);
+          const iconUrl = await getDownloadURL(iconRef);
+          etap.icon = iconUrl;
+
+          return etap;
+        })
+      );
+
       setEtaps(etapsArray);
-    };
+    }
+
     getEtaps();
   }, []);
 
-  useEffect(() => {
-    if (etapId) {
-      const activitiesRef = collection(database, "activities");
-      const activitiesQuery = query(
-        activitiesRef,
-        where("etap_id", "==", etapId)
-      );
-      const unsubscribe = onSnapshot(activitiesQuery, (snapshot) => {
-        const activitiesCount = snapshot.docs.length;
-        const userActivityRef = collection(database, "user_activity");
-        const userActivityQuery = query(
-          userActivityRef,
-          where("etap_id", "==", etapId)
-        );
-        getDocs(userActivityQuery).then((docs) => {
-          const userActivityCount = docs.length;
-          setIsButtonDisabled(activitiesCount !== userActivityCount);
-        });
-      });
-      return unsubscribe;
-    }
-  }, [etapId]);
+  //
+  function handleActivityConfirmation(newActivityId: string) {
+    setUserActivityIds((prevActivityIds) => [
+      ...prevActivityIds,
+      newActivityId,
+    ]);
+  }
 
-  const sortedEtaps = [...etaps].sort((a: IEtap, b: IEtap) => a.sort - b.sort);
+  // sort etaps by "sort" key in firebase
+  const sortedEtaps = [...etaps].sort((a, b) => a.sort - b.sort);
 
   return (
     <div>
-      {sortedEtaps.map((etap: IEtap) => {
+      {sortedEtaps.map((etap, index) => {
+        //check previous etap if all activities are completed, next etap is enable
+        const isPreviousEtapCompleted =
+          index === 0 ||
+          (index > 0 &&
+            activitiesByEtap[sortedEtaps[index - 1].id]?.length ===
+              userActivityIds.filter((activityId) =>
+                activitiesByEtap[sortedEtaps[index - 1].id].some(
+                  (activity) => activity.id === activityId
+                )
+              ).length);
+
+        const enableButton = isPreviousEtapCompleted;
+
         return (
           <button
             id={etap.id}
             onClick={() => setEtapId(etap.id)}
             key={etap.id}
-            disabled={etap.sort !== 1 && isButtonDisabled}>
+            disabled={!enableButton}>
+            {etap.icon && (
+              <img
+                src={etap.icon}
+                alt={etap.name}
+              />
+            )}
             <span>{etap.name}</span>
           </button>
         );
       })}
-      {etapId && <Activites etapsID={etapId} />}
+      {etapId && (
+        <Activities
+          etapData={{
+            etapsID: etapId,
+            onActivityConfirmation: handleActivityConfirmation,
+          }}
+        />
+      )}
     </div>
   );
 }

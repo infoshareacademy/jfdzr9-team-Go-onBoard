@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { database } from "../../utils/firebase/firebase.config";
 import { collection, getDocs } from "firebase/firestore";
-// import * as allIcons from "@tabler/icons-react";
 import ConfirmActivity from "../button/ConfirmActivity";
 import CommentActivity from "./Comment";
 
@@ -14,13 +13,21 @@ interface Activity {
 }
 
 interface Props {
-  activitiesId: string;
+  detailProps: {
+    activitiesId: string | null;
+    etap_id: string;
+    onActivityConfirmation: (newActivityId: string) => void;
+  };
 }
 
 function ActivitiesDetail(props: Props) {
   const [activitiesDetail, setActivitiesDetail] = useState<Activity[]>([]);
 
-  const activiti = props.activitiesId;
+  const confirmActivityProps = {
+    activitiesId: props.detailProps.activitiesId,
+    etap_id: props.detailProps.etap_id,
+    onActivityConfirmation: props.detailProps.onActivityConfirmation,
+  };
 
   useEffect(() => {
     const getActivities = async () => {
@@ -38,7 +45,7 @@ function ActivitiesDetail(props: Props) {
   return (
     <div>
       {activitiesDetail
-        .filter((detail) => detail.id === activiti)
+        .filter((detail) => detail.id === props.detailProps.activitiesId)
         .map((filteredEtap) => {
           // const Icon = allIcons[filteredEtap.type]; // create icon from @tabler/icons-react
 
@@ -48,14 +55,13 @@ function ActivitiesDetail(props: Props) {
               key={filteredEtap.id}>
               <span>{filteredEtap.name}</span>
               <span>{filteredEtap.description}</span>
-              {/* <span>
-                <Icon size={26} />
-              </span> */}
               <button>kliknij zeby obejrzec</button>
               {filteredEtap.comment && (
-                <CommentActivity activitiesId={activiti} />
+                <CommentActivity
+                  activitiesId={props.detailProps.activitiesId}
+                />
               )}
-              <ConfirmActivity activitiesId={activiti} />
+              <ConfirmActivity confirmActivityProps={confirmActivityProps} />
             </div>
           );
         })}

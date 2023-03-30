@@ -16,7 +16,7 @@ interface UserComment {
 }
 
 interface Props {
-  activitiesId: string;
+  activitiesId: string | null;
 }
 
 const CommentActivity: React.FC<Props> = (props) => {
@@ -57,7 +57,7 @@ const CommentActivity: React.FC<Props> = (props) => {
         // document doesn't exist, create a new one
         const newComment: UserComment = {
           comment: userCommentRef.current?.value ?? "",
-          user_activity_id: activiti,
+          user_activity_id: activiti || "",
           create: serverTimestamp(),
 
           // user_id: props.user.uid, TODO
