@@ -20,7 +20,7 @@ interface Props {
 }
 
 const CommentActivity: React.FC<Props> = (props) => {
-  const activiti = props.activitiesId; //props from ActivitiesDetail
+  const activiti = props.activitiesId;
 
   const userCommentRef = useRef<HTMLInputElement>(null);
   const [hasCommented, setHasCommented] = useState(false); //state to check if user add comment

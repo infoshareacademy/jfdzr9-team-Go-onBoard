@@ -25,6 +25,7 @@ function Etaps() {
       const etapsRef = collection(database, "etaps");
       const etapsData = await getDocs(etapsRef);
 
+      //make array with etpaid and activities
       const activitiesRef = collection(database, "activities");
       const activitiesData = await getDocs(activitiesRef);
       const activitiesByEtap = activitiesData.docs.reduce<
@@ -44,8 +45,6 @@ function Etaps() {
         return acc;
       }, {});
 
-      console.log("activityBYETAP", activitiesByEtap);
-
       setActivitiesByEtap(activitiesByEtap);
       //make array from user_activities with etpaid and activityid
       const userActivitiesRef = collection(database, "user_activities");
@@ -53,8 +52,6 @@ function Etaps() {
       const userActivityIds = useractivitiesData.docs.map(
         (doc) => doc.data().user_activity_id
       );
-
-      console.log("userActivityIds", userActivityIds);
 
       setUserActivityIds(userActivityIds);
 
@@ -85,7 +82,7 @@ function Etaps() {
     getEtaps();
   }, []);
 
-  //
+  //props to confirm button-after confirm check status to show etpas when all activ in etap are completed
   function handleActivityConfirmation(newActivityId: string) {
     setUserActivityIds((prevActivityIds) => [
       ...prevActivityIds,
