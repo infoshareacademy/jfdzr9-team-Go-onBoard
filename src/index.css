@@ -26,11 +26,11 @@ a:hover {
 body {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   padding: 0px 89px;
   gap: 3px;
-  position: absolute;
-  width: 1201px;
+  /* position: absolute; */
+  /* width: 100vh; */
   height: 816px;
   top: 31px;
 }
@@ -92,6 +92,14 @@ button:focus-visible {
 
   width: 1223px;
   height: 320px;
+}
+
+.middle-container {
+  display: flex;
+  justify-content: flex-start;
+  width: 1223px;
+  margin-top: 40px;
+  padding-top: 30px;
 }
 
 .greetingsContainer {
@@ -190,7 +198,8 @@ img:hover {
   color: #747bff;
 }
 
-.etaps {
+.etaps,
+.title-etaps {
   cursor: pointer;
   display: flex;
   flex-direction: row;
@@ -206,4 +215,10 @@ img:hover {
   /* Shadow field */
   box-shadow: 8px 8px 24px rgba(2, 2, 70, 0.05);
   border-radius: 24px;
+}
+
+.title-etaps {
+  background: none;
+  border-radius: none;
+  box-shadow: none;
 }
