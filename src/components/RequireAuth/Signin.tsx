@@ -9,17 +9,11 @@ export const Signin = () => {
         <form>
           <div>
             <label>Email</label>
-            <input
-              type="email"
-              placeholder="Pleace enter your email"
-            />
+            <input type="email" placeholder="Pleace enter your email" />
           </div>
           <div>
             <label>Password</label>
-            <input
-              type="password"
-              placeholder="Pleace enter your password"
-            />
+            <input type="password" placeholder="Pleace enter your password" />
             <p></p>
           </div>
         </form>
@@ -28,7 +22,7 @@ export const Signin = () => {
         </div>
         <div>
           <p>
-            <Link to="/signup">Logowanie</Link>
+            <Link to="/signup">Zarejestruj się</Link>
           </p>
           <p>
             <Link to="/signpassword">Nie pamietam hasla</Link>

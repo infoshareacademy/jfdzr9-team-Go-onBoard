@@ -1,38 +1,18 @@
 import "../../index.css";
-import { database } from "../../utils/firebase/firebase.config";
-import { collection, getDocs } from "firebase/firestore";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useFirebaseFetch } from "../hooks/useFirebaseFetch";
 
 export const WelcomeContainer = () => {
-  const [userName, setUserName] = useState([]);
-
-  const getUserName = async () => {
-    const userCollerction = collection(database, "users");
-    const querySnapshot = await getDocs(userCollerction);
-    const users = querySnapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-    setUserName(users);
-  };
-
-  useEffect(() => {
-    getUserName();
-  }, []);
+  // using hook useFirebaseFetch() to fetch collection called "users"//
+  const [userName] = useFirebaseFetch("users");
+  const { name } = userName || {};
+  // using hook useFirebaseFetch() to fetch collection called "courses"//
+  const [greetingText] = useFirebaseFetch("courses");
+  const { greeting } = greetingText || {};
 
   return (
     <div className="greetingsContainer">
-      <h2>
-        Hej, {""}
-        {userName.map(({ id, name }) => (
-          <span key={id}>{name}!</span>
-        ))}
-      </h2>
-      <div>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe fuga, iure sunt enim distinctio accusamus. Aliquam hic minima a, possimus nobis dicta delectus. Provident
-        odio officiis voluptas alias soluta est?
-      </div>
+      <h2>Hej,{name}!</h2>
+      <div>{greeting}</div>
     </div>
   );
 };

@@ -15,6 +15,14 @@ export const HomePageLayout = () => {
           <h1>Calendar under construction</h1>
         </div>
       </div>
+      <div className="middle-container">
+        <p className="title-etaps">
+          <span></span>
+          <span>Dział</span>
+          <span>Realizacja</span>
+          <span>Wykonano</span>
+        </p>
+      </div>
       <div className="down-container">
         <StagesContainer />
         <div className="buddy">
