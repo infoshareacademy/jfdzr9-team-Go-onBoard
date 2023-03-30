@@ -1,7 +1,7 @@
 import "../../index.css";
 import { database } from "../../utils/firebase/firebase.config";
 import { collection, getDocs } from "firebase/firestore";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { useEffect } from "react";
 import { getApp } from "firebase/app";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
@@ -99,9 +99,6 @@ export const StagesContainer = () => {
     }
     return acc;
   }, {});
-
-  console.log(averagesByEtapId);
-  console.log(checkDatesByEtapId);
 
   return (
     <>
