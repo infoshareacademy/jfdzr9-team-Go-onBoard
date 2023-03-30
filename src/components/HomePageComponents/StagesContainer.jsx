@@ -48,12 +48,13 @@ export const StagesContainer = () => {
   //stage sorting by "sort" key in firebase//
   const sortedStages = [...stagesName].sort((a, b) => a.sort - b.sort);
 
-  //ganing access to id of stages in each activities and user_activities collections - needed to calculations the average of activities in each stages for log in user//
+  //ganing access to id of stages in each activities and user_activities collections ( by used hook useFirebase) - needed to calculations the average of activities in each stages for log in user//
 
   const activity = useFirebaseFetch("activities");
   const userActivities = useFirebaseFetch("user");
 
   const counts = activity.reduce((acc, { etap_id }) => {
+    //counting the number of occurrences of each stage/////
     if (!acc[etap_id]) {
       acc[etap_id] = 1;
     } else {
@@ -61,6 +62,8 @@ export const StagesContainer = () => {
     }
     return acc;
   }, {});
+
+  //User stage grouping to calculate average and stage last check date//
   const userActivitiesByEtapId = userActivities.reduce((acc, activity) => {
     const { etap_id, check_date } = activity;
     if (!acc[etap_id]) {
@@ -74,6 +77,7 @@ export const StagesContainer = () => {
     return acc;
   }, {});
 
+  //Calculation of the average for each step and the date of the last step check//
   const averagesAndDates = Object.entries(counts).map(([key, value]) => {
     const matchingValues = userActivitiesByEtapId[key];
     const sum = matchingValues ? matchingValues.count : 0;
@@ -103,7 +107,7 @@ export const StagesContainer = () => {
     <>
       <div className="stages-container">
         <div className="stages-bloks">
-          {sortedStages.map(({ id, icon, name }, index) => {
+          {sortedStages.map(({ id, icon, name }) => {
             const imageUrlForStage = imageUrl[stagesName.findIndex((stage) => stage.id === id)];
             return (
               <span key={id} className="etaps">
@@ -119,44 +123,3 @@ export const StagesContainer = () => {
     </>
   );
 };
-//   const averages = Object.entries(counts).map(([key, value]) => {
-//     const matchingValues = userActivities.filter((obj) => obj.etap_id === key);
-//     const sum = matchingValues.reduce((acc) => acc + 1, 0);
-//     const average = (sum / value) * 100;
-//     return `${average}%`;
-//   });
-
-//   const checkDate = useMemo(
-//     () =>
-//       userActivities.map(({ check_date }) => {
-//         const date = check_date?.toDate(); // dodaj operator zabezpieczający przed błędem, jeśli check_date jest null lub undefined
-//         if (!date) {
-//           return "nie rozpoczęto"; // dodaj warunek sprawdzający, czy data jest null lub undefined i zwróć odpowiedni string
-//         }
-//         return date.toLocaleDateString();
-//       }),
-//     [userActivities]
-//   );
-//   console.log(checkDate);
-//   console.log(averages);
-
-//   return (
-//     <>
-//       <div className="stages-container">
-//         <div className="stages-bloks">
-//           {sortedStages.map(({ id, icon, name }, index) => {
-//             const imageUrlForStage = imageUrl[stagesName.findIndex((stage) => stage.id === id)];
-//             return (
-//               <span key={id} className="etaps">
-//                 <img src={imageUrlForStage} alt={icon} className="icons" />
-//                 <span>{name}</span>
-//                 <span>{averages[index]}</span>
-//                 <span>{checkDate ? checkDate[index] : "nie rozpoczęto"}</span>
-//               </span>
-//             );
-//           })}
-//         </div>
-//       </div>
-//     </>
-//   );
-// };
