@@ -16,11 +16,11 @@ interface UserComment {
 }
 
 interface Props {
-  activitiesId: string;
+  activitiesId: string | null;
 }
 
 const CommentActivity: React.FC<Props> = (props) => {
-  const activiti = props.activitiesId; //props from ActivitiesDetail
+  const activiti = props.activitiesId;
 
   const userCommentRef = useRef<HTMLInputElement>(null);
   const [hasCommented, setHasCommented] = useState(false); //state to check if user add comment
@@ -57,7 +57,7 @@ const CommentActivity: React.FC<Props> = (props) => {
         // document doesn't exist, create a new one
         const newComment: UserComment = {
           comment: userCommentRef.current?.value ?? "",
-          user_activity_id: activiti,
+          user_activity_id: activiti || "",
           create: serverTimestamp(),
 
           // user_id: props.user.uid, TODO
