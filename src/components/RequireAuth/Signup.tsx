@@ -1,5 +1,5 @@
 import { useState, FormEvent } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { UserAuth } from "./context/AuthContext";
 
 interface CreateUserError {
@@ -12,12 +12,14 @@ export const Signup = () => {
   const [error, setError] = useState("");
 
   const { createUser } = UserAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
     try {
       await createUser(email, password);
+      navigate("/dashboard");
     } catch (e: any) {
       setError(e.message);
       console.log(e.message);

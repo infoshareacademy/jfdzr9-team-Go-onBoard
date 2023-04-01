@@ -1,45 +1,28 @@
-import React, { ReactNode, useContext, createContext } from "react";
-import { createUserWithEmailAndPassword, UserCredential } from "firebase/auth";
+import { ReactNode, useContext, createContext, useEffect, useState } from "react";
+import { onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "../../../utils/firebase/firebase.config";
 
 interface IUserContext {
-  createUser: (email: string, password: string) => Promise<UserCredential>;
-}
-
-export interface AuthProviderProps {
-  children?: ReactNode;
+  user: null | User;
 }
 
 const UserContext = createContext<IUserContext>({
-  createUser: async (email: string, password: string) => {
-    throw new Error("UserContext not initialized");
-  },
+  user: null,
 });
 
-export const AuthContextProvider: React.FC = ({
-  children,
-}: AuthProviderProps) => {
-  const createUser = async (email: string, password: string) => {
-    try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      return userCredential;
-    } catch (error) {
-      console.error("Error creating user:", error);
-      throw error;
-    }
-  };
+export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
+  const [user, setUser] = useState<IUserContext["user"]>(null);
 
-  const value: IUserContext = {
-    createUser,
-  };
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
-  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
+  return <UserContext.Provider value={{ user }}>{children}</UserContext.Provider>;
 };
 
-export const UserAuth = () => {
-  return useContext(UserContext);
-};
+export const useUser = () => useContext(UserContext).user;
