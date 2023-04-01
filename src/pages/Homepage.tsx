@@ -9,7 +9,6 @@ export const HomePageLayout = () => {
 
   return (
     <>
-      <div>Hello {user.email}</div>
       <div className="up-container">
         <button>
           <Link to="/signup">BACK</Link>
