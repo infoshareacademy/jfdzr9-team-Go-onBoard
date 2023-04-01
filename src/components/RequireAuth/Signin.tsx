@@ -1,7 +1,7 @@
-import { Link,useNavigate} from "react-router-dom";
-import React, { useState,FormEvent } from 'react';
-import { UserAuth } from "./context/AuthContext";
-
+import { Link, useNavigate } from "react-router-dom";
+import React, { useState, FormEvent } from "react";
+import { auth } from "../../utils/firebase/firebase.config";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 export const Signin = () => {
   const [email, setEmail] = useState("");
@@ -9,20 +9,18 @@ export const Signin = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const(signIn) = UserAuth();
-
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setError('')
+    setError("");
     try {
       // await singIn(email, password)
-      createUserWithUsernameAndPassoword(auth, username, passrword)
-      navigate("/dashboard")
+      await signInWithEmailAndPassword(auth, email, password);
+      navigate("/dashboard");
     } catch (e: any) {
       setError(e.message);
       console.log(e.message);
-    }}
-  }
+    }
+  };
 
   return (
     <>
@@ -39,10 +37,9 @@ export const Signin = () => {
             <input onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Pleace enter your password" />
             <p></p>
           </div>
+          <button type="submit">Zaloguj</button>
         </form>
-        <div>
-          <button>Zaloguj</button>
-        </div>
+
         <div>
           <p>
             <Link to="/signup">Zarejestruj się</Link>

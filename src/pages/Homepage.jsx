@@ -2,10 +2,14 @@ import { StagesContainer } from "../components/HomePageComponents/StagesContaine
 import { WelcomeContainer } from "../components/HomePageComponents/WelcomeContainer";
 import "./../index.css";
 import { Link } from "react-router-dom";
+import { useUser } from "../components/RequireAuth/context/AuthContext";
 
 export const HomePageLayout = () => {
+  const user = useUser();
+
   return (
     <>
+      <div>Hello {user.email}</div>
       <div className="up-container">
         <button>
           <Link to="/signup">BACK</Link>

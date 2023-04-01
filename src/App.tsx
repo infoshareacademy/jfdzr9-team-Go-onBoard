@@ -5,7 +5,7 @@ import { Signin } from "./components/RequireAuth/Signin";
 import { Signup } from "./components/RequireAuth/Signup";
 import { Signpassword } from "./components/RequireAuth/Signpassword";
 import { AuthContextProvider, useUser } from "./components/RequireAuth/context/AuthContext";
-import { HomePageLayout } from "./pages/";
+import { HomePageLayout } from "./pages/Homepage";
 
 function App() {
   const user = useUser();
