@@ -8,6 +8,7 @@ import {
   serverTimestamp,
   updateDoc,
 } from "firebase/firestore";
+import { CommentContainer, CommentUser, StyledH5 } from "./Comment.Styled";
 
 interface UserComment {
   comment: string;
@@ -74,11 +75,15 @@ const CommentActivity: React.FC<Props> = (props) => {
 
   return (
     <form onSubmit={addComment}>
-      <label htmlFor="Name">Wpisz notatkę</label>
-      <input ref={userCommentRef} />
-      <button type="submit">
-        {hasCommented ? "Zaktualizuj NOTATKE" : "Zapisz NOTATKE"}
-      </button>
+      <CommentContainer>
+        <StyledH5>Wpisz tekst swojej notatki</StyledH5>
+
+        <CommentUser ref={userCommentRef} />
+
+        <button type="submit">
+          {hasCommented ? "Zaktualizuj NOTATKĘ" : "Zapisz NOTATKĘ"}
+        </button>
+      </CommentContainer>
     </form>
   );
 };

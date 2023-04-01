@@ -68,7 +68,12 @@ button:focus-visible {
     color: #747bff;
   }
   button {
-    background-color: #f9f9f9;
+    background-color: #020246;
+    color: white;
+  }
+  button:disabled {
+    background-color: #686b6f;
+    cursor: not-allowed;
   }
 }
 
@@ -183,7 +188,8 @@ img {
   height: 30px;
   color: crimson;
   cursor: pointer;
-  filter: invert(3%) sepia(99%) saturate(5630%) hue-rotate(246deg) brightness(111%) contrast(148%);
+  filter: invert(3%) sepia(99%) saturate(5630%) hue-rotate(246deg)
+    brightness(111%) contrast(148%);
 }
 
 img:hover {
@@ -191,7 +197,8 @@ img:hover {
   height: 30px;
   color: crimson;
   cursor: pointer;
-  filter: invert(9%) sepia(99%) saturate(5630%) hue-rotate(246deg) brightness(111%) contrast(148%);
+  filter: invert(9%) sepia(99%) saturate(5630%) hue-rotate(246deg)
+    brightness(111%) contrast(148%);
 }
 
 .etaps:hover {

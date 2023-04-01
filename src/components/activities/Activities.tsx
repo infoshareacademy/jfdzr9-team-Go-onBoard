@@ -1,7 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { database } from "../../utils/firebase/firebase.config";
-import { collection, getDocs } from "firebase/firestore";
+import {
+  collection,
+  QuerySnapshot,
+  DocumentData,
+  getDocs,
+} from "firebase/firestore";
 import ActivitiesDetail from "./ActivitiesDetail";
+import {
+  ActivitiesContainer,
+  ActivitiName,
+  Container,
+  Transparent,
+} from "./ActivitiesStyled";
 
 interface Activity {
   id: string;
@@ -28,19 +39,18 @@ function Activities(props: Props) {
   };
 
   useEffect(() => {
-    const getActivities = async () => {
+    const getActivities = async (): Promise<void> => {
       const activitiesRef = collection(database, "activities");
-      const activitiesData = await getDocs(activitiesRef);
-      const activitiesArray: Activity[] = [];
-      activitiesData.forEach((doc) => {
-        activitiesArray.push({
-          id: doc.id,
-          name: doc.data().name,
-          type: doc.data().type,
-          etap_id: doc.data().etap_id,
-          sort: doc.data().sort,
-        });
-      });
+      const activitiesData: QuerySnapshot<DocumentData> = await getDocs(
+        activitiesRef
+      );
+      const activitiesArray: Activity[] = activitiesData.docs.map((doc) => ({
+        id: doc.id,
+        name: doc.data().name,
+        type: doc.data().type,
+        etap_id: doc.data().etap_id,
+        sort: doc.data().sort,
+      }));
       setActivities(activitiesArray);
     };
     getActivities();
@@ -52,21 +62,24 @@ function Activities(props: Props) {
 
   const sortedActivities = [...activities].sort((a, b) => a.sort - b.sort); // clone the activities array and sort it by the "sort" value from firebase
   return (
-    <div>
-      {sortedActivities
-        .filter((activit) => activit.etap_id === props.etapData.etapsID)
-        .map((filteredEtap) => {
-          return (
-            <button
-              onClick={() => setActivitiesId(filteredEtap.id)}
-              key={filteredEtap.id}>
-              <span>{filteredEtap.name}</span>
-            </button>
-          );
-        })}
+    <Container>
+      <ActivitiesContainer>
+        {sortedActivities
+          .filter((activit) => activit.etap_id === props.etapData.etapsID)
+          .map((filteredEtap) => {
+            return (
+              <Transparent
+                onClick={() => setActivitiesId(filteredEtap.id)}
+                key={filteredEtap.id}>
+                <ActivitiName>{filteredEtap.name}</ActivitiName>
+              </Transparent>
+            );
+          })}
+      </ActivitiesContainer>
       {/* Hide details before button click  */}
+
       {activitiesId && <ActivitiesDetail detailProps={detailProps} />}
-    </div>
+    </Container>
   );
 }
 

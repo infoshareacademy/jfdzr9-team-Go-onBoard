@@ -3,6 +3,7 @@ import { database } from "../../utils/firebase/firebase.config";
 import { collection, getDocs } from "firebase/firestore";
 import ConfirmActivity from "../button/ConfirmActivity";
 import CommentActivity from "./Comment";
+import { EtapContainer, StyledH4, StyledH3 } from "./ActivitiesStyled";
 
 interface Activity {
   id: string;
@@ -50,11 +51,11 @@ function ActivitiesDetail(props: Props) {
           // const Icon = allIcons[filteredEtap.type]; // create icon from @tabler/icons-react
 
           return (
-            <div
+            <EtapContainer
               style={{ display: "flex", flexDirection: "column" }}
               key={filteredEtap.id}>
-              <span>{filteredEtap.name}</span>
-              <span>{filteredEtap.description}</span>
+              <StyledH3>{filteredEtap.name}</StyledH3>
+              <StyledH4>{filteredEtap.description}</StyledH4>
               <button>kliknij zeby obejrzec</button>
               {filteredEtap.comment && (
                 <CommentActivity
@@ -62,7 +63,7 @@ function ActivitiesDetail(props: Props) {
                 />
               )}
               <ConfirmActivity confirmActivityProps={confirmActivityProps} />
-            </div>
+            </EtapContainer>
           );
         })}
     </div>
