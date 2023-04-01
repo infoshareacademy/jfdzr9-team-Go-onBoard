@@ -7,16 +7,24 @@ import { getApp } from "firebase/app";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { useFirebaseFetch } from "../hooks/useFirebaseFetch";
 
+interface Stage {
+  id: string;
+  sort: number;
+  icon: string;
+  name: string;
+}
+
 //fetch stages collection from firebase//
 export const StagesContainer = () => {
-  const [stagesName, setStagesName] = useState([]);
-  const [imageUrl, setImageUrl] = useState([]);
+  const [stagesName, setStagesName] = useState<Stage[]>([]);
+  const [imageUrl, setImageUrl] = useState<Promise<string>[]>([]);
 
   const getStagesName = async () => {
     const userCollerction = collection(database, "etaps");
     const querySnapshot = await getDocs(userCollerction);
     const stages = querySnapshot.docs.map((doc) => ({
       id: doc.id,
+      icon: doc.data().icon,
       ...doc.data(),
     }));
 
@@ -30,7 +38,7 @@ export const StagesContainer = () => {
         const imageName = stage.icon;
         const imageRef = ref(storage, imageName);
         try {
-          const url = getDownloadURL(imageRef);
+          const url = await getDownloadURL(imageRef);
           return url;
         } catch (error) {
           console.error(error);
