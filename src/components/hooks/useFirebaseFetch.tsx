@@ -2,13 +2,12 @@ import { useState, useEffect, useMemo } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { database } from "../../utils/firebase/firebase.config";
 
-interface Data {
+type Data<T> = {
   id: string;
-  [key: string]: any;
-}
+} & T;
 
-export const useFirebaseFetch = (collectionName: string): Data[] => {
-  const [data, setData] = useState<Data[]>([]);
+export const useFirebaseFetch = <T,>(collectionName: string): Data<T>[] => {
+  const [data, setData] = useState<Data<T>[]>([]);
 
   const dataCollection = useMemo(() => collection(database, collectionName), [collectionName]);
 
@@ -17,7 +16,7 @@ export const useFirebaseFetch = (collectionName: string): Data[] => {
     const data = querySnapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
-    })) as Data[];
+    })) as Data<T>[];
     setData(data);
   };
 

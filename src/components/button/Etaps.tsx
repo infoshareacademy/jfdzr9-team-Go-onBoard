@@ -1,13 +1,6 @@
 import { useState, useEffect } from "react";
 import { database } from "../../utils/firebase/firebase.config.jsx";
-import {
-  collection,
-  getDocs,
-  DocumentData,
-  query,
-  where,
-  onSnapshot,
-} from "firebase/firestore";
+import { collection, getDocs, DocumentData, query, where, onSnapshot } from "firebase/firestore";
 import Activites from "../activities/Activities";
 
 interface IEtap {
@@ -43,19 +36,13 @@ function Etaps() {
   useEffect(() => {
     if (etapId) {
       const activitiesRef = collection(database, "activities");
-      const activitiesQuery = query(
-        activitiesRef,
-        where("etap_id", "==", etapId)
-      );
+      const activitiesQuery = query(activitiesRef, where("etap_id", "==", etapId));
       const unsubscribe = onSnapshot(activitiesQuery, (snapshot) => {
         const activitiesCount = snapshot.docs.length;
         const userActivityRef = collection(database, "user_activity");
-        const userActivityQuery = query(
-          userActivityRef,
-          where("etap_id", "==", etapId)
-        );
+        const userActivityQuery = query(userActivityRef, where("etap_id", "==", etapId));
         getDocs(userActivityQuery).then((docs) => {
-          const userActivityCount = docs.length;
+          const userActivityCount = docs.size;
           setIsButtonDisabled(activitiesCount !== userActivityCount);
         });
       });
@@ -69,11 +56,7 @@ function Etaps() {
     <div>
       {sortedEtaps.map((etap: IEtap) => {
         return (
-          <button
-            id={etap.id}
-            onClick={() => setEtapId(etap.id)}
-            key={etap.id}
-            disabled={etap.sort !== 1 && isButtonDisabled}>
+          <button id={etap.id} onClick={() => setEtapId(etap.id)} key={etap.id} disabled={etap.sort !== 1 && isButtonDisabled}>
             <span>{etap.name}</span>
           </button>
         );
