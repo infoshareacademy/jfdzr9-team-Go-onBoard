@@ -9,7 +9,32 @@ import { HomePageLayout } from "./pages/Homepage";
 import Etaps from "./components/button/Etaps";
 
 function App() {
-  return <Etaps />;
+  return (
+    <AuthContextProvider>
+      <Routes>
+        <Route
+          path="/dashboard"
+          element={<HomePageLayout />}
+        />
+        <Route
+          path="/signup"
+          element={<Signup />}
+        />
+        <Route
+          path="/signin"
+          element={<Signin />}
+        />
+        <Route
+          path="/signpassword"
+          element={<Signpassword />}
+        />
+        <Route
+          path="/etaps"
+          element={<Etaps />}
+        />
+      </Routes>
+    </AuthContextProvider>
+  );
 }
 
 export default App;

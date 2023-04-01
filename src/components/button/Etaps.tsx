@@ -15,9 +15,7 @@ interface Etap {
 function Etaps() {
   const [etaps, setEtaps] = useState<Etap[]>([]);
   const [etapId, setEtapId] = useState<string | null>(null);
-  const [activitiesByEtap, setActivitiesByEtap] = useState<
-    Record<string, { etap_id: string; id: string }[]>
-  >({});
+  const [activitiesByEtap, setActivitiesByEtap] = useState<Record<string, { etap_id: string; id: string }[]>>({});
   const [userActivityIds, setUserActivityIds] = useState<string[]>([]);
 
   useEffect(() => {
@@ -28,9 +26,7 @@ function Etaps() {
       //make array with etpaid and activities
       const activitiesRef = collection(database, "activities");
       const activitiesData = await getDocs(activitiesRef);
-      const activitiesByEtap = activitiesData.docs.reduce<
-        Record<string, { etap_id: string; id: string }[]>
-      >((acc, doc) => {
+      const activitiesByEtap = activitiesData.docs.reduce<Record<string, { etap_id: string; id: string }[]>>((acc, doc) => {
         const etapId = doc.data().etap_id;
 
         if (!acc[etapId]) {
@@ -49,9 +45,7 @@ function Etaps() {
       //make array from user_activities with etpaid and activityid
       const userActivitiesRef = collection(database, "user_activities");
       const useractivitiesData = await getDocs(userActivitiesRef);
-      const userActivityIds = useractivitiesData.docs.map(
-        (doc) => doc.data().user_activity_id
-      );
+      const userActivityIds = useractivitiesData.docs.map((doc) => doc.data().user_activity_id);
 
       setUserActivityIds(userActivityIds);
 
@@ -84,10 +78,7 @@ function Etaps() {
 
   //props to confirm button-after confirm check status to show etpas when all activ in etap are completed
   function handleActivityConfirmation(newActivityId: string) {
-    setUserActivityIds((prevActivityIds) => [
-      ...prevActivityIds,
-      newActivityId,
-    ]);
+    setUserActivityIds((prevActivityIds) => [...prevActivityIds, newActivityId]);
   }
 
   // sort etaps by "sort" key in firebase
@@ -101,26 +92,13 @@ function Etaps() {
           index === 0 ||
           (index > 0 &&
             activitiesByEtap[sortedEtaps[index - 1].id]?.length ===
-              userActivityIds.filter((activityId) =>
-                activitiesByEtap[sortedEtaps[index - 1].id].some(
-                  (activity) => activity.id === activityId
-                )
-              ).length);
+              userActivityIds.filter((activityId) => activitiesByEtap[sortedEtaps[index - 1].id].some((activity) => activity.id === activityId)).length);
 
         const enableButton = isPreviousEtapCompleted;
 
         return (
-          <button
-            id={etap.id}
-            onClick={() => setEtapId(etap.id)}
-            key={etap.id}
-            disabled={!enableButton}>
-            {etap.icon && (
-              <img
-                src={etap.icon}
-                alt={etap.name}
-              />
-            )}
+          <button id={etap.id} onClick={() => setEtapId(etap.id)} key={etap.id} disabled={!enableButton}>
+            {etap.icon && <img src={etap.icon} alt={etap.name} />}
             <span>{etap.name}</span>
           </button>
         );

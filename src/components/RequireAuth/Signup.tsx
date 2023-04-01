@@ -1,6 +1,7 @@
 import { useState, FormEvent } from "react";
-import { Link } from "react-router-dom";
-import { UserAuth } from "./context/AuthContext";
+import { Link, useNavigate } from "react-router-dom";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../utils/firebase/firebase.config";
 
 interface CreateUserError {
   message: string;
@@ -11,13 +12,15 @@ export const Signup = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const { createUser } = UserAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
     try {
-      await createUser(email, password);
+      await createUserWithEmailAndPassword(auth, email, password);
+
+      navigate("/dashboard");
     } catch (e: any) {
       setError(e.message);
       console.log(e.message);

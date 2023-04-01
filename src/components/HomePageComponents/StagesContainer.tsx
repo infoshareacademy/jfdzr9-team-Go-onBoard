@@ -1,42 +1,51 @@
 import "../../index.css";
 import { database } from "../../utils/firebase/firebase.config";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, Timestamp } from "firebase/firestore";
 import { useState } from "react";
 import { useEffect } from "react";
 import { getApp } from "firebase/app";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { useFirebaseFetch } from "../hooks/useFirebaseFetch";
+import { Link } from "react-router-dom";
+
+interface Stage {
+  id: string;
+  sort: number;
+  icon: string;
+  name: string;
+}
 
 //fetch stages collection from firebase//
 export const StagesContainer = () => {
-  const [stagesName, setStagesName] = useState([]);
-  const [imageUrl, setImageUrl] = useState([]);
+  const [stagesName, setStagesName] = useState<Stage[]>([]);
+  const [imageUrl, setImageUrl] = useState<string[]>([]);
 
   const getStagesName = async () => {
     const userCollerction = collection(database, "etaps");
     const querySnapshot = await getDocs(userCollerction);
     const stages = querySnapshot.docs.map((doc) => ({
       id: doc.id,
+      icon: doc.data().icon,
       ...doc.data(),
-    }));
+    })) as Stage[];
 
     //fetch svg icons from firebase storage//
     const firebaseApp = getApp();
     const storage = getStorage(firebaseApp);
 
     //using promise all to fetch all stages and svg icons before rendering whole page//
-    const ImageUrls = await Promise.all(
+    const ImageUrls = (await Promise.all(
       stages.map(async (stage) => {
         const imageName = stage.icon;
         const imageRef = ref(storage, imageName);
         try {
-          const url = getDownloadURL(imageRef);
+          const url = await getDownloadURL(imageRef);
           return url;
         } catch (error) {
           console.error(error);
         }
       })
-    );
+    )) as string[];
     setStagesName(stages);
     setImageUrl(ImageUrls);
   };
@@ -50,10 +59,29 @@ export const StagesContainer = () => {
 
   //ganing access to id of stages in each activities and user_activities collections ( by used hook useFirebase) - needed to calculations the average of activities in each stages for log in user//
 
-  const activity = useFirebaseFetch("activities");
-  const userActivities = useFirebaseFetch("user");
+  interface Users {
+    check_date: Timestamp;
+    etap_id: string;
+  }
 
-  const counts = activity.reduce((acc, { etap_id }) => {
+  interface UsersActivities {
+    comment: string;
+    false: boolean;
+    description: string;
+    etap_id: string;
+    id_course: string;
+    link: string;
+    name: string;
+    set: number;
+    sort: number;
+    test: boolean;
+    type: string;
+  }
+
+  const activity = useFirebaseFetch<UsersActivities>("activities");
+  const userActivities = useFirebaseFetch<Users>("user");
+
+  const counts = activity.reduce((acc: { [key: UsersActivities["etap_id"]]: number }, { etap_id }) => {
     //counting the number of occurrences of each stage/////
     if (!acc[etap_id]) {
       acc[etap_id] = 1;
@@ -64,13 +92,13 @@ export const StagesContainer = () => {
   }, {});
 
   //User stage grouping to calculate average and stage last check date//
-  const userActivitiesByEtapId = userActivities.reduce((acc, activity) => {
+  const userActivitiesByEtapId = userActivities.reduce((acc: { [key: UsersActivities["etap_id"]]: { count: number; check_date: Timestamp } }, activity) => {
     const { etap_id, check_date } = activity;
     if (!acc[etap_id]) {
-      acc[etap_id] = { count: 1, check_date: check_date ? check_date : null };
+      acc[etap_id] = { count: 1, check_date };
     } else {
       acc[etap_id].count++;
-      if (check_date && check_date > acc[etap_id].check_date) {
+      if (check_date > acc[etap_id]?.check_date) {
         acc[etap_id].check_date = check_date;
       }
     }
@@ -86,13 +114,14 @@ export const StagesContainer = () => {
     return { etap_id: key, average: `${average}%`, checkDate };
   });
 
-  const averagesByEtapId = averagesAndDates.reduce((acc, { etap_id, average }) => {
+  const averagesByEtapId = averagesAndDates.reduce((acc: { [key: UsersActivities["etap_id"]]: string }, { etap_id, average }) => {
     acc[etap_id] = average;
     return acc;
   }, {});
 
-  const checkDatesByEtapId = averagesAndDates.reduce((acc, { etap_id, checkDate }) => {
-    if (checkDate && checkDate.seconds) {
+  const checkDatesByEtapId = averagesAndDates.reduce((acc: { [key: UsersActivities["etap_id"]]: string }, { etap_id, checkDate }) => {
+    if (checkDate && checkDate) {
+      console.log(checkDate);
       acc[etap_id] = checkDate.toDate().toLocaleDateString();
     } else {
       acc[etap_id] = "nie rozpoczęto";
@@ -108,6 +137,9 @@ export const StagesContainer = () => {
             const imageUrlForStage = imageUrl[stagesName.findIndex((stage) => stage.id === id)];
             return (
               <span key={id} className="etaps">
+                <button>
+                  <Link to="/etaps">Process</Link>
+                </button>
                 <img src={imageUrlForStage} alt={icon} className="icons" />
                 <span>{name}</span>
                 <span>{averagesByEtapId[id]}</span>
