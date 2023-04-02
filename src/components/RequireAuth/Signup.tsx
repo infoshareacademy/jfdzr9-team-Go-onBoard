@@ -15,9 +15,23 @@ interface CreateUserError {
   message: string;
 }
 
-const firebaseErrors = {
-  "auth/email-already-in-use": "E-mail jest zarejestrowany",
-  "auth/weak-password": "Hasło powinno mieć 5 znaków",
+type FirebaseErrorCode =
+  | "auth/email-already-in-use"
+  | "auth/invalid-email"
+  | "auth/user-not-found"
+  | "auth/wrong-password"
+  | "auth/weak-password";
+
+type FirebaseErrorMessages = {
+  [key in FirebaseErrorCode]: string;
+};
+
+const firebaseErrors: FirebaseErrorMessages = {
+  "auth/email-already-in-use": "E-mail jest już zarejestrowany.",
+  "auth/invalid-email": "Wprowdź poprawny e-mail",
+  "auth/user-not-found": "E-mail nie został zarejestrowany",
+  "auth/wrong-password": "Niepoprawne hasło",
+  "auth/weak-password": "Hasło powinno zawierać conajmniej 6 znaków",
 };
 
 export const Signup = () => {
@@ -57,7 +71,7 @@ export const Signup = () => {
 
           try {
             await setDoc(doc(usersRef, uid), newUser);
-            e.target.reset();
+            (e.target as HTMLFormElement).reset();
             await signOut(auth);
           } catch (e: any) {
             console.dir(e);
@@ -69,7 +83,9 @@ export const Signup = () => {
           setError(firebaseErrors[e.code]);
         }
       } else {
-        setError("This email is not registered!");
+        setError(
+          "E-mail, nie moze zostać zrejestrowany. Jeśli opłaciłeś kurs, skontaktuj się z działem Sprzedaż. "
+        );
       }
     } catch (e: any) {
       setError("An error occurred while checking the email.");
