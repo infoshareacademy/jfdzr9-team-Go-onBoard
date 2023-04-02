@@ -26,7 +26,7 @@ type FirebaseErrorMessages = {
   [key in FirebaseErrorCode]: string;
 };
 
-const firebaseErrors: FirebaseErrorMessages = {
+const firebaseErrors: FirebaseErrorMessages & { [key: string]: string } = {
   "auth/email-already-in-use": "E-mail jest już zarejestrowany.",
   "auth/invalid-email": "Wprowdź poprawny e-mail",
   "auth/user-not-found": "E-mail nie został zarejestrowany",
