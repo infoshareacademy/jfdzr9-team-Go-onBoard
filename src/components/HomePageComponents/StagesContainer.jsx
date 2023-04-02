@@ -100,14 +100,37 @@ export const StagesContainer = () => {
     return acc;
   }, {});
 
+  sortedStages.push({
+    course_id: "aBXvTc786876njhghu6RSPJzBwasniv",
+    icon: "JS.svg",
+    id: "ssdd455455foVQal9YJCynUwiF6XV",
+    name: "test",
+    custom: true,
+    sort: 99,
+  });
+  const fetchData = () => {
+    const Wiktor = useFirebaseFetch("Wiktor");
+    console.log(Wiktor)
+  }
+  const handleClick = (e, name) => {
+  
+    // console.log(e.target)
+    if (name === "test") {
+      fetchData();
+      // console.log(e.currentTarget)
+    }
+  
+    
+  }
   return (
     <>
       <div className="stages-container">
         <div className="stages-bloks">
           {sortedStages.map(({ id, icon, name }) => {
+            
             const imageUrlForStage = imageUrl[stagesName.findIndex((stage) => stage.id === id)];
             return (
-              <span key={id} className="etaps">
+              <span onClick={(e) => handleClick(e, name)} key={id} className="etaps" name={name}>
                 <img src={imageUrlForStage} alt={icon} className="icons" />
                 <span>{name}</span>
                 <span>{averagesByEtapId[id]}</span>
