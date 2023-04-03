@@ -85,11 +85,11 @@ export const Signup = () => {
         <form onSubmit={handleSubmit}>
           <div>
             <label>Email</label>
-            <input onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Please enter your email" />
+            <input onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Wpisz swój email" />
           </div>
           <div>
             <label>Password</label>
-            <input onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Please enter your password" />
+            <input onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Wpisz swoje hasło" />
             <p>{error}</p>
           </div>
           <button type="submit">Zarejestruj</button>
