@@ -51,44 +51,46 @@ export const Signup = () => {
       const snapshot = await getDocs(queryUser);
 
       if (snapshot.size > 0) {
-        const { gender, id_course, role } = snapshot.docs[0].data();
-
-        try {
-          const userCredential = await createUserWithEmailAndPassword(
-            auth,
-            email,
-            password
-          );
-          const uid = userCredential.user.uid;
-          const usersRef = collection(database, "users");
-          const newUser = {
-            uid: uid,
-            email: email,
-            gender: gender,
-            id_course: id_course,
-            role: role,
-          };
+        snapshot.docs.forEach(async (docSnapshot) => {
+          const { gender, id_course, role } = docSnapshot.data();
 
           try {
-            await setDoc(doc(usersRef, uid), newUser);
-            (e.target as HTMLFormElement).reset();
-            await signOut(auth);
+            const userCredential = await createUserWithEmailAndPassword(
+              auth,
+              email,
+              password
+            );
+            const uid = userCredential.user.uid;
+            const usersRef = collection(database, "users");
+            const newUser = {
+              email: email,
+              gender: gender,
+              id_course: id_course,
+              role: role,
+            };
+
+            try {
+              const userDocRef = doc(usersRef, uid);
+              await setDoc(userDocRef, newUser);
+              (e.target as HTMLFormElement).reset();
+              await signOut(auth);
+            } catch (e: any) {
+              console.dir(e);
+              setError(firebaseErrors[e.code]);
+            }
+            navigate("/dashboard");
           } catch (e: any) {
             console.dir(e);
             setError(firebaseErrors[e.code]);
           }
-          navigate("/dashboard");
-        } catch (e: any) {
-          console.dir(e);
-          setError(firebaseErrors[e.code]);
-        }
+        });
       } else {
         setError(
           "E-mail, nie moze zostać zrejestrowany. Jeśli opłaciłeś kurs, skontaktuj się z działem Sprzedaż. "
         );
       }
     } catch (e: any) {
-      setError("An error occurred while checking the email.");
+      setError("Wystąpił błąd podczas weryfikowania e-mail.");
       console.log(e.message);
     }
   };
