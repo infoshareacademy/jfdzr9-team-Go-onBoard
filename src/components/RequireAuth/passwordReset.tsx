@@ -54,14 +54,14 @@ function PasswordReset() {
     <div>
       {successMessage ? (
         <div>
-          <h3>Success! Your Password change successfully</h3>
-          <button onClick={() => navigate("/")}>Go to the Login page</button>
+          <h3>Twoje hasło zostało zmienione</h3>
+          <button onClick={() => navigate("/")}>Wróć do strony logowania</button>
         </div>
       ) : (
         <div className="card">
           <form onSubmit={handleSubmit}>
             <div>
-              <input type="password" name="password" value={formFields.password} onChange={handleChange} placeholder="New Password" required />
+              <input type="password" name="password" value={formFields.password} onChange={handleChange} placeholder="Nowe hasło" required />
             </div>
             <div>
               <input

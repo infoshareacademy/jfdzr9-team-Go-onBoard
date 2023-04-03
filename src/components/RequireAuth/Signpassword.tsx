@@ -36,9 +36,9 @@ export const Signpassword = () => {
         <form onSubmit={handleSubmit}>
           <div>
             <label>Email</label>
-            <input type="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Pleace enter your email" />
+            <input type="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Wpisz swój email" />
           </div>
-          <button type="submit">Wysłać</button>
+          <button type="submit">Wyślij</button>
         </form>
         <div>
           <p>
