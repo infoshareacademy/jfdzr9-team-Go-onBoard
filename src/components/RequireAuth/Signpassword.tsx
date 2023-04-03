@@ -23,7 +23,7 @@ export const Signpassword = () => {
       console.log({ error });
 
       if (error.code === "auth/user-not-found") {
-        alert("User not found, try again!");
+        alert("Nie znaleziono użytkownika, spróbuj ponownie!");
         setEmail("");
       }
     }
@@ -38,7 +38,7 @@ export const Signpassword = () => {
             <label>Email</label>
             <input type="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Pleace enter your email" />
           </div>
-          <button type="submit">Wysli</button>
+          <button type="submit">Wysłać</button>
         </form>
         <div>
           <p>

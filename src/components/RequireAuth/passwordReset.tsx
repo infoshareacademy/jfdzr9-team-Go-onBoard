@@ -24,7 +24,7 @@ function PasswordReset() {
     e.preventDefault();
 
     if (formFields.password !== formFields.confirmPassword) {
-      alert("Passwords did not match.");
+      alert("Hasła się nie zgadzają.");
       return;
     }
 
@@ -34,12 +34,12 @@ function PasswordReset() {
         resetFormFields();
         setSuccessMessage(true);
       } else {
-        alert("Something is wrong; try again later!");
+        alert("Coś jest nie tak; Spróbuj ponownie później!");
         console.log("missing oobCode");
       }
     } catch (error: any) {
       if (error.code === "auth/invalid-action-code") {
-        alert("Something is wrong; try again later.");
+        alert("Coś jest nie tak; Spróbuj ponownie później.");
       }
       console.log(error.message);
     }
