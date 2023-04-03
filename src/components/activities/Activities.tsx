@@ -3,6 +3,7 @@ import { database } from "../../utils/firebase/firebase.config";
 import { collection, getDocs } from "firebase/firestore";
 import ActivitiesDetail from "./ActivitiesDetail";
 import { ActivitiesContainer, ActivitiName, Container, Transparent } from "./Activities.styled";
+import { useParamsStagesHook } from "../hooks/useParamsStagesHook";
 
 interface Activity {
   id: string;
@@ -14,17 +15,17 @@ interface Activity {
 
 interface Props {
   etapData: {
-    etapsID: string;
     onActivityConfirmation: (newActivityId: string) => void;
   };
 }
 
 function Activities(props: Props) {
+  const etapsID = useParamsStagesHook();
   const [activities, setActivities] = useState<Activity[]>([]);
   const [activitiesId, setActivitiesId] = useState<string | null>(null);
   const detailProps = {
     activitiesId: activitiesId,
-    etap_id: props.etapData.etapsID,
+    etap_id: etapsID,
     onActivityConfirmation: props.etapData.onActivityConfirmation,
   };
 
@@ -49,14 +50,14 @@ function Activities(props: Props) {
 
   useEffect(() => {
     setActivitiesId(null); // Reset activitiesId state when etap prop changes
-  }, [props.etapData.etapsID]);
+  }, [etapsID]);
 
   const sortedActivities = [...activities].sort((a, b) => a.sort - b.sort); // clone the activities array and sort it by the "sort" value from firebase
   return (
     <Container>
       <ActivitiesContainer>
         {sortedActivities
-          .filter((activit) => activit.etap_id === props.etapData.etapsID)
+          .filter((activit) => activit.etap_id === etapsID)
           .map((filteredEtap) => {
             return (
               <Transparent onClick={() => setActivitiesId(filteredEtap.id)} key={filteredEtap.id}>

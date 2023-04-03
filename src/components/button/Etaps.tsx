@@ -4,6 +4,8 @@ import { collection, getDocs } from "firebase/firestore";
 import { ref, getDownloadURL, getStorage } from "firebase/storage";
 import { getApp } from "firebase/app";
 import Activities from "../activities/Activities";
+import { Outlet, Link } from "react-router-dom";
+import "../../index.css";
 
 interface Etap {
   id: string;
@@ -94,23 +96,24 @@ function Etaps() {
             activitiesByEtap[sortedEtaps[index - 1].id]?.length ===
               userActivityIds.filter((activityId) => activitiesByEtap[sortedEtaps[index - 1].id].some((activity) => activity.id === activityId)).length);
 
-        const enableButton = isPreviousEtapCompleted;
+        const enableLink = isPreviousEtapCompleted;
 
         return (
-          <button id={etap.id} onClick={() => setEtapId(etap.id)} key={etap.id} disabled={!enableButton}>
+          <Link
+            className="stages-links"
+            to={enableLink ? `/etaps/${etap.id}` : "#"}
+            key={etap.id}
+            onClick={() => setEtapId(etap.id)}
+            style={{
+              pointerEvents: enableLink ? "auto" : "none",
+              opacity: enableLink ? 1 : 0.5,
+            }}>
             {etap.icon && <img src={etap.icon} alt={etap.name} />}
             <span>{etap.name}</span>
-          </button>
+          </Link>
         );
       })}
-      {etapId && (
-        <Activities
-          etapData={{
-            etapsID: etapId,
-            onActivityConfirmation: handleActivityConfirmation,
-          }}
-        />
-      )}
+      <Outlet />
     </div>
   );
 }

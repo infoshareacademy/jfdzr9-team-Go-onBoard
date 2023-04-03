@@ -8,6 +8,7 @@ import { AuthContextProvider } from "./components/RequireAuth/context/AuthContex
 import { HomePageLayout } from "./pages/Homepage";
 import { Process } from "./pages/Processpage";
 import Etaps from "./components/button/Etaps";
+import Activities from "./components/activities/Activities";
 
 function App() {
   return (
@@ -18,7 +19,18 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/signpassword" element={<Signpassword />} />
-        <Route path="/etaps" element={<Etaps />} />
+        <Route path="/etaps/*" element={<Etaps />}>
+          <Route
+            path=":id"
+            element={
+              <Activities
+                etapData={{
+                  onActivityConfirmation: undefined,
+                }}
+              />
+            }
+          />
+        </Route>
       </Routes>
     </AuthContextProvider>
   );
