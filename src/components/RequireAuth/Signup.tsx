@@ -2,25 +2,13 @@ import { useState, FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword, signOut } from "firebase/auth";
 import { auth, database } from "../../utils/firebase/firebase.config";
-import {
-  collection,
-  query,
-  where,
-  getDocs,
-  doc,
-  setDoc,
-} from "firebase/firestore";
+import { collection, query, where, getDocs, doc, setDoc } from "firebase/firestore";
 
 interface CreateUserError {
   message: string;
 }
 
-type FirebaseErrorCode =
-  | "auth/email-already-in-use"
-  | "auth/invalid-email"
-  | "auth/user-not-found"
-  | "auth/wrong-password"
-  | "auth/weak-password";
+type FirebaseErrorCode = "auth/email-already-in-use" | "auth/invalid-email" | "auth/user-not-found" | "auth/wrong-password" | "auth/weak-password";
 
 type FirebaseErrorMessages = {
   [key in FirebaseErrorCode]: string;
@@ -55,11 +43,7 @@ export const Signup = () => {
           const { gender, id_course, role } = docSnapshot.data();
 
           try {
-            const userCredential = await createUserWithEmailAndPassword(
-              auth,
-              email,
-              password
-            );
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const uid = userCredential.user.uid;
             const usersRef = collection(database, "users");
             const newUser = {
@@ -85,9 +69,7 @@ export const Signup = () => {
           }
         });
       } else {
-        setError(
-          "E-mail, nie moze zostać zrejestrowany. Jeśli opłaciłeś kurs, skontaktuj się z działem Sprzedaż. "
-        );
+        setError("E-mail, nie moze zostać zrejestrowany. Jeśli opłaciłeś kurs, skontaktuj się z działem Sprzedaż. ");
       }
     } catch (e: any) {
       setError("Wystąpił błąd podczas weryfikowania e-mail.");
@@ -103,19 +85,11 @@ export const Signup = () => {
         <form onSubmit={handleSubmit}>
           <div>
             <label>Email</label>
-            <input
-              onChange={(e) => setEmail(e.target.value)}
-              type="email"
-              placeholder="Please enter your email"
-            />
+            <input onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Wpisz swój email" />
           </div>
           <div>
             <label>Password</label>
-            <input
-              onChange={(e) => setPassword(e.target.value)}
-              type="password"
-              placeholder="Please enter your password"
-            />
+            <input onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Wpisz swoje hasło" />
             <p>{error}</p>
           </div>
           <button type="submit">Zarejestruj</button>
