@@ -17,17 +17,21 @@ interface Props {
   etapData: {
     onActivityConfirmation: (newActivityId: string) => void;
   };
+  etap_id: string;
 }
 
 function Activities(props: Props) {
   const etapsID = useParamsStagesHook();
   const [activities, setActivities] = useState<Activity[]>([]);
   const [activitiesId, setActivitiesId] = useState<string | null>(null);
-  const detailProps = {
-    activitiesId: activitiesId,
-    etap_id: etapsID,
-    onActivityConfirmation: props.etapData.onActivityConfirmation,
-  };
+  const detailProps =
+    activitiesId && etapsID
+      ? {
+          activitiesId: activitiesId,
+          etap_id: etapsID,
+          onActivityConfirmation: props.etapData.onActivityConfirmation,
+        }
+      : null;
 
   useEffect(() => {
     const getActivities = async () => {

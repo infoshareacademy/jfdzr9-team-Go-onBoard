@@ -14,6 +14,12 @@ interface Etap {
   icon: string;
 }
 
+interface Props {
+  etapData: {
+    etapsID: string;
+    onActivityConfirmation: (newActivityId: string) => void;
+  };
+}
 function Etaps() {
   const [etaps, setEtaps] = useState<Etap[]>([]);
   const [etapId, setEtapId] = useState<string | null>(null);
@@ -113,6 +119,15 @@ function Etaps() {
           </Link>
         );
       })}
+      {etapId && (
+        <Activities
+          etapData={{
+            etapsID: etapId,
+            onActivityConfirmation: handleActivityConfirmation,
+          }}
+        />
+      )}
+
       <Outlet />
     </div>
   );

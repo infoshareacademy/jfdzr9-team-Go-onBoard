@@ -6,7 +6,6 @@ import { Signup } from "./components/RequireAuth/Signup";
 import { Signpassword } from "./components/RequireAuth/Signpassword";
 import { AuthContextProvider } from "./components/RequireAuth/context/AuthContext";
 import { HomePageLayout } from "./pages/Homepage";
-import { Process } from "./pages/Processpage";
 import Etaps from "./components/button/Etaps";
 import Activities from "./components/activities/Activities";
 
@@ -20,16 +19,7 @@ function App() {
         <Route path="/signin" element={<Signin />} />
         <Route path="/signpassword" element={<Signpassword />} />
         <Route path="/etaps/*" element={<Etaps />}>
-          <Route
-            path=":id"
-            element={
-              <Activities
-                etapData={{
-                  onActivityConfirmation: undefined,
-                }}
-              />
-            }
-          />
+          <Route path=":id" element={<Activities />} />
         </Route>
       </Routes>
     </AuthContextProvider>

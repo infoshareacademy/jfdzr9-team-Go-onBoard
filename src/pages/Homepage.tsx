@@ -3,12 +3,15 @@ import { WelcomeContainer } from "../components/HomePageComponents/WelcomeContai
 import "./../index.css";
 import { Link } from "react-router-dom";
 import { useUser } from "../components/RequireAuth/context/AuthContext";
+import Account from "../components/RequireAuth/Account";
 
 export const HomePageLayout = () => {
   const user = useUser();
 
   return (
     <>
+      <Account />
+      <div>Hello {user?.email}</div>
       <div className="up-container">
         <button>
           <Link to="/signup">BACK</Link>
