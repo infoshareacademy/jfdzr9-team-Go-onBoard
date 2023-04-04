@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import React, { useState, FormEvent } from "react";
 import { auth } from "../../utils/firebase/firebase.config";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { async } from "@firebase/util";
 
 export const Signin = () => {
   const [email, setEmail] = useState("");
@@ -30,11 +31,11 @@ export const Signin = () => {
         <form onSubmit={handleSubmit}>
           <div>
             <label>Email</label>
-            <input onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Pleace enter your email" />
+            <input onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Wpisz swój email" />
           </div>
           <div>
             <label>Password</label>
-            <input onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Pleace enter your password" />
+            <input onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Wpisz swoje hasło" />
             <p></p>
           </div>
           <button type="submit">Zaloguj</button>
