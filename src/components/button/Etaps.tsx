@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, createContext } from "react";
 import { database } from "../../utils/firebase/firebase.config"; // import storage
 import { collection, getDocs } from "firebase/firestore";
 import { ref, getDownloadURL, getStorage } from "firebase/storage";
@@ -6,6 +6,7 @@ import { getApp } from "firebase/app";
 import Activities from "../activities/Activities";
 import { Outlet, Link } from "react-router-dom";
 import "../../index.css";
+import { StagesContext, StagesContextValue } from "./Context/StagesContext";
 
 interface Etap {
   id: string;
@@ -20,6 +21,7 @@ interface Props {
     onActivityConfirmation: (newActivityId: string) => void;
   };
 }
+
 function Etaps() {
   const [etaps, setEtaps] = useState<Etap[]>([]);
   const [etapId, setEtapId] = useState<string | null>(null);
@@ -85,51 +87,49 @@ function Etaps() {
   }, []);
 
   //props to confirm button-after confirm check status to show etpas when all activ in etap are completed
-  function handleActivityConfirmation(newActivityId: string) {
-    setUserActivityIds((prevActivityIds) => [...prevActivityIds, newActivityId]);
-  }
 
+  const handleActivityConfirmation = (newActivityId: string) => {
+    setUserActivityIds((prevActivityIds) => [...prevActivityIds, newActivityId]);
+  };
+
+  const stagesContextValue: StagesContextValue = {
+    handleActivityConfirmation,
+    etapId,
+  };
   // sort etaps by "sort" key in firebase
   const sortedEtaps = [...etaps].sort((a, b) => a.sort - b.sort);
 
   return (
-    <div>
-      {sortedEtaps.map((etap, index) => {
-        //check previous etap if all activities are completed, next etap is enable
-        const isPreviousEtapCompleted =
-          index === 0 ||
-          (index > 0 &&
-            activitiesByEtap[sortedEtaps[index - 1].id]?.length ===
-              userActivityIds.filter((activityId) => activitiesByEtap[sortedEtaps[index - 1].id].some((activity) => activity.id === activityId)).length);
+    <StagesContext.Provider value={stagesContextValue}>
+      <div>
+        {sortedEtaps.map((etap, index) => {
+          //check previous etap if all activities are completed, next etap is enable
+          const isPreviousEtapCompleted =
+            index === 0 ||
+            (index > 0 &&
+              activitiesByEtap[sortedEtaps[index - 1].id]?.length ===
+                userActivityIds.filter((activityId) => activitiesByEtap[sortedEtaps[index - 1].id].some((activity) => activity.id === activityId)).length);
 
-        const enableLink = isPreviousEtapCompleted;
+          const enableLink = isPreviousEtapCompleted;
 
-        return (
-          <Link
-            className="stages-links"
-            to={enableLink ? `/etaps/${etap.id}` : "#"}
-            key={etap.id}
-            onClick={() => setEtapId(etap.id)}
-            style={{
-              pointerEvents: enableLink ? "auto" : "none",
-              opacity: enableLink ? 1 : 0.5,
-            }}>
-            {etap.icon && <img src={etap.icon} alt={etap.name} />}
-            <span>{etap.name}</span>
-          </Link>
-        );
-      })}
-      {etapId && (
-        <Activities
-          etapData={{
-            etapsID: etapId,
-            onActivityConfirmation: handleActivityConfirmation,
-          }}
-        />
-      )}
-
-      <Outlet />
-    </div>
+          return (
+            <Link
+              className="stages-links"
+              to={enableLink ? `/etaps/${etap.id}` : "#"}
+              key={etap.id}
+              onClick={() => setEtapId(etap.id)}
+              style={{
+                pointerEvents: enableLink ? "auto" : "none",
+                opacity: enableLink ? 1 : 0.5,
+              }}>
+              {etap.icon && <img src={etap.icon} alt={etap.name} />}
+              <span>{etap.name}</span>
+            </Link>
+          );
+        })}
+        <Outlet />
+      </div>
+    </StagesContext.Provider>
   );
 }
 

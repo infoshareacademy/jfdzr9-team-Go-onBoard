@@ -4,6 +4,7 @@ import { collection, getDocs } from "firebase/firestore";
 import ActivitiesDetail from "./ActivitiesDetail";
 import { ActivitiesContainer, ActivitiName, Container, Transparent } from "./Activities.styled";
 import { useParamsStagesHook } from "../hooks/useParamsStagesHook";
+import { useStages } from "../button/Context/StagesContext";
 
 interface Activity {
   id: string;
@@ -13,14 +14,15 @@ interface Activity {
   sort: number;
 }
 
-interface Props {
-  etapData: {
-    onActivityConfirmation: (newActivityId: string) => void;
-  };
-  etap_id: string;
-}
+// interface Props {
+//   etapData: {
+//     onActivityConfirmation: (newActivityId: string) => void;
+//   };
+//   etap_id: string;
+// }
 
-function Activities(props: Props) {
+function Activities() {
+  const { etapId, handleActivityConfirmation } = useStages();
   const etapsID = useParamsStagesHook();
   const [activities, setActivities] = useState<Activity[]>([]);
   const [activitiesId, setActivitiesId] = useState<string | null>(null);
@@ -29,7 +31,7 @@ function Activities(props: Props) {
       ? {
           activitiesId: activitiesId,
           etap_id: etapsID,
-          onActivityConfirmation: props.etapData.onActivityConfirmation,
+          onActivityConfirmation: handleActivityConfirmation,
         }
       : null;
 
@@ -72,7 +74,7 @@ function Activities(props: Props) {
       </ActivitiesContainer>
       {/* Hide details before button click  */}
 
-      {activitiesId && <ActivitiesDetail detailProps={detailProps} />}
+      {detailProps && <ActivitiesDetail detailProps={detailProps} />}
     </Container>
   );
 }

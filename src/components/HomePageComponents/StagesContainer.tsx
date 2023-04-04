@@ -138,7 +138,7 @@ export const StagesContainer = () => {
             return (
               <span key={id} className="etaps">
                 <button>
-                  <Link to="/etaps">Process</Link>
+                  <Link to={`/etaps/${id}`}>Process</Link>
                 </button>
                 <img src={imageUrlForStage} alt={icon} className="icons" />
                 <span>{name}</span>
