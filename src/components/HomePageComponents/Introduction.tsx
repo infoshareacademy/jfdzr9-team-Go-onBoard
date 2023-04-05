@@ -14,6 +14,7 @@ function Introduction() {
   const [showModal, setShowModal] = useState<boolean>(true);
   const [fileName, setFileName] = useState<string>("");
   const [downloadURL, setDownloadURL] = useState<string>("");
+  const [key, setKey] = useState<number>(Date.now());
   const user = useUser();
 
   useEffect(() => {
@@ -36,29 +37,32 @@ function Introduction() {
     }
   }
 
-  function handleOpenModal() {
-    setShowModal(true);
+  function handlePlayerReady(player: any) {
+    if (player && typeof player.play === "function") {
+      player.play();
+    }
+  }
+
+  function handleRestartVideo() {
+    setKey(Date.now());
   }
 
   return (
     <div>
-      <button onClick={handleOpenModal}>Open Modal</button>
       <ReactModal
         isOpen={showModal}
-        contentLabel="Minimal Modal Example"
-        onAfterOpen={() => {
-          // Start playing the video when the modal is opened
-          const videoPlayer = document.querySelector("video");
-          videoPlayer && videoPlayer.play();
-        }}>
+        contentLabel="Minimal Modal Example">
         {fileName && (
           <ReactPlayer
+            key={key}
             url={downloadURL}
             playing={true}
             controls={false}
             style={{ width: "100%", height: "100%", outline: "none" }}
+            onReady={handlePlayerReady}
           />
         )}
+        <button onClick={handleRestartVideo}>Odtwórz jeszcze raz</button>
         <button onClick={handleCloseModal}>Przejdź do dashboardu</button>
       </ReactModal>
     </div>
