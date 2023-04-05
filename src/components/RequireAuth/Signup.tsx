@@ -2,7 +2,7 @@ import { useState, FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword, signOut } from "firebase/auth";
 import { auth, database } from "../../utils/firebase/firebase.config";
-import { collection, query, where, getDocs, doc, setDoc } from "firebase/firestore";
+import { collection, query, where, getDocs, doc, setDoc, addDoc } from "firebase/firestore";
 
 interface CreateUserError {
   message: string;
@@ -52,14 +52,17 @@ export const Signup = () => {
               id_course: id_course,
               role: role,
             };
-
             try {
               const userDocRef = doc(usersRef, uid);
-              await setDoc(userDocRef, newUser);
+              await setDoc(userDocRef, {
+                uid: uid,
+                ...newUser,
+              });
               (e.target as HTMLFormElement).reset();
               await signOut(auth);
             } catch (e: any) {
               console.dir(e);
+              console.log(usersRef.path);
               setError(firebaseErrors[e.code]);
             }
             navigate("/dashboard");
