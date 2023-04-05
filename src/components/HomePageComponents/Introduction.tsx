@@ -59,7 +59,7 @@ function Introduction() {
             style={{ width: "100%", height: "100%", outline: "none" }}
           />
         )}
-        <button onClick={handleCloseModal}>Close Modal</button>
+        <button onClick={handleCloseModal}>Przejdź do dashboardu</button>
       </ReactModal>
     </div>
   );
