@@ -7,6 +7,7 @@ import { getApp } from "firebase/app";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { useFirebaseFetch } from "../hooks/useFirebaseFetch";
 import { Link } from "react-router-dom";
+import { useUser } from "../RequireAuth/context/AuthContext";
 
 interface Stage {
   id: string;
@@ -17,6 +18,7 @@ interface Stage {
 
 //fetch stages collection from firebase//
 export const StagesContainer = () => {
+  const user = useUser();
   const [stagesName, setStagesName] = useState<Stage[]>([]);
   const [imageUrl, setImageUrl] = useState<string[]>([]);
 
@@ -141,7 +143,7 @@ export const StagesContainer = () => {
                   <Link to={`/etaps/${id}`}>Process</Link>
                 </button>
                 <img src={imageUrlForStage} alt={icon} className="icons" />
-                <span>{name}</span>
+                {/* <span>{name}</span> */}
                 <span>{averagesByEtapId[id]}</span>
                 <span>{checkDatesByEtapId[id]}</span>
               </span>

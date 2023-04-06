@@ -7,11 +7,11 @@ import Account from "../components/RequireAuth/Account";
 
 export const HomePageLayout = () => {
   const user = useUser();
-
+  console.log(user);
   return (
     <>
       <Account />
-      <div>Hello {user?.email}</div>
+      <div>Hello {user.displayName}</div>
       <div className="up-container">
         <button>
           <Link to="/signup">BACK</Link>
