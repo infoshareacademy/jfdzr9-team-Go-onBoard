@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useUser } from "./context/AuthContext";
 import { use } from "chai";
-import { app, auth, firebaseConfig } from "../../utils/firebase/firebase.config";
+import { auth, firebaseConfig } from "../../utils/firebase/firebase.config";
 import { useNavigate } from "react-router-dom";
 
 const Account = () => {
@@ -10,8 +10,14 @@ const Account = () => {
   console.log(user);
 
   const handleLogout = async () => {
-    await auth.signOut();
-    navigate("/signin");
+    try {
+      await auth.signOut();
+      navigate("/signin", { replace: true });
+    } catch (error) {
+      console.log(error);
+    }
+    // await auth.signOut();
+    // navigate("/signin");
   };
   return (
     <div>
