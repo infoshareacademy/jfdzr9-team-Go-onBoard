@@ -7,6 +7,7 @@ import { getApp } from "firebase/app";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { useFirebaseFetch } from "../hooks/useFirebaseFetch";
 import { Link } from "react-router-dom";
+import { useUser } from "../RequireAuth/context/AuthContext";
 
 interface Stage {
   id: string;
@@ -17,6 +18,7 @@ interface Stage {
 
 //fetch stages collection from firebase//
 export const StagesContainer = () => {
+  const user = useUser();
   const [stagesName, setStagesName] = useState<Stage[]>([]);
   const [imageUrl, setImageUrl] = useState<string[]>([]);
 
@@ -62,6 +64,7 @@ export const StagesContainer = () => {
   interface Users {
     check_date: Timestamp;
     etap_id: string;
+    user_id: String;
   }
 
   interface UsersActivities {
@@ -79,7 +82,8 @@ export const StagesContainer = () => {
   }
 
   const activity = useFirebaseFetch<UsersActivities>("activities");
-  const userActivities = useFirebaseFetch<Users>("user");
+  const userActivities = useFirebaseFetch<Users>("user_activities");
+  const filteredUserActivities = userActivities.filter((activity) => activity.user_id === user?.uid);
 
   const counts = activity.reduce((acc: { [key: UsersActivities["etap_id"]]: number }, { etap_id }) => {
     //counting the number of occurrences of each stage/////
@@ -92,7 +96,7 @@ export const StagesContainer = () => {
   }, {});
 
   //User stage grouping to calculate average and stage last check date//
-  const userActivitiesByEtapId = userActivities.reduce((acc: { [key: UsersActivities["etap_id"]]: { count: number; check_date: Timestamp } }, activity) => {
+  const userActivitiesByEtapId = filteredUserActivities.reduce((acc: { [key: UsersActivities["etap_id"]]: { count: number; check_date: Timestamp } }, activity) => {
     const { etap_id, check_date } = activity;
     if (!acc[etap_id]) {
       acc[etap_id] = { count: 1, check_date };
@@ -138,10 +142,10 @@ export const StagesContainer = () => {
             return (
               <span key={id} className="etaps">
                 <button>
-                  <Link to="/etaps">Process</Link>
+                  <Link to={`/etaps/${id}`}>Process</Link>
                 </button>
                 <img src={imageUrlForStage} alt={icon} className="icons" />
-                <span>{name}</span>
+                {/* <span>{name}</span> */}
                 <span>{averagesByEtapId[id]}</span>
                 <span>{checkDatesByEtapId[id]}</span>
               </span>
