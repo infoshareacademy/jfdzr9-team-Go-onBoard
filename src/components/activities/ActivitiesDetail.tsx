@@ -10,6 +10,7 @@ interface Activity {
   description: string;
   type: string;
   comment?: string;
+  link?: string; // Add link to the Activity interface
 }
 
 interface Props {
@@ -22,6 +23,7 @@ interface Props {
 
 function ActivitiesDetail(props: Props) {
   const [activitiesDetail, setActivitiesDetail] = useState<Activity[]>([]);
+  const [fetchedLink, setFetchedLink] = useState<string | null>(null);
 
   const confirmActivityProps = {
     activitiesId: props.detailProps.activitiesId,
@@ -42,20 +44,37 @@ function ActivitiesDetail(props: Props) {
     getActivities();
   }, []);
 
+  useEffect(() => {
+    // fetch only the link from the activities, if link =-1 change state
+    const activity = activitiesDetail.find(
+      (activity) => activity.id === props.detailProps.activitiesId
+    );
+    if (activity && activity.link && activity.link !== "-1") {
+      setFetchedLink(activity.link);
+    } else {
+      setFetchedLink(null);
+    }
+  }, [activitiesDetail, props.detailProps.activitiesId]);
+
   return (
     <div>
       {activitiesDetail
         .filter((detail) => detail.id === props.detailProps.activitiesId)
         .map((filteredEtap) => {
-          // const Icon = allIcons[filteredEtap.type]; // create icon from @tabler/icons-react
-
           return (
             <div
               style={{ display: "flex", flexDirection: "column" }}
               key={filteredEtap.id}>
               <span>{filteredEtap.name}</span>
               <span>{filteredEtap.description}</span>
-              <button>kliknij zeby obejrzec</button>
+              {fetchedLink && ( // render the button if in activities is link
+                <a
+                  href={fetchedLink}
+                  target="_blank"
+                  rel="noopener noreferrer">
+                  <button>Przejdź do strony</button>
+                </a>
+              )}
               {filteredEtap.comment && (
                 <CommentActivity
                   activitiesId={props.detailProps.activitiesId}
