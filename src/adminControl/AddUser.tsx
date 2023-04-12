@@ -51,9 +51,10 @@ function AddUser() {
 
   return (
     <div>
+      <p>Dodaj użytkownika do bazy</p>
       <form
         onSubmit={onSubmit}
-        style={{ display: "flex", flexDirection: "column" }}>
+        style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
         <label htmlFor="E-mail">E-mail</label>
         <input
           ref={emailRef}

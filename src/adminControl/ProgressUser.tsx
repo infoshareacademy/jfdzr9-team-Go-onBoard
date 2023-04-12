@@ -56,7 +56,6 @@ function ProgressUser() {
               query(userActivityRef, where("user_id", "==", user.id))
             );
             const userActivitiesCount = userActivitiesData.size;
-            console.log(userActivitiesData);
             const progress = (userActivitiesCount / activitiesCount) * 100;
             return { ...user, progress };
           })
@@ -88,6 +87,7 @@ function ProgressUser() {
       }
       if (
         searchTerm &&
+        user.name &&
         !user.name.toLowerCase().includes(searchTerm.toLowerCase())
       ) {
         return false;
@@ -101,7 +101,18 @@ function ProgressUser() {
       if (column === "progress") {
         return directionMultiplier * ((b.progress || 0) - (a.progress || 0));
       }
-      return directionMultiplier * a[column].localeCompare(b[column]);
+
+      // Check if both properties exist before comparing them
+      if (a[column] && b[column]) {
+        return directionMultiplier * a[column].localeCompare(b[column]);
+      }
+
+      // Handle missing properties
+      if (!a[column]) return directionMultiplier * 1;
+      if (!b[column]) return directionMultiplier * -1;
+
+      // If both properties are missing, consider them equal
+      return 0;
     });
 
   const courseIds = Array.from(new Set(users.map((user) => user.id_course)));

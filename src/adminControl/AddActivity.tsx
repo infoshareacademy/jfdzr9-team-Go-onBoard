@@ -56,6 +56,7 @@ function AddActivity() {
 
   return (
     <div>
+      <p>Dodaj aktywność do bazy</p>
       <form
         onSubmit={onSubmit}
         style={{ display: "flex", flexDirection: "column" }}>
