@@ -60,7 +60,7 @@ export const Signup = () => {
                 uid: uid,
                 ...newUser,
               });
-              updateProfile(auth.currentUser, {
+              updateProfile(auth.currentUser!, {
                 displayName: profileName,
               })
                 .then(() => {
@@ -78,7 +78,7 @@ export const Signup = () => {
               console.log(usersRef.path);
               setError(firebaseErrors[e.code]);
             }
-            navigate("/dashboard");
+            navigate("/signin");
           } catch (e: any) {
             console.dir(e);
             setError(firebaseErrors[e.code]);
@@ -101,7 +101,7 @@ export const Signup = () => {
         <form onSubmit={handleSubmit}>
           <div>
             <label>Name</label>
-            <input onChange={(e) => setProfileName(e.target.value)} type="name" placeholder="Wpisz swój email" />
+            <input onChange={(e) => setProfileName(e.target.value)} type="name" placeholder="Wpisz swóje imię" />
           </div>
           <div>
             <label>Email</label>

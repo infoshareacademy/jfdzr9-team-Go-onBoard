@@ -7,6 +7,7 @@ import Activities from "../activities/Activities";
 import { Outlet, Link } from "react-router-dom";
 import "../../index.css";
 import { StagesContext, StagesContextValue } from "./Context/StagesContext";
+import { useUser } from "../RequireAuth/context/AuthContext";
 
 interface Etap {
   id: string;
@@ -23,6 +24,7 @@ interface Props {
 }
 
 function Etaps() {
+  const user = useUser();
   const [etaps, setEtaps] = useState<Etap[]>([]);
   const [etapId, setEtapId] = useState<string | null>(null);
   const [activitiesByEtap, setActivitiesByEtap] = useState<Record<string, { etap_id: string; id: string }[]>>({});
@@ -101,6 +103,9 @@ function Etaps() {
 
   return (
     <StagesContext.Provider value={stagesContextValue}>
+      <Link to={`/dashboard/${user?.uid}`}>
+        <button>BACK TO DASHBOARD</button>
+      </Link>
       <div>
         {sortedEtaps.map((etap, index) => {
           //check previous etap if all activities are completed, next etap is enable

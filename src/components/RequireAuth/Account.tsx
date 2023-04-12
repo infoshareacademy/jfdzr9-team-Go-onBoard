@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useUser } from "./context/AuthContext";
-import { use } from "chai";
 import { auth, firebaseConfig } from "../../utils/firebase/firebase.config";
 import { useNavigate } from "react-router-dom";
 
