@@ -2,15 +2,32 @@ import { StagesContainer } from "../components/HomePageComponents/StagesContaine
 import { WelcomeContainer } from "../components/HomePageComponents/WelcomeContainer";
 import "./../index.css";
 import { useUser } from "../components/RequireAuth/context/AuthContext";
-import Account from "../components/RequireAuth/Account";
+import { useEffect, useState } from "react";
+import { doc, getDoc } from "firebase/firestore";
+import Introduction from "../components/HomePageComponents/Introduction";
+import { database } from "../utils/firebase/firebase.config";
 
 export const HomePageLayout = () => {
   const user = useUser();
-  console.log(user);
+  const [showIntroduction, setShowIntroduction] = useState<boolean>(false);
+
+  useEffect(() => {
+    async function checkIntroduction() {
+      if (user) {
+        const userRef = doc(database, "users", user.uid);
+        const userDoc = await getDoc(userRef);
+        const userData = userDoc.data();
+        if (!userData?.introduction) {
+          setShowIntroduction(true);
+        }
+      }
+    }
+    checkIntroduction();
+  }, [user]);
+
   return (
     <>
-      <Account />
-      {/* <div>Hello {user.displayName}</div> */}
+      {showIntroduction && <Introduction />}
       <div className="up-container">
         <WelcomeContainer />
         <div className="calendar">
