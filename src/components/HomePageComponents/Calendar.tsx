@@ -66,24 +66,24 @@ function Calendar() {
       if (previousDate) {
         const dayDifference =
           (activityDate.getTime() - previousDate.getTime()) /
-          (1000 * 3600 * 24);
+          (1000 * 3600 * 24); //days between current date and previous date
         if (dayDifference === 1) {
-          currentStreak++;
+          currentStreak++; //if difference is 1 ->increase
         } else {
           consecutiveActivities = Math.max(
             consecutiveActivities,
             currentStreak
-          );
-          currentStreak = 1;
+          ); //compare consecutiveActivities with currentStreak
+          currentStreak = 1; //rest to 1 if activity isn't next day
         }
       } else {
         currentStreak = 1;
       }
 
-      previousDate = activityDate;
+      previousDate = activityDate; //to make another loop assign previousDate to activityDate
     }
 
-    consecutiveActivities = Math.max(consecutiveActivities, currentStreak);
+    consecutiveActivities = Math.max(consecutiveActivities, currentStreak); //after the loop completes, compare the consecutiveActivities value with currentStreak and set consecutiveActivities to a larger value to ensure we have the longest streak of consecutive days with activities.
   }
 
   return (
