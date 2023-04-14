@@ -1,6 +1,6 @@
 import { useState, FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { createUserWithEmailAndPassword, signOut } from "firebase/auth";
+import { createUserWithEmailAndPassword, signOut, getAuth, updateProfile } from "firebase/auth";
 import { auth, database } from "../../utils/firebase/firebase.config";
 import { collection, query, where, getDocs, doc, setDoc } from "firebase/firestore";
 import { LogoName } from "./Sign.style";
@@ -27,6 +27,7 @@ export const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [profileName, setProfileName] = useState("");
 
   const navigate = useNavigate();
 
@@ -41,7 +42,7 @@ export const Signup = () => {
 
       if (snapshot.size > 0) {
         snapshot.docs.forEach(async (docSnapshot) => {
-          const { gender, id_course, role } = docSnapshot.data();
+          const { gender, id_course, role, name } = docSnapshot.data();
 
           try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -52,18 +53,33 @@ export const Signup = () => {
               gender: gender,
               id_course: id_course,
               role: role,
+              name: name,
             };
-
             try {
               const userDocRef = doc(usersRef, uid);
-              await setDoc(userDocRef, newUser);
+              await setDoc(userDocRef, {
+                uid: uid,
+                ...newUser,
+              });
+              updateProfile(auth.currentUser!, {
+                displayName: profileName,
+              })
+                .then(() => {
+                  // Profile updated!
+                  // ...
+                })
+                .catch((error) => {
+                  // An error occurred
+                  console.log(error);
+                });
               (e.target as HTMLFormElement).reset();
-              await signOut(auth);
+              // await signOut(auth);
             } catch (e: any) {
               console.dir(e);
+              console.log(usersRef.path);
               setError(firebaseErrors[e.code]);
             }
-            navigate("/dashboard");
+            navigate("/signin");
           } catch (e: any) {
             console.dir(e);
             setError(firebaseErrors[e.code]);
@@ -84,6 +100,10 @@ export const Signup = () => {
         <LogoName>GO! onBoard</LogoName>
         <h1>Zarejestruj się</h1>
         <form onSubmit={handleSubmit}>
+          <div>
+            <label>Name</label>
+            <input onChange={(e) => setProfileName(e.target.value)} type="name" placeholder="Wpisz swóje imię" />
+          </div>
           <div>
             <label>Email</label>
             <input onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Wpisz swój email" />

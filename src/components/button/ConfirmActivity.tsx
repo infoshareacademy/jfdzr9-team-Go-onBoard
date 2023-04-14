@@ -1,14 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { database } from "../../utils/firebase/firebase.config";
-import {
-  collection,
-  query,
-  where,
-  getDocs,
-  doc,
-  setDoc,
-  serverTimestamp,
-} from "firebase/firestore";
+import { collection, query, where, getDocs, doc, setDoc, serverTimestamp } from "firebase/firestore";
+import { useUser } from "../RequireAuth/context/AuthContext";
 
 interface ConfirmActivityProps {
   confirmActivityProps: {
@@ -19,10 +12,9 @@ interface ConfirmActivityProps {
 }
 
 const ConfirmActivity: React.FC<ConfirmActivityProps> = (props) => {
+  const user = useUser();
   const [activityChecked, setActivityChecked] = useState<boolean>(false); // flag for check button
-  const [checkedActivityId, setCheckedActivityId] = useState<string | null>(
-    null
-  ); // state to track the checked activity
+  const [checkedActivityId, setCheckedActivityId] = useState<string | null>(null); // state to track the checked activity
   const [isDisabled, setIsDisabled] = useState<boolean>(true); // state to disable the button if the activity has already been checked
   const [hasMounted, setHasMounted] = useState<boolean>(false); // flag to indicate whether the component has mounted
 
@@ -32,10 +24,7 @@ const ConfirmActivity: React.FC<ConfirmActivityProps> = (props) => {
   // Fetch the user_activities collection and check if there's a document with a true value for the result field
   useEffect(() => {
     const fetchData = async () => {
-      const q = query(
-        collection(database, "user_activities"),
-        where("user_activity_id", "==", activiti)
-      );
+      const q = query(collection(database, "user_activities"), where("user_activity_id", "==", activiti));
       const querySnapshot = await getDocs(q);
       const hasResult = querySnapshot.docs.some((doc) => doc.data().result);
       setIsDisabled(hasResult);
@@ -52,6 +41,7 @@ const ConfirmActivity: React.FC<ConfirmActivityProps> = (props) => {
       check_date: serverTimestamp(),
       user_activity_id: activiti,
       etap_id: etap_id,
+      user_id: user?.uid,
     };
     setDoc(doc(checkRef), newCheck)
       .then(() => {

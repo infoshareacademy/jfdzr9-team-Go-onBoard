@@ -1,8 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
-import React, { useState, FormEvent } from "react";
+import { useState, FormEvent } from "react";
 import { auth } from "../../utils/firebase/firebase.config";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { async } from "@firebase/util";
 
 export const Signin = () => {
   const [email, setEmail] = useState("");
@@ -14,9 +13,12 @@ export const Signin = () => {
     e.preventDefault();
     setError("");
     try {
-      // await singIn(email, password)
       await signInWithEmailAndPassword(auth, email, password);
-      navigate("/dashboard");
+      auth.onAuthStateChanged((user) => {
+        if (user) {
+          navigate(`/dashboard/${user.uid}`);
+        }
+      });
     } catch (e: any) {
       setError(e.message);
       console.log(e.message);

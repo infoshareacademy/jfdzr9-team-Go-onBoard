@@ -3,16 +3,35 @@ import { WelcomeContainer } from "../components/HomePageComponents/WelcomeContai
 import "./../index.css";
 import { Link } from "react-router-dom";
 import { useUser } from "../components/RequireAuth/context/AuthContext";
+import { useEffect, useState } from "react";
+import { doc, getDoc } from "firebase/firestore";
+import Introduction from "../components/HomePageComponents/Introduction";
+import { database } from "../utils/firebase/firebase.config";
+import Account from "../components/RequireAuth/Account";
 
 export const HomePageLayout = () => {
   const user = useUser();
+  const [showIntroduction, setShowIntroduction] = useState<boolean>(false);
+
+  useEffect(() => {
+    async function checkIntroduction() {
+      if (user) {
+        const userRef = doc(database, "users", user.uid);
+        const userDoc = await getDoc(userRef);
+        const userData = userDoc.data();
+        if (!userData?.introduction) {
+          setShowIntroduction(true);
+        }
+      }
+    }
+    checkIntroduction();
+  }, [user]);
 
   return (
     <>
+      {showIntroduction && <Introduction />}
+      <Account />
       <div className="up-container">
-        <button>
-          <Link to="/signup">BACK</Link>
-        </button>
         <WelcomeContainer />
         <div className="calendar">
           <h1>Calendar under construction</h1>

@@ -3,6 +3,8 @@ import { database } from "../../utils/firebase/firebase.config";
 import { collection, getDocs } from "firebase/firestore";
 import ActivitiesDetail from "./ActivitiesDetail";
 import { ActivitiesContainer, ActivitiName, Container, Transparent } from "./Activities.styled";
+import { useParamsStagesHook } from "../hooks/useParamsStagesHook";
+import { useStages } from "../button/Context/StagesContext";
 
 interface Activity {
   id: string;
@@ -12,21 +14,26 @@ interface Activity {
   sort: number;
 }
 
-interface Props {
-  etapData: {
-    etapsID: string;
-    onActivityConfirmation: (newActivityId: string) => void;
-  };
-}
+// interface Props {
+//   etapData: {
+//     onActivityConfirmation: (newActivityId: string) => void;
+//   };
+//   etap_id: string;
+// }
 
-function Activities(props: Props) {
+function Activities() {
+  const { etapId, handleActivityConfirmation } = useStages();
+  const etapsID = useParamsStagesHook();
   const [activities, setActivities] = useState<Activity[]>([]);
   const [activitiesId, setActivitiesId] = useState<string | null>(null);
-  const detailProps = {
-    activitiesId: activitiesId,
-    etap_id: props.etapData.etapsID,
-    onActivityConfirmation: props.etapData.onActivityConfirmation,
-  };
+  const detailProps =
+    activitiesId && etapsID
+      ? {
+          activitiesId: activitiesId,
+          etap_id: etapsID,
+          onActivityConfirmation: handleActivityConfirmation,
+        }
+      : null;
 
   useEffect(() => {
     const getActivities = async () => {
@@ -49,14 +56,14 @@ function Activities(props: Props) {
 
   useEffect(() => {
     setActivitiesId(null); // Reset activitiesId state when etap prop changes
-  }, [props.etapData.etapsID]);
+  }, [etapsID]);
 
   const sortedActivities = [...activities].sort((a, b) => a.sort - b.sort); // clone the activities array and sort it by the "sort" value from firebase
   return (
     <Container>
       <ActivitiesContainer>
         {sortedActivities
-          .filter((activit) => activit.etap_id === props.etapData.etapsID)
+          .filter((activit) => activit.etap_id === etapsID)
           .map((filteredEtap) => {
             return (
               <Transparent onClick={() => setActivitiesId(filteredEtap.id)} key={filteredEtap.id}>
@@ -67,7 +74,7 @@ function Activities(props: Props) {
       </ActivitiesContainer>
       {/* Hide details before button click  */}
 
-      {activitiesId && <ActivitiesDetail detailProps={detailProps} />}
+      {detailProps && <ActivitiesDetail detailProps={detailProps} />}
     </Container>
   );
 }

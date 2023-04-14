@@ -1,9 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, createContext } from "react";
 import { database } from "../../utils/firebase/firebase.config"; // import storage
 import { collection, getDocs } from "firebase/firestore";
 import { ref, getDownloadURL, getStorage } from "firebase/storage";
 import { getApp } from "firebase/app";
 import Activities from "../activities/Activities";
+import { Outlet, Link } from "react-router-dom";
+import "../../index.css";
+import { StagesContext, StagesContextValue } from "./Context/StagesContext";
+import { useUser } from "../RequireAuth/context/AuthContext";
 
 interface Etap {
   id: string;
@@ -12,7 +16,15 @@ interface Etap {
   icon: string;
 }
 
+interface Props {
+  etapData: {
+    etapsID: string;
+    onActivityConfirmation: (newActivityId: string) => void;
+  };
+}
+
 function Etaps() {
+  const user = useUser();
   const [etaps, setEtaps] = useState<Etap[]>([]);
   const [etapId, setEtapId] = useState<string | null>(null);
   const [activitiesByEtap, setActivitiesByEtap] = useState<Record<string, { etap_id: string; id: string }[]>>({});
@@ -77,41 +89,52 @@ function Etaps() {
   }, []);
 
   //props to confirm button-after confirm check status to show etpas when all activ in etap are completed
-  function handleActivityConfirmation(newActivityId: string) {
-    setUserActivityIds((prevActivityIds) => [...prevActivityIds, newActivityId]);
-  }
 
+  const handleActivityConfirmation = (newActivityId: string) => {
+    setUserActivityIds((prevActivityIds) => [...prevActivityIds, newActivityId]);
+  };
+
+  const stagesContextValue: StagesContextValue = {
+    handleActivityConfirmation,
+    etapId,
+  };
   // sort etaps by "sort" key in firebase
   const sortedEtaps = [...etaps].sort((a, b) => a.sort - b.sort);
 
   return (
-    <div>
-      {sortedEtaps.map((etap, index) => {
-        //check previous etap if all activities are completed, next etap is enable
-        const isPreviousEtapCompleted =
-          index === 0 ||
-          (index > 0 &&
-            activitiesByEtap[sortedEtaps[index - 1].id]?.length ===
-              userActivityIds.filter((activityId) => activitiesByEtap[sortedEtaps[index - 1].id].some((activity) => activity.id === activityId)).length);
+    <StagesContext.Provider value={stagesContextValue}>
+      <Link to={`/dashboard/${user?.uid}`}>
+        <button>BACK TO DASHBOARD</button>
+      </Link>
+      <div>
+        {sortedEtaps.map((etap, index) => {
+          //check previous etap if all activities are completed, next etap is enable
+          const isPreviousEtapCompleted =
+            index === 0 ||
+            (index > 0 &&
+              activitiesByEtap[sortedEtaps[index - 1].id]?.length ===
+                userActivityIds.filter((activityId) => activitiesByEtap[sortedEtaps[index - 1].id].some((activity) => activity.id === activityId)).length);
 
-        const enableButton = isPreviousEtapCompleted;
+          const enableLink = isPreviousEtapCompleted;
 
-        return (
-          <button id={etap.id} onClick={() => setEtapId(etap.id)} key={etap.id} disabled={!enableButton}>
-            {etap.icon && <img src={etap.icon} alt={etap.name} />}
-            <span>{etap.name}</span>
-          </button>
-        );
-      })}
-      {etapId && (
-        <Activities
-          etapData={{
-            etapsID: etapId,
-            onActivityConfirmation: handleActivityConfirmation,
-          }}
-        />
-      )}
-    </div>
+          return (
+            <Link
+              className="stages-links"
+              to={enableLink ? `/etaps/${etap.id}` : "#"}
+              key={etap.id}
+              onClick={() => setEtapId(etap.id)}
+              style={{
+                pointerEvents: enableLink ? "auto" : "none",
+                opacity: enableLink ? 1 : 0.5,
+              }}>
+              {etap.icon && <img src={etap.icon} alt={etap.name} />}
+              <span>{etap.name}</span>
+            </Link>
+          );
+        })}
+        <Outlet />
+      </div>
+    </StagesContext.Provider>
   );
 }
 
