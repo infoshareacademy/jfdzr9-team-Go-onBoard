@@ -40,14 +40,22 @@ function Calendar() {
   const now = new Date();
   let daysUntilStart: string | number = "Nieznany";
 
+  //calculate days to start course
   if (currentUser?.start_course && isTimestamp(currentUser.start_course)) {
-    const start_course_date = currentUser.start_course.toDate();
-    const timeDifference = start_course_date.getTime() - now.getTime();
-    daysUntilStart = Math.ceil(timeDifference / (1000 * 3600 * 24));
+    const start_course_date = currentUser.start_course.toDate(); //change to object
+    const timeDifference = start_course_date.getTime() - now.getTime(); //calculate in miliseconds
+    daysUntilStart = Math.ceil(timeDifference / (1000 * 3600 * 24)); //change miliseconds->days and round up
   }
 
   // Calculate consecutive activities
   let consecutiveActivities = 0;
+  let bestStreak = 0;
+
+  // Check if the current date is in sortedUserActivities
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  let currentDayInActivities = false;
+
   if (userName) {
     const sortedUserActivities = userActivitiesCollection
       ?.filter((activity) => activity.user_id === userName.uid) //filter activity by user_id
@@ -57,7 +65,13 @@ function Calendar() {
         return date;
       })
       .filter(isUniqueDate) //filter date by unique, if user make few activity one day, take only one date
-      .sort((a, b) => a.getTime() - b.getTime()); //sort it
+      .sort((a, b) => a.getTime() - b.getTime());
+
+    //check that currentdate is in array-sortedUserActivities
+    currentDayInActivities =
+      sortedUserActivities?.some(
+        (activityDate) => activityDate.getTime() === today.getTime()
+      ) ?? false;
 
     let previousDate: Date | null = null;
     let currentStreak = 0;
@@ -67,13 +81,11 @@ function Calendar() {
         const dayDifference =
           (activityDate.getTime() - previousDate.getTime()) /
           (1000 * 3600 * 24); //days between current date and previous date
+
         if (dayDifference === 1) {
-          currentStreak++; //if difference is 1 ->increase
+          currentStreak++;
         } else {
-          consecutiveActivities = Math.max(
-            consecutiveActivities,
-            currentStreak
-          ); //compare consecutiveActivities with currentStreak
+          bestStreak = Math.max(bestStreak, currentStreak);
           currentStreak = 1; //rest to 1 if activity isn't next day
         }
       } else {
@@ -83,7 +95,13 @@ function Calendar() {
       previousDate = activityDate; //to make another loop assign previousDate to activityDate
     }
 
-    consecutiveActivities = Math.max(consecutiveActivities, currentStreak); //after the loop completes, compare the consecutiveActivities value with currentStreak and set consecutiveActivities to a larger value to ensure we have the longest streak of consecutive days with activities.
+    bestStreak = Math.max(bestStreak, currentStreak); //compares which is greater
+
+    if (currentDayInActivities) {
+      consecutiveActivities = currentStreak;
+    } else {
+      consecutiveActivities = 0;
+    }
   }
 
   return (
@@ -96,7 +114,8 @@ function Calendar() {
               daysUntilStart === 1 ? "dzień" : "dni"
             }!`}
       </h2>
-      <h2>Dni pracy pod rząd: {consecutiveActivities}</h2>
+      <h4>Dni pracy pod rząd: {consecutiveActivities}</h4>
+      <h4>Najlepszy wynik: {bestStreak}</h4>
     </>
   );
 }
