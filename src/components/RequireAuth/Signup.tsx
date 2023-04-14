@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword, signOut } from "firebase/auth";
 import { auth, database } from "../../utils/firebase/firebase.config";
 import { collection, query, where, getDocs, doc, setDoc } from "firebase/firestore";
+import { LogoName } from "./Sign.style";
 
 interface CreateUserError {
   message: string;
@@ -80,7 +81,7 @@ export const Signup = () => {
   return (
     <>
       <div>
-        <h3>GO! onBoard</h3>
+        <LogoName>GO! onBoard</LogoName>
         <h1>Zarejestruj się</h1>
         <form onSubmit={handleSubmit}>
           <div>
