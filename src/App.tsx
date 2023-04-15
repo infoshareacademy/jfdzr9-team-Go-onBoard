@@ -9,7 +9,7 @@ import Etaps from "./components/button/Etaps";
 import PasswordReset from "./components/RequireAuth/passwordReset";
 import Activities from "./components/activities/Activities";
 import RequireAuth from "./components/RequireAuth/RequireAuth";
-import Quiz from "./assets/Questions.firebase";
+import Quiz from "./assets/Quiz";
 
 function App() {
   return (

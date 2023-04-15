@@ -62,7 +62,7 @@ function Quiz() {
   ];
 
   /* A possible answer was clicked */
-  const optionClicked = (isCorrect) => {
+  const optionClicked = (isCorrect: boolean) => {
     // Increment the score
     if (isCorrect) {
       setScore(score + 1);
