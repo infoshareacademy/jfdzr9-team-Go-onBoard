@@ -7,11 +7,15 @@ import { database } from "../../utils/firebase/firebase.config";
 const RequireAuth = () => {
   const user = useUser();
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
     const checkUserRole = async () => {
-      if (!user) return;
+      if (!user) {
+        setIsLoading(false);
+        return;
+      }
 
       const docRef = doc(database, "users", user.uid);
       const docSnap = await getDoc(docRef);
@@ -23,6 +27,7 @@ const RequireAuth = () => {
           setIsAdmin(true);
         }
       }
+      setIsLoading(false);
     };
 
     checkUserRole();
@@ -34,7 +39,11 @@ const RequireAuth = () => {
     }
   }, [isAdmin, navigate]);
 
-  return user ? <Outlet /> : null;
+  if (isLoading) {
+    return <div>Loading...</div>;
+  } else {
+    return user ? <Outlet /> : null;
+  }
 };
 
 export default RequireAuth;
