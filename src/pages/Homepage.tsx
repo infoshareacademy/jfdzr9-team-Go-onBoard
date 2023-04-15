@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import Introduction from "../components/HomePageComponents/Introduction";
 import { database } from "../utils/firebase/firebase.config";
-import Account from "../components/RequireAuth/Account";
+import Calendar from "../components/HomePageComponents/Calendar";
 
 export const HomePageLayout = () => {
   const user = useUser();
@@ -30,11 +30,10 @@ export const HomePageLayout = () => {
   return (
     <>
       {showIntroduction && <Introduction />}
-      <Account />
       <div className="up-container">
         <WelcomeContainer />
         <div className="calendar">
-          <h1>Calendar under construction</h1>
+          <Calendar />
         </div>
       </div>
       <div className="middle-container">
