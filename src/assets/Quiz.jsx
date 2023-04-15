@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-// import "./QuestionesCSS.css";
 import { useFirebaseFetch } from "../components/hooks/useFirebaseFetch";
 
 function Quiz() {
