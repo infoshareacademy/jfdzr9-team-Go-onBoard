@@ -11,6 +11,8 @@ import Activities from "./components/activities/Activities";
 import RequireAuth from "./components/RequireAuth/RequireAuth";
 import { InfoPagePassword } from "./components/RequireAuth/InfoPagePassword";
 import PanelAdmin from "./pages/PanelAdmin";
+import ProtectedRoute from "./components/RequireAuth/ProtectedRoute";
+import NotFoundPage from "./pages/NotFoundPage";
 
 function App() {
   return (
@@ -59,8 +61,17 @@ function App() {
           </Route>
           <Route
             path="/panelAdmina"
-            element={<PanelAdmin />}></Route>
+            element={
+              <ProtectedRoute requiredRole="admin">
+                <PanelAdmin />
+              </ProtectedRoute>
+            }
+          />
         </Route>
+        <Route
+          path="*"
+          element={<NotFoundPage />}
+        />
       </Routes>
     </AuthContextProvider>
   );

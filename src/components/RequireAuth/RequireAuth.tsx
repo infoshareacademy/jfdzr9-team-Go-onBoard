@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getDoc, doc } from "firebase/firestore";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate, Navigate } from "react-router-dom";
 import { useUser } from "./context/AuthContext";
 import { database } from "../../utils/firebase/firebase.config";
 
@@ -42,7 +42,7 @@ const RequireAuth = () => {
   if (isLoading) {
     return <div>Loading...</div>;
   } else {
-    return user ? <Outlet /> : null;
+    return user ? <Outlet /> : <Navigate to={"/signin"} />;
   }
 };
 

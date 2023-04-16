@@ -1,4 +1,10 @@
-import { ReactNode, useContext, createContext, useEffect, useState } from "react";
+import {
+  ReactNode,
+  useContext,
+  createContext,
+  useEffect,
+  useState,
+} from "react";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "../../../utils/firebase/firebase.config";
 
@@ -22,7 +28,9 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     };
   }, []);
 
-  return <UserContext.Provider value={{ user }}>{children}</UserContext.Provider>;
+  return (
+    <UserContext.Provider value={{ user }}>{children}</UserContext.Provider>
+  );
 };
 
 export const useUser = () => useContext(UserContext).user;
