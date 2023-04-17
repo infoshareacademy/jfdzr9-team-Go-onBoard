@@ -5,10 +5,9 @@ export const ActivitiesContainer = styled.div`
   align-items: flex-start;
   gap: 2rem;
   background: #ffffff;
-  width: 21rem;
-  height: 100%;
+  width: 300px;
   padding: 2rem;
-  box-shadow: 8px 8px 24px rgba(2, 2, 70, 0.05);
+  box-shadow: rgb(0 0 0 / 15%) 4px 5px 10px;
   border-radius: 31.2294px;
 `;
 export const ActivitiName = styled.div`
@@ -17,13 +16,13 @@ export const ActivitiName = styled.div`
   font-size: 1rem;
   color: #020246;
   font-weight: 700;
+  text-align: start;
 `;
 export const Container = styled.div`
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  padding: 40px;
-  gap: 5rem;
+  gap: 2rem;
 `;
 export const EtapContainer = styled.div`
   display: flex;
