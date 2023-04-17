@@ -83,31 +83,47 @@ export const StagesContainer = () => {
 
   const activity = useFirebaseFetch<UsersActivities>("activities");
   const userActivities = useFirebaseFetch<Users>("user_activities");
-  const filteredUserActivities = userActivities.filter((activity) => activity.user_id === user?.uid);
+  const filteredUserActivities = userActivities.filter(
+    (activity) => activity.user_id === user?.uid
+  );
 
-  const counts = activity.reduce((acc: { [key: UsersActivities["etap_id"]]: number }, { etap_id }) => {
-    //counting the number of occurrences of each stage/////
-    if (!acc[etap_id]) {
-      acc[etap_id] = 1;
-    } else {
-      acc[etap_id]++;
-    }
-    return acc;
-  }, {});
+  const counts = activity.reduce(
+    (acc: { [key: UsersActivities["etap_id"]]: number }, { etap_id }) => {
+      //counting the number of occurrences of each stage/////
+      if (!acc[etap_id]) {
+        acc[etap_id] = 1;
+      } else {
+        acc[etap_id]++;
+      }
+      return acc;
+    },
+    {}
+  );
 
   //User stage grouping to calculate average and stage last check date//
-  const userActivitiesByEtapId = filteredUserActivities.reduce((acc: { [key: UsersActivities["etap_id"]]: { count: number; check_date: Timestamp } }, activity) => {
-    const { etap_id, check_date } = activity;
-    if (!acc[etap_id]) {
-      acc[etap_id] = { count: 1, check_date };
-    } else {
-      acc[etap_id].count++;
-      if (check_date > acc[etap_id]?.check_date) {
-        acc[etap_id].check_date = check_date;
+  const userActivitiesByEtapId = filteredUserActivities.reduce(
+    (
+      acc: {
+        [key: UsersActivities["etap_id"]]: {
+          count: number;
+          check_date: Timestamp;
+        };
+      },
+      activity
+    ) => {
+      const { etap_id, check_date } = activity;
+      if (!acc[etap_id]) {
+        acc[etap_id] = { count: 1, check_date };
+      } else {
+        acc[etap_id].count++;
+        if (check_date > acc[etap_id]?.check_date) {
+          acc[etap_id].check_date = check_date;
+        }
       }
-    }
-    return acc;
-  }, {});
+      return acc;
+    },
+    {}
+  );
 
   //Calculation of the average for each step and the date of the last step check//
   const averagesAndDates = Object.entries(counts).map(([key, value]) => {
@@ -118,33 +134,51 @@ export const StagesContainer = () => {
     return { etap_id: key, average: `${average}%`, checkDate };
   });
 
-  const averagesByEtapId = averagesAndDates.reduce((acc: { [key: UsersActivities["etap_id"]]: string }, { etap_id, average }) => {
-    acc[etap_id] = average;
-    return acc;
-  }, {});
+  const averagesByEtapId = averagesAndDates.reduce(
+    (
+      acc: { [key: UsersActivities["etap_id"]]: string },
+      { etap_id, average }
+    ) => {
+      acc[etap_id] = average;
+      return acc;
+    },
+    {}
+  );
 
-  const checkDatesByEtapId = averagesAndDates.reduce((acc: { [key: UsersActivities["etap_id"]]: string }, { etap_id, checkDate }) => {
-    if (checkDate && checkDate) {
-      console.log(checkDate);
-      acc[etap_id] = checkDate.toDate().toLocaleDateString();
-    } else {
-      acc[etap_id] = "nie rozpoczęto";
-    }
-    return acc;
-  }, {});
+  const checkDatesByEtapId = averagesAndDates.reduce(
+    (
+      acc: { [key: UsersActivities["etap_id"]]: string },
+      { etap_id, checkDate }
+    ) => {
+      if (checkDate && checkDate) {
+        acc[etap_id] = checkDate.toDate().toLocaleDateString();
+      } else {
+        acc[etap_id] = "nie rozpoczęto";
+      }
+      return acc;
+    },
+    {}
+  );
 
   return (
     <>
       <div className="stages-container">
         <div className="stages-bloks">
           {sortedStages.map(({ id, icon, name }) => {
-            const imageUrlForStage = imageUrl[stagesName.findIndex((stage) => stage.id === id)];
+            const imageUrlForStage =
+              imageUrl[stagesName.findIndex((stage) => stage.id === id)];
             return (
-              <span key={id} className="etaps">
+              <span
+                key={id}
+                className="etaps">
                 <button>
                   <Link to={`/etaps/${id}`}>Process</Link>
                 </button>
-                <img src={imageUrlForStage} alt={icon} className="icons" />
+                <img
+                  src={imageUrlForStage}
+                  alt={icon}
+                  className="icons"
+                />
                 {/* <span>{name}</span> */}
                 <span>{averagesByEtapId[id]}</span>
                 <span>{checkDatesByEtapId[id]}</span>
