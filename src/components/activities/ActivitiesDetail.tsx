@@ -87,7 +87,9 @@ function ActivitiesDetail(props: Props) {
                       href={fetchedLink}
                       target="_blank"
                       rel="noopener noreferrer">
-                      <button>Przejdź do strony</button>
+                      <button className="confirmButton">
+                        Przejdź do strony
+                      </button>
                     </a>
                   )}
                 </HeaderInfoButton>

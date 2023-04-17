@@ -155,7 +155,7 @@ function Etaps() {
                       alt={etap.name}
                     />
                   )}
-                  <span>{etap.name}</span>
+                  <span className="title-etaps">{etap.name}</span>
                 </Link>
               );
             })}
