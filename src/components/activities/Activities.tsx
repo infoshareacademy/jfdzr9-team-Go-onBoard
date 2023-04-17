@@ -2,9 +2,15 @@ import React, { useState, useEffect } from "react";
 import { database } from "../../utils/firebase/firebase.config";
 import { collection, getDocs } from "firebase/firestore";
 import ActivitiesDetail from "./ActivitiesDetail";
-import { ActivitiesContainer, ActivitiName, Container, Transparent } from "./Activities.styled";
+import {
+  ActivitiesContainer,
+  ActivitiName,
+  Container,
+  Transparent,
+} from "./Activities.styled";
 import { useParamsStagesHook } from "../hooks/useParamsStagesHook";
 import { useStages } from "../button/Context/StagesContext";
+import IconFetchedHeader from "./IconFetchedHeader";
 
 interface Activity {
   id: string;
@@ -66,8 +72,11 @@ function Activities() {
           .filter((activit) => activit.etap_id === etapsID)
           .map((filteredEtap) => {
             return (
-              <Transparent onClick={() => setActivitiesId(filteredEtap.id)} key={filteredEtap.id}>
+              <Transparent
+                onClick={() => setActivitiesId(filteredEtap.id)}
+                key={filteredEtap.id}>
                 <ActivitiName>{filteredEtap.name}</ActivitiName>
+                <IconFetchedHeader iconName={filteredEtap.type || ""} />
               </Transparent>
             );
           })}
