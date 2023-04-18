@@ -1,21 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useFirebaseFetch } from "../hooks/useFirebaseFetch";
-import { QuestionesData } from "./ModelsQuizTypes";
-import { QuestionCard } from "./QuizQuestion";
-import { useUser } from "../RequireAuth/context/AuthContext";
+import { EtapIdProps, QuestionesData, Question, Option } from "./ModelsQuizTypes";
+import { QuestionCard, QuestionProps } from "./QuizQuestion";
 
-export const Quiz = () => {
-  const user = useUser();
-  const [quizIndex, setQuizIndex] = useState(0);
+export const Quiz = ({ etapIdForQuiz }: EtapIdProps) => {
+  const { etap_id } = etapIdForQuiz;
+  const [quizIndex, setQuizIndex] = useState("");
   const [questionIndex, setQuestionIndex] = useState(0);
   const quizes = useFirebaseFetch<QuestionesData>("quiz");
-  const currentQuiz = quizes[quizIndex];
+  const currentQuiz = quizes.find((quizByEtapId) => quizByEtapId.etap_id === quizIndex);
+  console.log("Obecny Quiz", currentQuiz);
+
+  useEffect(() => {
+    setQuizIndex(etap_id);
+  }, [etapIdForQuiz]);
 
   if (!currentQuiz) {
     return <span>Brak Quizu</span>;
   }
-  console.log(currentQuiz, quizes);
+
   const currentQuestion = currentQuiz.questiones[questionIndex];
+  const currentOption = currentQuestion.options;
+  // console.log("Obecna Opcja", currentOption);
+  console.log("Obecne Pytanie", currentQuestion.options);
 
   if (!currentQuestion) {
     return <span>Brak pytania</span>;
@@ -23,7 +30,7 @@ export const Quiz = () => {
   return (
     <div>
       <h1>Quiz</h1>
-      <QuestionCard currentQuestion={questionIndex + 1} question={currentQuestion} lengthOfQuestions={currentQuiz.questiones.length} />
+      <QuestionCard currentQuestion={questionIndex} question={currentQuestion} lengthOfQuestions={currentQuiz.questiones.length} setQuestionIndex={setQuestionIndex} />
     </div>
   );
 };

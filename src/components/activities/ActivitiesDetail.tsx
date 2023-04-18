@@ -3,6 +3,7 @@ import { database } from "../../utils/firebase/firebase.config";
 import { collection, getDocs } from "firebase/firestore";
 import ConfirmActivity from "../button/ConfirmActivity";
 import CommentActivity from "./Comment";
+import { Quiz } from "../Quiz/Quiz";
 
 interface Activity {
   id: string;
@@ -24,7 +25,6 @@ interface Props {
 function ActivitiesDetail(props: Props) {
   const [activitiesDetail, setActivitiesDetail] = useState<Activity[]>([]);
   const [fetchedLink, setFetchedLink] = useState<string | null>(null);
-
   const confirmActivityProps = {
     activitiesId: props.detailProps.activitiesId,
     etap_id: props.detailProps.etap_id,
@@ -46,9 +46,7 @@ function ActivitiesDetail(props: Props) {
 
   useEffect(() => {
     // fetch only the link from the activities, if link =-1 change state
-    const activity = activitiesDetail.find(
-      (activity) => activity.id === props.detailProps.activitiesId
-    );
+    const activity = activitiesDetail.find((activity) => activity.id === props.detailProps.activitiesId);
     if (activity && activity.link && activity.link !== "-1") {
       setFetchedLink(activity.link);
     } else {
@@ -62,25 +60,17 @@ function ActivitiesDetail(props: Props) {
         .filter((detail) => detail.id === props.detailProps.activitiesId)
         .map((filteredEtap) => {
           return (
-            <div
-              style={{ display: "flex", flexDirection: "column" }}
-              key={filteredEtap.id}>
+            <div style={{ display: "flex", flexDirection: "column" }} key={filteredEtap.id}>
               <span>{filteredEtap.name}</span>
               <span>{filteredEtap.description}</span>
               {fetchedLink && ( // render the button if in activities is link
-                <a
-                  href={fetchedLink}
-                  target="_blank"
-                  rel="noopener noreferrer">
+                <a href={fetchedLink} target="_blank" rel="noopener noreferrer">
                   <button>Przejdź do strony</button>
                 </a>
               )}
-              {filteredEtap.comment && (
-                <CommentActivity
-                  activitiesId={props.detailProps.activitiesId}
-                />
-              )}
+              {filteredEtap.comment && <CommentActivity activitiesId={props.detailProps.activitiesId} />}
               <ConfirmActivity confirmActivityProps={confirmActivityProps} />
+              <Quiz etapIdForQuiz={confirmActivityProps} />
             </div>
           );
         })}
