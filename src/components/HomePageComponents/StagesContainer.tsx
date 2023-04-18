@@ -8,6 +8,7 @@ import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { useFirebaseFetch } from "../hooks/useFirebaseFetch";
 import { Link } from "react-router-dom";
 import { useUser } from "../RequireAuth/context/AuthContext";
+import { usersCollection } from "../RequireAuth/context/usersCollectionContext";
 
 interface Stage {
   id: string;
@@ -19,6 +20,7 @@ interface Stage {
 //fetch stages collection from firebase//
 export const StagesContainer = () => {
   const user = useUser();
+  const userCollection = usersCollection();
   const [stagesName, setStagesName] = useState<Stage[]>([]);
   const [imageUrl, setImageUrl] = useState<string[]>([]);
 
@@ -31,6 +33,7 @@ export const StagesContainer = () => {
       ...doc.data(),
     })) as Stage[];
 
+    console.log(userCollection);
     //fetch svg icons from firebase storage//
     const firebaseApp = getApp();
     const storage = getStorage(firebaseApp);
@@ -83,6 +86,7 @@ export const StagesContainer = () => {
 
   const activity = useFirebaseFetch<UsersActivities>("activities");
   const userActivities = useFirebaseFetch<Users>("user_activities");
+  // console.log(userActivities[0].user_id);
   const filteredUserActivities = userActivities.filter((activity) => activity.user_id === user?.uid);
 
   const counts = activity.reduce((acc: { [key: UsersActivities["etap_id"]]: number }, { etap_id }) => {
@@ -125,7 +129,6 @@ export const StagesContainer = () => {
 
   const checkDatesByEtapId = averagesAndDates.reduce((acc: { [key: UsersActivities["etap_id"]]: string }, { etap_id, checkDate }) => {
     if (checkDate && checkDate) {
-      console.log(checkDate);
       acc[etap_id] = checkDate.toDate().toLocaleDateString();
     } else {
       acc[etap_id] = "nie rozpoczęto";

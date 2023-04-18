@@ -2,9 +2,11 @@ import { useState } from "react";
 import { useFirebaseFetch } from "../hooks/useFirebaseFetch";
 import { QuestionesData } from "./ModelsQuizTypes";
 import { QuestionCard } from "./QuizQuestion";
+import { useUser } from "../RequireAuth/context/AuthContext";
 
 export const Quiz = () => {
-  const [quizIndex, setQuizIndex] = useState(1);
+  const user = useUser();
+  const [quizIndex, setQuizIndex] = useState(0);
   const [questionIndex, setQuestionIndex] = useState(0);
   const quizes = useFirebaseFetch<QuestionesData>("quiz");
   const currentQuiz = quizes[quizIndex];
