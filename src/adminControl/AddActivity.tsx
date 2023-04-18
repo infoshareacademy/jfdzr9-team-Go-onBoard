@@ -49,7 +49,6 @@ function AddActivity() {
       .then(() => {
         setMessage("Dodano do aktywności");
         setTimeout(() => setMessage(null), 2000); // clear message after 5 seconds
-        console.log("hello");
       })
       .catch(() => setMessage("Error"));
   }

@@ -9,7 +9,10 @@ import Etaps from "./components/button/Etaps";
 import PasswordReset from "./components/RequireAuth/passwordReset";
 import Activities from "./components/activities/Activities";
 import RequireAuth from "./components/RequireAuth/RequireAuth";
-import { Quiz } from "./components/Quiz/Quiz";
+import { InfoPagePassword } from "./components/RequireAuth/InfoPagePassword";
+import PanelAdmin from "./pages/PanelAdmin";
+import ProtectedRoute from "./components/RequireAuth/ProtectedRoute";
+import NotFoundPage from "./pages/NotFoundPage";
 
 function App() {
   return (
@@ -18,9 +21,9 @@ function App() {
         <Route path="/" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
-        <Route path="/quiz" element={<Quiz />} />
         <Route path="/signpassword" element={<Signpassword />} />
         <Route path="emulator/action" element={<PasswordReset />} />
+        <Route path="/InfoPagePassword" element={<InfoPagePassword />} />
         <Route element={<RequireAuth />}>
           <Route path="/dashboard/*" element={<HomePageLayout />}>
             <Route path=":id" element={<HomePageLayout />} />
@@ -28,7 +31,16 @@ function App() {
           <Route path="/etaps/*" element={<Etaps />}>
             <Route path=":id" element={<Activities />} />
           </Route>
+          <Route
+            path="/panelAdmina"
+            element={
+              <ProtectedRoute requiredRole="admin">
+                <PanelAdmin />
+              </ProtectedRoute>
+            }
+          />
         </Route>
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </AuthContextProvider>
   );

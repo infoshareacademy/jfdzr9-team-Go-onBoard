@@ -86,7 +86,6 @@ export const StagesContainer = () => {
 
   const activity = useFirebaseFetch<UsersActivities>("activities");
   const userActivities = useFirebaseFetch<Users>("user_activities");
-  // console.log(userActivities[0].user_id);
   const filteredUserActivities = userActivities.filter((activity) => activity.user_id === user?.uid);
 
   const counts = activity.reduce((acc: { [key: UsersActivities["etap_id"]]: number }, { etap_id }) => {
@@ -100,18 +99,29 @@ export const StagesContainer = () => {
   }, {});
 
   //User stage grouping to calculate average and stage last check date//
-  const userActivitiesByEtapId = filteredUserActivities.reduce((acc: { [key: UsersActivities["etap_id"]]: { count: number; check_date: Timestamp } }, activity) => {
-    const { etap_id, check_date } = activity;
-    if (!acc[etap_id]) {
-      acc[etap_id] = { count: 1, check_date };
-    } else {
-      acc[etap_id].count++;
-      if (check_date > acc[etap_id]?.check_date) {
-        acc[etap_id].check_date = check_date;
+  const userActivitiesByEtapId = filteredUserActivities.reduce(
+    (
+      acc: {
+        [key: UsersActivities["etap_id"]]: {
+          count: number;
+          check_date: Timestamp;
+        };
+      },
+      activity
+    ) => {
+      const { etap_id, check_date } = activity;
+      if (!acc[etap_id]) {
+        acc[etap_id] = { count: 1, check_date };
+      } else {
+        acc[etap_id].count++;
+        if (check_date > acc[etap_id]?.check_date) {
+          acc[etap_id].check_date = check_date;
+        }
       }
-    }
-    return acc;
-  }, {});
+      return acc;
+    },
+    {}
+  );
 
   //Calculation of the average for each step and the date of the last step check//
   const averagesAndDates = Object.entries(counts).map(([key, value]) => {
