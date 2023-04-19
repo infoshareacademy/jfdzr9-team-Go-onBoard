@@ -32,6 +32,7 @@ function Etaps() {
   >({});
   const [userActivityIds, setUserActivityIds] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedEtapId, setSelectedEtapId] = useState<string | null>(null);
 
   useEffect(() => {
     async function getEtaps() {
@@ -144,10 +145,19 @@ function Etaps() {
                   className="stages-links"
                   to={enableLink ? `/etaps/${etap.id}` : "#"}
                   key={etap.id}
-                  onClick={() => setEtapId(etap.id)}
+                  onClick={() => {
+                    setEtapId(etap.id);
+                    setSelectedEtapId(etap.id);
+                  }}
                   style={{
                     pointerEvents: enableLink ? "auto" : "none",
-                    opacity: enableLink ? 1 : 0.5,
+                    // opacity: enableLink ? 1 : 0.5,
+                    backgroundColor:
+                      etap.id === selectedEtapId
+                        ? "green"
+                        : enableLink
+                        ? "" // Tutaj możesz ustawić inny kolor dla dostępnych etapów, np. "white"
+                        : "var(--primary-2)", // Kolor dla etapów niedostępnych
                   }}>
                   {etap.icon && (
                     <img

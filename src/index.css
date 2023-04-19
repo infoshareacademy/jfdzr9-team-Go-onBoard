@@ -13,10 +13,10 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 
-  --primary-1: #020246; /* Blue */
-  --primary-2: #ffcde4; /* Red */
-  --secondary-1: #eff0f7; /* Green */
-  --secondary-2: #d3d3d3; /* Yellow */
+  --primary-1: #020246;
+  --primary-2: #ffcde4;
+  --secondary-1: #eff0f7;
+  --secondary-2: #d3d3d3;
 }
 
 a {
@@ -56,10 +56,7 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
+
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
@@ -131,7 +128,7 @@ button:focus-visible {
     color: white;
   }
   button:disabled {
-    background-color: #686b6f;
+    background-color: var(--primary-2);
     cursor: not-allowed;
   }
 }

@@ -14,7 +14,7 @@ export const ActivitiName = styled.div`
   font-family: "Inter";
   font-style: normal;
   font-size: 1rem;
-  color: #020246;
+  /* color: #020246; */
   font-weight: 700;
   text-align: start;
 `;
@@ -42,8 +42,8 @@ export const Transparent = styled.button`
   align-items: center;
   width: 100%;
   justify-content: space-between;
-  filter: brightness(0) saturate(100%) invert(9%) sepia(34%) saturate(5579%)
-    hue-rotate(234deg) brightness(90%) contrast(121%);
+  /* filter: brightness(0) saturate(100%) invert(9%) sepia(34%) saturate(5579%)
+    hue-rotate(234deg) brightness(90%) contrast(121%); */
 `;
 export const StyledH4 = styled.h4`
   font-family: "Inter";

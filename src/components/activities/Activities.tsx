@@ -32,6 +32,10 @@ function Activities() {
   const etapsID = useParamsStagesHook();
   const [activities, setActivities] = useState<Activity[]>([]);
   const [activitiesId, setActivitiesId] = useState<string | null>(null);
+  const [selectedActivitiesId, setSelectedActivitiesId] = useState<
+    string | null
+  >(null);
+
   const detailProps =
     activitiesId && etapsID
       ? {
@@ -73,7 +77,20 @@ function Activities() {
           .map((filteredEtap) => {
             return (
               <Transparent
-                onClick={() => setActivitiesId(filteredEtap.id)}
+                onClick={() => {
+                  setActivitiesId(filteredEtap.id);
+                  setSelectedActivitiesId(filteredEtap.id);
+                }}
+                style={{
+                  color:
+                    filteredEtap.id === selectedActivitiesId
+                      ? "#46AD2C"
+                      : "#020246",
+                  filter:
+                    filteredEtap.id === selectedActivitiesId
+                      ? "invert(53%) sepia(7%) saturate(6913%) hue-rotate(67deg) brightness(106%) contrast(70%)"
+                      : "",
+                }}
                 key={filteredEtap.id}>
                 <ActivitiName>{filteredEtap.name}</ActivitiName>
                 <IconFetchedHeader iconName={filteredEtap.type || ""} />
