@@ -3,7 +3,7 @@ export const ActivitiesContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 2rem;
+  gap: 1rem;
   background: #ffffff;
   width: 300px;
   padding: 2rem;

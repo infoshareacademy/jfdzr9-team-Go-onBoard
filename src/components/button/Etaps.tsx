@@ -151,12 +151,11 @@ function Etaps() {
                   }}
                   style={{
                     pointerEvents: enableLink ? "auto" : "none",
-                    // opacity: enableLink ? 1 : 0.5,
                     backgroundColor:
                       etap.id === selectedEtapId
-                        ? "green"
+                        ? "var(--active)"
                         : enableLink
-                        ? "" // Tutaj możesz ustawić inny kolor dla dostępnych etapów, np. "white"
+                        ? ""
                         : "var(--primary-2)", // Kolor dla etapów niedostępnych
                   }}>
                   {etap.icon && (

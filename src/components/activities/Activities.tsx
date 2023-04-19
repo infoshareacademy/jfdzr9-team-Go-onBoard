@@ -84,8 +84,8 @@ function Activities() {
                 style={{
                   color:
                     filteredEtap.id === selectedActivitiesId
-                      ? "#46AD2C"
-                      : "#020246",
+                      ? "var(--active)"
+                      : "var(--primary-1)",
                   filter:
                     filteredEtap.id === selectedActivitiesId
                       ? "invert(53%) sepia(7%) saturate(6913%) hue-rotate(67deg) brightness(106%) contrast(70%)"
