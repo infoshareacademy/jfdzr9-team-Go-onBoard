@@ -1,9 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, SetStateAction } from "react";
 import { database } from "../../utils/firebase/firebase.config";
 import { collection, getDocs } from "firebase/firestore";
 import ConfirmActivity from "../button/ConfirmActivity";
 import CommentActivity from "./Comment";
 import { Quiz } from "../Quiz/Quiz";
+// import { Activity } from "tabler-icons-react";
+import Activities from "./Activities";
 
 interface Activity {
   id: string;
@@ -12,6 +14,8 @@ interface Activity {
   type: string;
   comment?: string;
   link?: string; // Add link to the Activity interface
+  test: boolean;
+  // setCurrentActivity: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface Props {
@@ -25,12 +29,13 @@ interface Props {
 function ActivitiesDetail(props: Props) {
   const [activitiesDetail, setActivitiesDetail] = useState<Activity[]>([]);
   const [fetchedLink, setFetchedLink] = useState<string | null>(null);
+  const [currentActivity, setCurrentActivity] = useState<Activity>();
   const confirmActivityProps = {
     activitiesId: props.detailProps.activitiesId,
     etap_id: props.detailProps.etap_id,
     onActivityConfirmation: props.detailProps.onActivityConfirmation,
   };
-
+  console.log("obecna aktywność", currentActivity);
   useEffect(() => {
     const getActivities = async () => {
       const activitiesRef = collection(database, "activities");
@@ -47,11 +52,13 @@ function ActivitiesDetail(props: Props) {
   useEffect(() => {
     // fetch only the link from the activities, if link =-1 change state
     const activity = activitiesDetail.find((activity) => activity.id === props.detailProps.activitiesId);
+    console.log(activity);
     if (activity && activity.link && activity.link !== "-1") {
       setFetchedLink(activity.link);
     } else {
       setFetchedLink(null);
     }
+    setCurrentActivity(activity);
   }, [activitiesDetail, props.detailProps.activitiesId]);
 
   return (
@@ -62,7 +69,8 @@ function ActivitiesDetail(props: Props) {
           return (
             <div style={{ display: "flex", flexDirection: "column" }} key={filteredEtap.id}>
               <span>{filteredEtap.name}</span>
-              <span>{filteredEtap.description}</span>
+              {currentActivity?.test === true ? <Quiz etapIdForQuiz={confirmActivityProps} /> : <span>{filteredEtap.description}</span>}
+
               {fetchedLink && ( // render the button if in activities is link
                 <a href={fetchedLink} target="_blank" rel="noopener noreferrer">
                   <button>Przejdź do strony</button>
@@ -70,7 +78,6 @@ function ActivitiesDetail(props: Props) {
               )}
               {filteredEtap.comment && <CommentActivity activitiesId={props.detailProps.activitiesId} />}
               <ConfirmActivity confirmActivityProps={confirmActivityProps} />
-              <Quiz etapIdForQuiz={confirmActivityProps} />
             </div>
           );
         })}

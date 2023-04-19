@@ -26,3 +26,10 @@ export interface EtapIdProps {
     onActivityConfirmation: (newActivityId: string) => void;
   };
 }
+
+export interface QuestionProps {
+  question: Question;
+  currentQuestion: number;
+  lengthOfQuestions: number;
+  setQuestionIndex: React.Dispatch<React.SetStateAction<number>>;
+}

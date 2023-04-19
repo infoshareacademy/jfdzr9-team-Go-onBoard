@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useFirebaseFetch } from "../hooks/useFirebaseFetch";
-import { EtapIdProps, QuestionesData, Question, Option } from "./ModelsQuizTypes";
-import { QuestionCard, QuestionProps } from "./QuizQuestion";
+import { EtapIdProps, QuestionesData } from "./ModelsQuizTypes";
+import { QuestionCard } from "./QuizQuestion";
 
 export const Quiz = ({ etapIdForQuiz }: EtapIdProps) => {
   const { etap_id } = etapIdForQuiz;
@@ -20,8 +20,6 @@ export const Quiz = ({ etapIdForQuiz }: EtapIdProps) => {
   }
 
   const currentQuestion = currentQuiz.questiones[questionIndex];
-  const currentOption = currentQuestion.options;
-  // console.log("Obecna Opcja", currentOption);
   console.log("Obecne Pytanie", currentQuestion.options);
 
   if (!currentQuestion) {
