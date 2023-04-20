@@ -38,9 +38,9 @@ export const QuestionCard = ({ question, currentQuestion, lengthOfQuestions, set
       {/* Show results or show the question game  */}
       {showResults ? (
         <div className="final-results">
-          <h1>Wynik końcowy</h1>
+          <h2>Wynik końcowy</h2>
           <h2>
-            {score} out of {lengthOfQuestions} correct ({quizResult()}%)
+            {score} z {lengthOfQuestions} prawidłowych({quizResult()}%)
           </h2>
           <button onClick={() => restartGame()}>Wykonaj test od nowa</button>
         </div>

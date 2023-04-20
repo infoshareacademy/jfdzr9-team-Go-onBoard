@@ -24,14 +24,16 @@ const ConfirmActivity: React.FC<ConfirmActivityProps> = (props) => {
   // Fetch the user_activities collection and check if there's a document with a true value for the result field
   useEffect(() => {
     const fetchData = async () => {
-      const q = query(collection(database, "user_activities"), where("user_activity_id", "==", activiti));
+      const q = query(collection(database, "user_activities"), where("user_activity_id", "==", activiti), where("user_id", "==", user?.uid));
       const querySnapshot = await getDocs(q);
       const hasResult = querySnapshot.docs.some((doc) => doc.data().result);
-      setIsDisabled(hasResult);
-      setHasMounted(true); // set the flag to indicate that the component has mounted
+      // setHasMounted(true); // set the flag to indicate that the component has mounted
+      // Additional query to check if a document with the user_id exists
+      setIsDisabled(hasResult); // disable the button if the activity has already been checked or user_id doesn't match
+      setHasMounted(true);
     };
     fetchData();
-  }, [activiti]);
+  }, [activiti, user?.uid]);
 
   function checkActivity(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     e.preventDefault();

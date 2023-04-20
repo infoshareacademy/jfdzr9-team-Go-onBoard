@@ -9,7 +9,6 @@ export const Quiz = ({ etapIdForQuiz }: EtapIdProps) => {
   const [questionIndex, setQuestionIndex] = useState(0);
   const quizes = useFirebaseFetch<QuestionesData>("quiz");
   const currentQuiz = quizes.find((quizByEtapId) => quizByEtapId.etap_id === quizIndex);
-  console.log("Obecny Quiz", currentQuiz);
 
   useEffect(() => {
     setQuizIndex(etap_id);
@@ -20,7 +19,6 @@ export const Quiz = ({ etapIdForQuiz }: EtapIdProps) => {
   }
 
   const currentQuestion = currentQuiz.questiones[questionIndex];
-  console.log("Obecne Pytanie", currentQuestion.options);
 
   if (!currentQuestion) {
     return <span>Brak pytania</span>;

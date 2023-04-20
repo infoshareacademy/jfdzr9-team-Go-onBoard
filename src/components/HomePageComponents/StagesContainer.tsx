@@ -147,7 +147,7 @@ export const StagesContainer = () => {
     <>
       <div className="stages-container">
         <div className="stages-bloks">
-          {sortedStages.map(({ id, icon, name }) => {
+          {sortedStages.map(({ id, icon }) => {
             const imageUrlForStage = imageUrl[stagesName.findIndex((stage) => stage.id === id)];
             return (
               <span key={id} className="etaps">

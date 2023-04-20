@@ -36,6 +36,7 @@ function ActivitiesDetail(props: Props) {
     onActivityConfirmation: props.detailProps.onActivityConfirmation,
   };
   console.log("obecna aktywność", currentActivity);
+  console.log(confirmActivityProps);
   useEffect(() => {
     const getActivities = async () => {
       const activitiesRef = collection(database, "activities");
