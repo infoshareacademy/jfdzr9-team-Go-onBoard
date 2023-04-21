@@ -2,10 +2,8 @@ import { useState } from "react";
 import AddActivity from "../adminControl/AddActivity";
 import AddUser from "../adminControl/AddUser";
 import ProgressUser from "../adminControl/ProgressUser";
-
 import ButtonLogout from "../components/RequireAuth/ButtonLogout";
 import AddQuiz from "../adminControl/AddQuiz";
-import { useFirebaseFetch } from "../components/hooks/useFirebaseFetch";
 
 function PanelAdmin() {
   const [showAddActivity, setShowAddActivity] = useState(false);
@@ -40,9 +38,7 @@ function PanelAdmin() {
     setShowAddUser(false);
     setShowProgressUser(false);
   };
-  const stagesCollection = useFirebaseFetch("etaps");
-  const stagesId = stagesCollection.map((stageId) => stageId.id);
-  console.log("ID etapów", stagesCollection);
+
   return (
     <>
       <h1>Panel Admina</h1>
