@@ -42,7 +42,7 @@ function PanelAdmin() {
 
   return (
     <>
-      <h1>PanelAdmina</h1>
+      <h1>Panel Admina</h1>
       <div>
         <button onClick={handleShowAddActivity}>AddActivity</button>
         <button onClick={handleShowAddUser}>AddUser</button>

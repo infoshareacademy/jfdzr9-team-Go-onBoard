@@ -19,76 +19,6 @@ type Question = {
   options: Option[];
 };
 
-// function AddQuiz() {
-//   const etapRef = useRef<HTMLInputElement>(null);
-//   const courseRef = useRef<HTMLInputElement>(null);
-//   const courseNameRef = useRef<HTMLInputElement>(null);
-//   const optionsRef = useRef<HTMLInputElement>(null);
-//   const optionsTextRef = useRef<HTMLInputElement>(null);
-//   const idRef = useRef<HTMLInputElement>(null);
-//   const textRef = useRef<HTMLInputElement>(null);
-//   const isCorrectRef = useRef<HTMLInputElement>(null);
-//   const [message, setMessage] = useState<string | null>(null);
-
-//   // Push Function
-//   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
-//     e.preventDefault();
-//     const quizRef = collection(database, "quiz");
-//     const options = [
-//       {
-//         id: parseInt(idRef.current?.value ?? "0"),
-//         text: textRef.current?.value ?? "",
-//         isCorrect: Boolean(isCorrectRef.current?.value),
-//       },
-//     ];
-//     const questiones = [
-//       {
-//         text: optionsTextRef.current?.value ?? "",
-//         options: options,
-//       },
-//     ];
-//     const newQuiz: QuizData = {
-//       etap_id: etapRef.current?.value ?? "",
-//       id_course: courseRef.current?.value ?? "",
-//       course_name: courseNameRef.current?.value ?? "",
-//       questiones: questiones,
-//     };
-
-//     addDoc(quizRef, newQuiz)
-//       .then(() => {
-//         setMessage("Dodano quiz do bazy");
-//         setTimeout(() => setMessage(null), 2000); // clear message after 5 seconds
-//       })
-//       .catch(() => setMessage("Error"));
-//   }
-
-//   return (
-//     <div>
-//       <p>Dodaj quiz do bazy</p>
-//       <form onSubmit={onSubmit} style={{ display: "flex", flexDirection: "column" }}>
-//         <label htmlFor="Name">ID etapu</label>
-//         <input ref={etapRef} />
-//         <label htmlFor="Name">ID kursu</label>
-//         <input ref={courseRef} />
-//         <label htmlFor="Name">Nazwa kursu</label>
-//         <input ref={courseNameRef} />
-//         <label htmlFor="Name">Pytanie</label>
-//         <input ref={optionsTextRef} />
-//         <label htmlFor="Name">Nr odpowiedzi</label>
-//         <input ref={idRef} />
-//         <label htmlFor="Name">Treść odpowiedzi</label>
-//         <input ref={textRef} />
-//         <label htmlFor="Name">Wynik odpowiedzi = "true" lub " false"</label>
-//         <input ref={isCorrectRef} />
-//         <button type="submit">Submit</button>
-//       </form>
-//       {message && <p>{message}</p>}
-//     </div>
-//   );
-// }
-
-// export default AddQuiz;
-
 function AddQuiz() {
   const etapRef = useRef<HTMLInputElement>(null);
   const courseRef = useRef<HTMLInputElement>(null);
@@ -98,6 +28,7 @@ function AddQuiz() {
   const textRef = useRef<HTMLInputElement>(null);
   const isCorrectRef = useRef<HTMLInputElement>(null);
   const [questiones, setQuestiones] = useState<Question[]>([]);
+  const [newAnswer, setNewAnswer] = useState<Question[]>();
   const [message, setMessage] = useState<string | null>(null);
 
   // Push Function
@@ -145,7 +76,10 @@ function AddQuiz() {
     courseNameRef.current!.value = "";
 
     addDoc(quizRef, newQuiz)
-      .then(() => setMessage("Quiz został zapisany w bazie danych."))
+      .then(() => {
+        setMessage("Quiz został zapisany w bazie danych.");
+        setTimeout(() => setMessage(null), 2000); // clear message after 5 seconds
+      })
       .catch(() => setMessage("Wystąpił błąd podczas zapisywania quizu."));
   }
 
@@ -165,8 +99,9 @@ function AddQuiz() {
         <input type="number" id="optionisCorrect" ref={idRef} />
         <label htmlFor="optionText">Tekst odpowiedzi</label>
         <input type="text" id="optionText" ref={textRef} />
-        <label htmlFor="isCorrect">Czy poprawna odpowiedź?</label>
-        <input type="checkbox" id="isCorrect" ref={isCorrectRef} />
+        <label htmlFor="isCorrect">Jeśli odpowiedź jest poprawna wpisz "true" w innym wypadku "false"</label>
+        <input type="text" id="isCorrect" ref={isCorrectRef} />
+        <button type="submit">Dodaj kolejną odpowiedź</button>
         <button type="submit">Dodaj pytanie</button>
       </form>
       {message && <p>{message}</p>}
