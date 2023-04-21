@@ -20,6 +20,16 @@ type Question = {
   options: Option[];
 };
 
+interface Stages {
+  id: string;
+  name: string;
+}
+
+interface Courses {
+  name: string;
+  id_course: string;
+}
+
 function AddQuiz() {
   const etapRef = useRef<HTMLSelectElement>(null);
   const courseRef = useRef<HTMLSelectElement>(null);
@@ -32,8 +42,8 @@ function AddQuiz() {
   const [message, setMessage] = useState<string | null>(null);
   const [isButtonClicked, setIsButtonClicked] = useState<Boolean>(false);
 
-  const stagesCollection = useFirebaseFetch("etaps");
-  const coursesCollection = useFirebaseFetch("courses");
+  const stagesCollection = useFirebaseFetch<Stages>("etaps");
+  const coursesCollection = useFirebaseFetch<Courses>("courses");
   // Push Function
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -132,50 +142,69 @@ function AddQuiz() {
   }
 
   return (
-    <div>
-      <p>Dodaj quiz do bazy</p>
-      <form onSubmit={onSubmit} style={{ display: "flex", flexDirection: "column" }}>
-        <select ref={etapRef} required>
-          <option value="">Filtruj po ID etapu</option>
-          {stagesCollection.map((stage) => (
-            <option key={stage.id} value={stage.id} title={stage.name ? stage.name : stagesCollection.find((s) => s.id === stage.id)?.name}>
-              {stage.id}
-            </option>
-          ))}
-        </select>
-        <label htmlFor="course_id">ID kursu</label>
-        <select ref={courseRef} required>
-          <option value="">Filtruj po ID kursu</option>
-          {coursesCollection.map((course) => (
-            <option key={course.id} value={course.id}>
-              {course.id_course ? course.id_course : coursesCollection.find((id) => id.id === course.id)?.id_course}
-            </option>
-          ))}
-        </select>
-        <label htmlFor="course_name">Nazwa kursu</label>
-        <select ref={courseNameRef} required>
-          <option value="">Filtruj po nazwie kursu</option>
-          {coursesCollection.map((course) => (
-            <option key={course.id} value={course.id}>
-              {course.name ? course.name : coursesCollection.find((id) => id.id === course.id)?.name}
-            </option>
-          ))}
-        </select>
-        <label htmlFor="optionsText">Pytanie</label>
-        <input type="text" id="optionsText" ref={optionsTextRef} />
-        <label htmlFor="optionId">Nr odpowiedzi</label>
-        <input type="text" id="optionisCorrect" ref={idRef} />
-        <label htmlFor="optionText">Tekst odpowiedzi</label>
-        <input type="text" id="optionText" ref={textRef} />
-        <label htmlFor="isCorrect">Jeśli odpowiedź jest poprawna zaznacz checkbox</label>
-        <input type="checkbox" id="isCorrect" ref={isCorrectRef} />
-        <button type="submit">Dodaj kolejną odpowiedź</button>
-        <button type="submit" onClick={setButtonClickedFn}>
-          Dodaj pytanie
-        </button>
-      </form>
-      <button onClick={saveQuiz}>Zapisz quiz w bazie</button>
-      {message && <p>{message}</p>}
+    <div style={{ display: "flex" }}>
+      <div style={{ margin: "30px", width: "450px", fontSize: "13px" }}>
+        <h3>INSTRUKCJA:</h3>
+        <p style={{ fontSize: "11px" }}>
+          Tworząc quiz podaj niezbędne informacje takie jak: id etapu ( po najechaniu na nr id po chwili pojawi się podpowiedź do jakiego kursu odnosi się id), id kursu oraz nazwę
+          kursu, a następnie postępuj zgodnie z poniszą instrukcją
+        </p>
+        <p>
+          1. Aby dodać kolejne odpowiedzi do tego samego pytania wpisz kolejno: Pytanie, Nr odpowiedzi, Treść odpowiedzi oraz zaznacz czy jest prawidłowa i kliknij "Dodaj kolejną
+          odpowiedź i następnie postępuj w ten sam sposób - jedynie pytanie pozostanie wpisane z pierwszego kroku.
+        </p>
+        <p>
+          2. Chcąc dodać kolejne pytanie pamiętaj, aby po wpisaniu ostatniej odpowiedzi z pkt 1 tym razem wcisnąć przycisk "Dodaj pytanie", a następnie postępować zgodnie z krokami
+          z pkt. 1
+        </p>
+        <p>3. Jeśli chcesz wysłać juz gotowy quiz to po dodaniu ostatniej odpowiedzi do danego pytania po prostu kliknij w przycisk "Zapisz quiz w bazie"</p>
+      </div>
+      <div>
+        <p>Dodaj quiz do bazy</p>
+        <form onSubmit={onSubmit} style={{ display: "flex", flexDirection: "column" }}>
+          <label htmlFor="etap_id">ID etapu</label>
+          <select ref={etapRef} required>
+            <option value="">Filtruj po ID etapu</option>
+            {stagesCollection.map((stage) => (
+              <option key={stage.id} value={stage.id} title={stage.name ? stage.name : stagesCollection.find((s) => s.id === stage.id)?.name}>
+                {stage.id}
+              </option>
+            ))}
+          </select>
+          <label htmlFor="course_id">ID kursu</label>
+          <select ref={courseRef} required>
+            <option value="">Filtruj po ID kursu</option>
+            {coursesCollection.map((course) => (
+              <option key={course.id} value={course.id}>
+                {course.id_course ? course.id_course : coursesCollection.find((id) => id.id === course.id)?.id_course}
+              </option>
+            ))}
+          </select>
+          <label htmlFor="course_name">Nazwa kursu</label>
+          <select ref={courseNameRef} required>
+            <option value="">Filtruj po nazwie kursu</option>
+            {coursesCollection.map((course) => (
+              <option key={course.id} value={course.id}>
+                {course.name ? course.name : coursesCollection.find((id) => id.id === course.id)?.name}
+              </option>
+            ))}
+          </select>
+          <label htmlFor="optionsText">Pytanie</label>
+          <input type="text" id="optionsText" ref={optionsTextRef} />
+          <label htmlFor="optionId">Nr odpowiedzi</label>
+          <input type="text" id="optionisCorrect" ref={idRef} />
+          <label htmlFor="optionText">Tekst odpowiedzi</label>
+          <input type="text" id="optionText" ref={textRef} />
+          <label htmlFor="isCorrect">Jeśli odpowiedź jest poprawna zaznacz checkbox</label>
+          <input type="checkbox" id="isCorrect" ref={isCorrectRef} />
+          <button type="submit">Dodaj kolejną odpowiedź</button>
+          <button type="submit" onClick={setButtonClickedFn}>
+            Dodaj pytanie
+          </button>
+        </form>
+        <button onClick={saveQuiz}>Zapisz quiz w bazie</button>
+        {message && <p>{message}</p>}
+      </div>
     </div>
   );
 }
