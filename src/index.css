@@ -12,6 +12,12 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+
+  --primary-1: #020246;
+  --primary-2: #ffcde4;
+  --secondary-1: #eff0f7;
+  --secondary-2: #d3d3d3;
+  --active: #46ad2c;
 }
 
 a {
@@ -51,33 +57,63 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
+
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
 .stages-links {
-  height: 60px;
+  height: 40px;
+  width: 126px;
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
-  font-size: 1em;
+  /* font-size: 1em; */
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: var(--primary-1);
   cursor: pointer;
   transition: border-color 0.25s;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .stages-links:hover {
-  border-color: #646cff;
+  border-color: var(--secondary-1);
 }
+
+.stages-links:disabled {
+  border-color: var(--secondary-1);
+  color: var(--primary-1);
+}
+
 .stages-links:focus,
 .stages-links:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+.listEtaps {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 2rem;
+}
+
+.contentWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 6rem;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+}
+
+.detailsContent {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 @media (prefers-color-scheme: light) {
@@ -93,7 +129,7 @@ button:focus-visible {
     color: white;
   }
   button:disabled {
-    background-color: #686b6f;
+    background-color: var(--primary-2);
     cursor: not-allowed;
   }
 }
@@ -209,7 +245,8 @@ img {
   height: 30px;
   color: crimson;
   /* cursor: pointer; */
-  filter: invert(93%) sepia(99%) saturate(5630%) hue-rotate(246deg) brightness(111%) contrast(148%);
+  filter: invert(93%) sepia(99%) saturate(5630%) hue-rotate(246deg)
+    brightness(111%) contrast(148%);
 }
 
 /* img:hover {
@@ -237,8 +274,8 @@ img {
   width: 696px;
   height: 28px;
 
-  background: #d7baba;
-  color: black;
+  background: var(--primary-2);
+  color: var(--secondary-1);
   /* Shadow field */
   box-shadow: 8px 8px 24px rgba(2, 2, 70, 0.05);
   border-radius: 24px;
@@ -248,4 +285,11 @@ img {
   background: none;
   border-radius: none;
   box-shadow: none;
+}
+
+.confirmButton {
+  width: 35%;
+
+  margin-left: auto;
+  margin-right: auto;
 }

@@ -27,8 +27,12 @@ function Etaps() {
   const user = useUser();
   const [etaps, setEtaps] = useState<Etap[]>([]);
   const [etapId, setEtapId] = useState<string | null>(null);
-  const [activitiesByEtap, setActivitiesByEtap] = useState<Record<string, { etap_id: string; id: string }[]>>({});
+  const [activitiesByEtap, setActivitiesByEtap] = useState<
+    Record<string, { etap_id: string; id: string }[]>
+  >({});
   const [userActivityIds, setUserActivityIds] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [selectedEtapId, setSelectedEtapId] = useState<string | null>(null);
 
   useEffect(() => {
     async function getEtaps() {
@@ -38,7 +42,9 @@ function Etaps() {
       //make array with etpaid and activities
       const activitiesRef = collection(database, "activities");
       const activitiesData = await getDocs(activitiesRef);
-      const activitiesByEtap = activitiesData.docs.reduce<Record<string, { etap_id: string; id: string }[]>>((acc, doc) => {
+      const activitiesByEtap = activitiesData.docs.reduce<
+        Record<string, { etap_id: string; id: string }[]>
+      >((acc, doc) => {
         const etapId = doc.data().etap_id;
 
         if (!acc[etapId]) {
@@ -57,7 +63,9 @@ function Etaps() {
       //make array from user_activities with etpaid and activityid
       const userActivitiesRef = collection(database, "user_activities");
       const useractivitiesData = await getDocs(userActivitiesRef);
-      const userActivityIds = useractivitiesData.docs.map((doc) => doc.data().user_activity_id);
+      const userActivityIds = useractivitiesData.docs.map(
+        (doc) => doc.data().user_activity_id
+      );
 
       setUserActivityIds(userActivityIds);
 
@@ -83,6 +91,7 @@ function Etaps() {
       );
 
       setEtaps(etapsArray);
+      setIsLoading(false);
     }
 
     getEtaps();
@@ -91,7 +100,10 @@ function Etaps() {
   //props to confirm button-after confirm check status to show etpas when all activ in etap are completed
 
   const handleActivityConfirmation = (newActivityId: string) => {
-    setUserActivityIds((prevActivityIds) => [...prevActivityIds, newActivityId]);
+    setUserActivityIds((prevActivityIds) => [
+      ...prevActivityIds,
+      newActivityId,
+    ]);
   };
 
   const stagesContextValue: StagesContextValue = {
@@ -101,38 +113,63 @@ function Etaps() {
   // sort etaps by "sort" key in firebase
   const sortedEtaps = [...etaps].sort((a, b) => a.sort - b.sort);
 
+  if (isLoading) {
+    return <div>Loading...</div>; // Show a loading indicator while fetching data
+  }
+
   return (
     <StagesContext.Provider value={stagesContextValue}>
       <Link to={`/dashboard/${user?.uid}`}>
         <button>BACK TO DASHBOARD</button>
       </Link>
-      <div>
-        {sortedEtaps.map((etap, index) => {
-          //check previous etap if all activities are completed, next etap is enable
-          const isPreviousEtapCompleted =
-            index === 0 ||
-            (index > 0 &&
-              activitiesByEtap[sortedEtaps[index - 1].id]?.length ===
-                userActivityIds.filter((activityId) => activitiesByEtap[sortedEtaps[index - 1].id].some((activity) => activity.id === activityId)).length);
+      <div className="contentWrap">
+        <>
+          <Outlet />
+          <div className="listEtaps">
+            {sortedEtaps.map((etap, index) => {
+              //check previous etap if all activities are completed, next etap is enable
+              const isPreviousEtapCompleted =
+                index === 0 ||
+                (index > 0 &&
+                  activitiesByEtap[sortedEtaps[index - 1].id]?.length ===
+                    userActivityIds.filter((activityId) =>
+                      activitiesByEtap[sortedEtaps[index - 1].id].some(
+                        (activity) => activity.id === activityId
+                      )
+                    ).length);
 
-          const enableLink = isPreviousEtapCompleted;
+              const enableLink = isPreviousEtapCompleted;
 
-          return (
-            <Link
-              className="stages-links"
-              to={enableLink ? `/etaps/${etap.id}` : "#"}
-              key={etap.id}
-              onClick={() => setEtapId(etap.id)}
-              style={{
-                pointerEvents: enableLink ? "auto" : "none",
-                opacity: enableLink ? 1 : 0.5,
-              }}>
-              {etap.icon && <img src={etap.icon} alt={etap.name} />}
-              <span>{etap.name}</span>
-            </Link>
-          );
-        })}
-        <Outlet />
+              return (
+                <Link
+                  className="stages-links"
+                  to={enableLink ? `/etaps/${etap.id}` : "#"}
+                  key={etap.id}
+                  onClick={() => {
+                    setEtapId(etap.id);
+                    setSelectedEtapId(etap.id);
+                  }}
+                  style={{
+                    pointerEvents: enableLink ? "auto" : "none",
+                    backgroundColor:
+                      etap.id === selectedEtapId
+                        ? "var(--active)"
+                        : enableLink
+                        ? ""
+                        : "var(--primary-2)", // Kolor dla etapów niedostępnych
+                  }}>
+                  {etap.icon && (
+                    <img
+                      src={etap.icon}
+                      alt={etap.name}
+                    />
+                  )}
+                  <span className="title-etaps">{etap.name}</span>
+                </Link>
+              );
+            })}
+          </div>
+        </>
       </div>
     </StagesContext.Provider>
   );
