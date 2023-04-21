@@ -249,3 +249,8 @@ img {
   border-radius: none;
   box-shadow: none;
 }
+
+option[title] {
+  background-color: red;
+  font-weight: bold;
+}

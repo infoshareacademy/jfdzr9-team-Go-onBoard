@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-
+import React, { useRef, useState } from "react";
+import "../index.css";
 import { database } from "../utils/firebase/firebase.config";
 import { collection, addDoc } from "firebase/firestore";
 import { useFirebaseFetch } from "../components/hooks/useFirebaseFetch";
@@ -21,9 +21,9 @@ type Question = {
 };
 
 function AddQuiz() {
-  const etapRef = useRef<HTMLInputElement>(null);
-  const courseRef = useRef<HTMLInputElement>(null);
-  const courseNameRef = useRef<HTMLInputElement>(null);
+  const etapRef = useRef<HTMLSelectElement>(null);
+  const courseRef = useRef<HTMLSelectElement>(null);
+  const courseNameRef = useRef<HTMLSelectElement>(null);
   const optionsTextRef = useRef<HTMLInputElement>(null);
   const idRef = useRef<HTMLInputElement>(null);
   const textRef = useRef<HTMLInputElement>(null);
@@ -32,6 +32,8 @@ function AddQuiz() {
   const [message, setMessage] = useState<string | null>(null);
   const [isButtonClicked, setIsButtonClicked] = useState<Boolean>(false);
 
+  const stagesCollection = useFirebaseFetch("etaps");
+  const coursesCollection = useFirebaseFetch("courses");
   // Push Function
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -71,7 +73,6 @@ function AddQuiz() {
     // Update questiones state with new question
     setQuestiones(updatedQuestiones);
     // Clear form input values
-    // optionsTextRef.current!.value = "";
     idRef.current!.value = "";
     textRef.current!.value = "";
     isCorrectRef.current!.checked = false;
@@ -82,15 +83,10 @@ function AddQuiz() {
 
     setNewQuestion();
   }
-
+  // handle button to reset for new question
   function setButtonClickedFn() {
     setIsButtonClicked(true);
   }
-  // function clickedButton() {
-  //   setIsButtonClicked(true);
-  //   // Ustawiamy stan na początkowy, a następnie zerujemy go
-  //   setTimeout(() => setIsButtonClicked(false), 1000);
-  // }
 
   //Set newQueston
   function setNewQuestion() {
@@ -106,7 +102,7 @@ function AddQuiz() {
       isCorrectRef.current!.checked = false;
     }
   }
-
+  //reset refrences after save quiz
   function resetQuiz() {
     etapRef.current!.value = "";
     courseRef.current!.value = "";
@@ -139,19 +135,39 @@ function AddQuiz() {
     <div>
       <p>Dodaj quiz do bazy</p>
       <form onSubmit={onSubmit} style={{ display: "flex", flexDirection: "column" }}>
-        <label htmlFor="etap_id">ID etapu</label>
-        <input type="text" id="etap_id" ref={etapRef} />
-        <label htmlFor="id_course">ID kursu</label>
-        <input type="text" id="id_course" ref={courseRef} />
+        <select ref={etapRef} required>
+          <option value="">Filtruj po ID etapu</option>
+          {stagesCollection.map((stage) => (
+            <option key={stage.id} value={stage.id} title={stage.name ? stage.name : stagesCollection.find((s) => s.id === stage.id)?.name}>
+              {stage.id}
+            </option>
+          ))}
+        </select>
+        <label htmlFor="course_id">ID kursu</label>
+        <select ref={courseRef} required>
+          <option value="">Filtruj po ID kursu</option>
+          {coursesCollection.map((course) => (
+            <option key={course.id} value={course.id}>
+              {course.id_course ? course.id_course : coursesCollection.find((id) => id.id === course.id)?.id_course}
+            </option>
+          ))}
+        </select>
         <label htmlFor="course_name">Nazwa kursu</label>
-        <input type="text" id="course_name" ref={courseNameRef} />
+        <select ref={courseNameRef} required>
+          <option value="">Filtruj po nazwie kursu</option>
+          {coursesCollection.map((course) => (
+            <option key={course.id} value={course.id}>
+              {course.name ? course.name : coursesCollection.find((id) => id.id === course.id)?.name}
+            </option>
+          ))}
+        </select>
         <label htmlFor="optionsText">Pytanie</label>
         <input type="text" id="optionsText" ref={optionsTextRef} />
         <label htmlFor="optionId">Nr odpowiedzi</label>
         <input type="text" id="optionisCorrect" ref={idRef} />
         <label htmlFor="optionText">Tekst odpowiedzi</label>
         <input type="text" id="optionText" ref={textRef} />
-        <label htmlFor="isCorrect">Jeśli odpowiedź jest poprawna wpisz "true" w innym wypadku "false"</label>
+        <label htmlFor="isCorrect">Jeśli odpowiedź jest poprawna zaznacz checkbox</label>
         <input type="checkbox" id="isCorrect" ref={isCorrectRef} />
         <button type="submit">Dodaj kolejną odpowiedź</button>
         <button type="submit" onClick={setButtonClickedFn}>

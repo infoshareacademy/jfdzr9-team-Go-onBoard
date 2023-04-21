@@ -40,12 +40,9 @@ function PanelAdmin() {
     setShowAddUser(false);
     setShowProgressUser(false);
   };
-
-  const quizCollection = useFirebaseFetch("quiz");
-  console.log(quizCollection);
-
-  const QuizId = quizCollection.find((id) => id.id);
-  console.log(QuizId);
+  const stagesCollection = useFirebaseFetch("etaps");
+  const stagesId = stagesCollection.map((stageId) => stageId.id);
+  console.log("ID etapów", stagesCollection);
   return (
     <>
       <h1>Panel Admina</h1>
