@@ -23,10 +23,17 @@ export const Quiz = ({ etapIdForQuiz }: EtapIdProps) => {
   if (!currentQuestion) {
     return <span>Brak pytania</span>;
   }
+
   return (
     <div>
       <h1>Quiz</h1>
-      <QuestionCard currentQuestion={questionIndex} question={currentQuestion} lengthOfQuestions={currentQuiz.questiones.length} setQuestionIndex={setQuestionIndex} />
+      <QuestionCard
+        currentQuestion={questionIndex}
+        question={currentQuestion}
+        lengthOfQuestions={currentQuiz.questiones.length}
+        setQuestionIndex={setQuestionIndex}
+        etapId={etap_id}
+      />
     </div>
   );
 };

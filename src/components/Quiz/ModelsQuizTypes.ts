@@ -32,4 +32,5 @@ export interface QuestionProps {
   currentQuestion: number;
   lengthOfQuestions: number;
   setQuestionIndex: React.Dispatch<React.SetStateAction<number>>;
+  etapId: string;
 }

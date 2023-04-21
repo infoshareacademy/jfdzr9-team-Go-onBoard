@@ -155,7 +155,6 @@ export const StagesContainer = () => {
                   <Link to={`/etaps/${id}`}>Process</Link>
                 </button>
                 <img src={imageUrlForStage} alt={icon} className="icons" />
-                {/* <span>{name}</span> */}
                 <span>{averagesByEtapId[id]}</span>
                 <span>{checkDatesByEtapId[id]}</span>
               </span>

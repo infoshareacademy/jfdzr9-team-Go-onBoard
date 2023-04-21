@@ -1,11 +1,9 @@
-import React, { useState, useEffect, useRef, SetStateAction } from "react";
+import { useState, useEffect } from "react";
 import { database } from "../../utils/firebase/firebase.config";
 import { collection, getDocs } from "firebase/firestore";
 import ConfirmActivity from "../button/ConfirmActivity";
 import CommentActivity from "./Comment";
 import { Quiz } from "../Quiz/Quiz";
-// import { Activity } from "tabler-icons-react";
-import Activities from "./Activities";
 
 interface Activity {
   id: string;

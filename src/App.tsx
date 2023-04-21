@@ -13,7 +13,6 @@ import { InfoPagePassword } from "./components/RequireAuth/InfoPagePassword";
 import PanelAdmin from "./pages/PanelAdmin";
 import ProtectedRoute from "./components/RequireAuth/ProtectedRoute";
 import NotFoundPage from "./pages/NotFoundPage";
-import { Quiz } from "./components/Quiz/Quiz";
 
 function App() {
   return (

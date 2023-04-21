@@ -14,13 +14,6 @@ interface Activity {
   sort: number;
 }
 
-// interface Props {
-//   etapData: {
-//     onActivityConfirmation: (newActivityId: string) => void;
-//   };
-//   etap_id: string;
-// }
-
 function Activities() {
   const { etapId, handleActivityConfirmation } = useStages();
   const etapsID = useParamsStagesHook();

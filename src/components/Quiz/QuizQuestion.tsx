@@ -1,11 +1,16 @@
 import { QuestionProps } from "./ModelsQuizTypes";
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { AnswersContainer } from "./Answers.Container.styled";
 import { Answer } from "./Answers.styled";
+import { collection, doc, onSnapshot, query, setDoc, updateDoc, where } from "firebase/firestore";
+import { database } from "../../utils/firebase/firebase.config";
+import { useUser } from "../RequireAuth/context/AuthContext";
 
-export const QuestionCard = ({ question, currentQuestion, lengthOfQuestions, setQuestionIndex }: QuestionProps) => {
+export const QuestionCard = ({ question, currentQuestion, lengthOfQuestions, setQuestionIndex, etapId }: QuestionProps) => {
+  const userName = useUser();
   const [showResults, setShowResults] = useState(false);
   const [score, setScore] = useState(0);
+  const [userResult, setUserResult] = useState<Number>();
 
   const optionClicked = (isCorrect: boolean) => {
     if (isCorrect) {
@@ -25,22 +30,49 @@ export const QuestionCard = ({ question, currentQuestion, lengthOfQuestions, set
     setShowResults(false);
   };
 
-  const quizResult = () => {
+  const quizResult = useMemo(() => {
     const result = (score / question.options.length) * 100;
+    setUserResult(result);
     return result;
-  };
+  }, [score, question.options.length]);
+
+  const userQuizPointsCollection = collection(database, "user_quiz_points");
+
+  useEffect(() => {
+    // check if there is already a document for a given user and stage
+    const etapIdQuery = query(userQuizPointsCollection, where("etap_id", "==", etapId), where("user_id", "==", userName?.uid));
+    const unsubscribe = onSnapshot(etapIdQuery, (snapshot) => {
+      if (snapshot.empty) {
+        // if don't exist create new
+        const newUserPoints = {
+          etap_id: etapId,
+          user_id: userName?.uid,
+          result: userResult,
+        };
+        setDoc(doc(userQuizPointsCollection), newUserPoints)
+          .then(() => {})
+          .catch(() => console.log("Error"));
+      } else {
+        // if exist update the document
+        const docId = snapshot.docs[0].id;
+        updateDoc(doc(userQuizPointsCollection, docId), { result: userResult })
+          .then(() => {})
+          .catch(() => console.log("Error"));
+      }
+    });
+    return () => unsubscribe();
+  }, [userResult]);
 
   return (
     <div>
       {/* Current Score  */}
       <h2>Punkty: {score}</h2>
-
       {/* Show results or show the question game  */}
       {showResults ? (
         <div className="final-results">
           <h2>Wynik końcowy</h2>
           <h2>
-            {score} z {lengthOfQuestions} prawidłowych({quizResult()}%)
+            {score} z {lengthOfQuestions} prawidłowych({quizResult}%)
           </h2>
           <button onClick={() => restartGame()}>Wykonaj test od nowa</button>
         </div>
