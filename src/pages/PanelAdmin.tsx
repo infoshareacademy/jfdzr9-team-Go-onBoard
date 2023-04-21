@@ -5,6 +5,7 @@ import ProgressUser from "../adminControl/ProgressUser";
 
 import ButtonLogout from "../components/RequireAuth/ButtonLogout";
 import AddQuiz from "../adminControl/AddQuiz";
+import { useFirebaseFetch } from "../components/hooks/useFirebaseFetch";
 
 function PanelAdmin() {
   const [showAddActivity, setShowAddActivity] = useState(false);
@@ -40,6 +41,11 @@ function PanelAdmin() {
     setShowProgressUser(false);
   };
 
+  const quizCollection = useFirebaseFetch("quiz");
+  console.log(quizCollection);
+
+  const QuizId = quizCollection.find((id) => id.id);
+  console.log(QuizId);
   return (
     <>
       <h1>Panel Admina</h1>
