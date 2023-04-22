@@ -4,6 +4,7 @@ import { useFirebaseFetch } from "../hooks/useFirebaseFetch";
 import { Doughnut } from "react-chartjs-2";
 import { Chart } from "chart.js";
 import { ArcElement, DoughnutController } from "chart.js";
+import { collection, getFirestore, onSnapshot } from "firebase/firestore";
 
 Chart.register(ArcElement, DoughnutController);
 
@@ -23,50 +24,63 @@ function ProgressEtap() {
   const [userProgress, setUserProgress] = useState<number | null>(null);
 
   useEffect(() => {
-    if (user && activities.length && userActivitiesData.length) {
-      const filteredUserActivities = userActivitiesData.filter(
-        (activity) => activity.user_id === user.uid
-      );
+    if (user) {
+      const db = getFirestore();
+      const userActivitiesRef = collection(db, "user_activities");
 
-      const progress =
-        (filteredUserActivities.length / activities.length) * 100;
-      setUserProgress(progress);
+      const unsubscribe = onSnapshot(userActivitiesRef, (snapshot) => {
+        const newUserActivitiesData = snapshot.docs.map((doc) => doc.data());
+        const filteredUserActivities = newUserActivitiesData.filter(
+          (activity) => activity.user_id === user.uid
+        );
+
+        const progress =
+          (filteredUserActivities.length / activities.length) * 100;
+        setUserProgress(progress);
+      });
+
+      return () => {
+        unsubscribe();
+      };
     }
-  }, [user, activities, userActivitiesData]);
+  }, [user, activities]);
 
   const data = {
     datasets: [
       {
         data: [userProgress ?? 0, 100 - (userProgress ?? 0)],
-        backgroundColor: ["#36A2EB", "#FF6384"],
-        hoverBackgroundColor: ["#36A2EB", "#FF6384"],
+        backgroundColor: ["#020246", "#d9d9d9"],
+        hoverBackgroundColor: ["#020246", "#d9d9d9"],
       },
     ],
   };
 
   return (
-    <div style={{ border: "1px solid black", position: "relative" }}>
-      {user && userProgress !== null ? (
-        <div key={user.uid}>
-          <Doughnut
-            data={data}
-            style={{ zIndex: "1" }}
-          />
-          <div
-            style={{
-              zIndex: "3",
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-            }}>
-            {userProgress.toFixed(0)}%
+    <>
+      <div style={{ position: "relative" }}>
+        <h2>Twój wynik</h2>
+        {user && userProgress !== null ? (
+          <div key={user.uid}>
+            <Doughnut
+              data={data}
+              style={{ zIndex: "1", width: "100px", height: "100px" }}
+            />
+            <div
+              style={{
+                zIndex: "3",
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+              }}>
+              {userProgress.toFixed(0)}%
+            </div>
           </div>
-        </div>
-      ) : (
-        <div>Loading user progress...</div>
-      )}
-    </div>
+        ) : (
+          <div>Loading user progress...</div>
+        )}
+      </div>
+    </>
   );
 }
 
