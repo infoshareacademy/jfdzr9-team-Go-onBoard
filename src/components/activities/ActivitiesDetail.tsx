@@ -3,6 +3,7 @@ import { database } from "../../utils/firebase/firebase.config";
 import { collection, getDocs } from "firebase/firestore";
 import ConfirmActivity from "../button/ConfirmActivity";
 import CommentActivity from "./Comment";
+import Modal from 'react-modal';
 import {
   DetailsWraper,
   LinkFetched,
@@ -11,6 +12,7 @@ import {
 } from "./Activities.styled";
 import LinkFetchedHeader from "./LinkFetchedHeader";
 import IconFetchedHeader from "./IconFetchedHeader";
+import { Movie } from "tabler-icons-react";
 
 interface Activity {
   id: string;
@@ -64,9 +66,49 @@ function ActivitiesDetail(props: Props) {
       setFetchedLink(null);
     }
   }, [activitiesDetail, props.detailProps.activitiesId]);
+  
+  const [modalIsOpen, setIsOpen] = React.useState(false);
+  const [iframe, setIframe] = useState<any>(null);
+
+  function openModal(filteredEtap:any) {
+    setIsOpen(true);
+    setIframe(
+      <div>
+        <iframe
+          src={filteredEtap.movie}
+          width="560"
+          height="315"
+          frameBorder="0"
+          allowFullScreen
+        />
+      </div>
+    );
+  }
+
+  function afterOpenModal() {
+    // references are now sync'd and can be accessed.
+
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+
+  }
 
   return (
     <DetailsWraper>
+      <Modal
+        isOpen={modalIsOpen}
+        onAfterOpen={afterOpenModal}
+        onRequestClose={closeModal}
+     
+       
+        contentLabel="Modal"
+        // overlayClassName="modal-overlay"
+        // className="modal-content"
+      >{iframe}
+      <button onClick={closeModal} >X</button>
+      </Modal>
       {activitiesDetail
         .filter((detail) => detail.id === props.detailProps.activitiesId)
         .map((filteredEtap) => {
@@ -83,14 +125,9 @@ function ActivitiesDetail(props: Props) {
                 </HeaderInfo>
                 <HeaderInfoButton>
                   {fetchedLink && ( // render the button if in activities is link
-                    <a
-                      href={fetchedLink}
-                      target="_blank"
-                      rel="noopener noreferrer">
-                      <button className="confirmButton">
-                        Przejdź do strony
-                      </button>
-                    </a>
+                    <button onClick={()=> openModal(filteredEtap)} className="confirmButton"> Przejdz do strony </button>
+                      
+                    
                   )}
                 </HeaderInfoButton>
               </LinkFetched>

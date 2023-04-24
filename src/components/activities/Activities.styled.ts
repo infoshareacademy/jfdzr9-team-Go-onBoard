@@ -77,7 +77,8 @@ export const LinkFetched = styled.div`
 `;
 
 export const StyledLinkFetchedHeader = styled.div`
-  display: flex;
+  cursor:pointer;
+display: flex;
   flex-direction: row;
   align-items: center;
   padding: 16px 20px 16px 16px;
