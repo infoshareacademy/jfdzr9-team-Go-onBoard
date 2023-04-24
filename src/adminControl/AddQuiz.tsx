@@ -151,7 +151,7 @@ function AddQuiz() {
         </p>
         <p>
           1. Aby dodać kolejne odpowiedzi do tego samego pytania wpisz kolejno: Pytanie, Nr odpowiedzi, Treść odpowiedzi oraz zaznacz czy jest prawidłowa i kliknij "Dodaj kolejną
-          odpowiedź i następnie postępuj w ten sam sposób - jedynie pytanie pozostanie wpisane z pierwszego kroku.
+          odpowiedź".
         </p>
         <p>
           2. Chcąc dodać kolejne pytanie pamiętaj, aby po wpisaniu ostatniej odpowiedzi z pkt 1 tym razem wcisnąć przycisk "Dodaj pytanie", a następnie postępować zgodnie z krokami

@@ -1,7 +1,7 @@
 import "../../index.css";
 import { database } from "../../utils/firebase/firebase.config";
 import { collection, getDocs, Timestamp } from "firebase/firestore";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useEffect } from "react";
 import { getApp } from "firebase/app";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
@@ -21,6 +21,7 @@ export const StagesContainer = () => {
   const user = useUser();
   const [stagesName, setStagesName] = useState<Stage[]>([]);
   const [imageUrl, setImageUrl] = useState<string[]>([]);
+  const [disabled, setDisabled] = useState<{ [key: string]: boolean | null }>({ true: false });
 
   const getStagesName = async () => {
     const userCollerction = collection(database, "etaps");
@@ -126,13 +127,31 @@ export const StagesContainer = () => {
     const sum = matchingValues ? matchingValues.count : 0;
     const average = (sum / value) * 100;
     const checkDate = matchingValues ? matchingValues.check_date : null;
-    return { etap_id: key, average: `${average}%`, checkDate };
+    return { etap_id: key, average: average, checkDate };
   });
 
-  const averagesByEtapId = averagesAndDates.reduce((acc: { [key: UsersActivities["etap_id"]]: string }, { etap_id, average }) => {
+  const averagesByEtapId = averagesAndDates.reduce((acc: { [key: UsersActivities["etap_id"]]: number }, { etap_id, average }) => {
     acc[etap_id] = average;
     return acc;
   }, {});
+
+  //blocking button clicks until user get 25% done activities
+  const disabledMap = useMemo(() => {
+    const map: { [key: string]: boolean } = {};
+    let isFirst = true; // tracikng variable if first etap_id
+    for (const { etap_id } of averagesAndDates) {
+      if (isFirst && averagesByEtapId[etap_id] >= 0) {
+        // set first etap_id on false, if it value in averagesByEtapId is 0 or more
+        map[etap_id] = true;
+        isFirst = false;
+        continue;
+      }
+      map[etap_id] = averagesByEtapId[etap_id] >= 25; // sets disabledMap for next etap_id
+    }
+    return map;
+  }, [averagesAndDates, averagesByEtapId]);
+
+  //////////////////////////////////////////////////
 
   const checkDatesByEtapId = averagesAndDates.reduce((acc: { [key: UsersActivities["etap_id"]]: string }, { etap_id, checkDate }) => {
     if (checkDate && checkDate) {
@@ -152,10 +171,17 @@ export const StagesContainer = () => {
             return (
               <span key={id} className="etaps">
                 <button>
-                  <Link to={`/etaps/${id}`}>Process</Link>
+                  <Link
+                    to={disabledMap[id] ? `/etaps/${id}` : "#"}
+                    style={{
+                      pointerEvents: disabledMap[id] ? "auto" : "none",
+                      opacity: disabledMap[id] ? 1 : 0.5,
+                    }}>
+                    Process
+                  </Link>
                 </button>
                 <img src={imageUrlForStage} alt={icon} className="icons" />
-                <span>{averagesByEtapId[id]}</span>
+                <span>{averagesByEtapId[id]}%</span>
                 <span>{checkDatesByEtapId[id]}</span>
               </span>
             );
