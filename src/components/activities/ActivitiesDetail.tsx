@@ -76,6 +76,7 @@ function ActivitiesDetail(props: Props) {
               key={filteredEtap.id}>
               <h3>{filteredEtap.name}</h3>
               <span>{filteredEtap.description}</span>
+              <a href={filteredEtap.link} target="_blank">Download</a>
               <LinkFetched>
                 <HeaderInfo>
                   <IconFetchedHeader iconName={filteredEtap.type || ""} />
