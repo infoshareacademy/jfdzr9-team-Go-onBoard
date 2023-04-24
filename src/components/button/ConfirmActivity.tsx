@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { database } from "../../utils/firebase/firebase.config";
-import { collection, query, where, getDocs, doc, setDoc, serverTimestamp } from "firebase/firestore";
+import { collection, query, where, getDocs, doc, setDoc, serverTimestamp, onSnapshot } from "firebase/firestore";
 import { useUser } from "../RequireAuth/context/AuthContext";
 
 interface ConfirmActivityProps {
@@ -11,12 +11,20 @@ interface ConfirmActivityProps {
   };
 }
 
+interface QuizCollection {
+  result: number;
+  user_id: string;
+  id: string;
+  etapId: string;
+}
+
 const ConfirmActivity: React.FC<ConfirmActivityProps> = (props) => {
   const user = useUser();
   const [activityChecked, setActivityChecked] = useState<boolean>(false); // flag for check button
   const [checkedActivityId, setCheckedActivityId] = useState<string | null>(null); // state to track the checked activity
   const [isDisabled, setIsDisabled] = useState<boolean>(true); // state to disable the button if the activity has already been checked
   const [hasMounted, setHasMounted] = useState<boolean>(false); // flag to indicate whether the component has mounted
+  const [points, setPoints] = useState<QuizCollection[]>([]);
 
   const activiti: string = props.confirmActivityProps.activitiesId || "";
   const etap_id: string = props.confirmActivityProps.etap_id;
@@ -54,6 +62,39 @@ const ConfirmActivity: React.FC<ConfirmActivityProps> = (props) => {
       })
       .catch(() => console.log("Error"));
   }
+
+  ///listening when the result of quiz will changed to enable or disable the button "zapisz krok"
+  useEffect(() => {
+    const pointsRef = collection(database, "user_quiz_points");
+    const pointsQuery = query(pointsRef, where("user_id", "==", user?.uid));
+    const unsubscribe = onSnapshot(pointsQuery, (snapshot) => {
+      const newPoints: QuizCollection[] = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        user_id: doc.data().user_id,
+        result: doc.data().result,
+        etapId: doc.data().etap_id,
+        ...doc.data(),
+      }));
+      setPoints(newPoints);
+
+      const userPoints: QuizCollection | undefined = newPoints.find((point) => point.user_id === user?.uid && point.etapId === etap_id);
+      console.log(userPoints?.result);
+
+      if (userPoints?.result && userPoints.result >= 75) {
+        setIsDisabled(false);
+        setActivityChecked(false);
+        props.confirmActivityProps.onActivityConfirmation(activiti);
+      } else {
+        setIsDisabled(true);
+        setActivityChecked(true);
+        props.confirmActivityProps.onActivityConfirmation(activiti);
+      }
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   return (
     <button

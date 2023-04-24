@@ -127,8 +127,8 @@ function Etaps() {
               key={etap.id}
               onClick={() => setEtapId(etap.id)}
               style={{
-                pointerEvents: enableLink ? "auto" : "none",
                 opacity: enableLink ? 1 : 0.5,
+                cursor: enableLink ? "pointer" : "not-allowed",
               }}>
               {etap.icon && <img src={etap.icon} alt={etap.name} />}
               <span>{etap.name}</span>

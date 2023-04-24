@@ -50,7 +50,7 @@ function ActivitiesDetail(props: Props) {
   useEffect(() => {
     // fetch only the link from the activities, if link =-1 change state
     const activity = activitiesDetail.find((activity) => activity.id === props.detailProps.activitiesId);
-    console.log(activity);
+
     if (activity && activity.link && activity.link !== "-1") {
       setFetchedLink(activity.link);
     } else {

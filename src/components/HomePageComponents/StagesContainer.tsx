@@ -169,20 +169,19 @@ export const StagesContainer = () => {
           {sortedStages.map(({ id, icon }) => {
             const imageUrlForStage = imageUrl[stagesName.findIndex((stage) => stage.id === id)];
             return (
-              <span key={id} className="etaps">
-                <button>
-                  <Link
-                    to={disabledMap[id] ? `/etaps/${id}` : "#"}
-                    style={{
-                      pointerEvents: disabledMap[id] ? "auto" : "none",
-                      opacity: disabledMap[id] ? 1 : 0.5,
-                    }}>
-                    Process
-                  </Link>
-                </button>
-                <img src={imageUrlForStage} alt={icon} className="icons" />
-                <span>{averagesByEtapId[id]}%</span>
-                <span>{checkDatesByEtapId[id]}</span>
+              <span key={id}>
+                <Link
+                  className="etaps"
+                  to={disabledMap[id] ? `/etaps/${id}` : "#"}
+                  style={{
+                    pointerEvents: disabledMap[id] ? "auto" : "auto",
+                    opacity: disabledMap[id] ? 1 : 0.5,
+                    cursor: disabledMap[id] ? "pointer" : "not-allowed",
+                  }}>
+                  <img src={imageUrlForStage} alt={icon} className="icons" />
+                  <span>{averagesByEtapId[id]}%</span>
+                  <span>{checkDatesByEtapId[id]}</span>
+                </Link>
               </span>
             );
           })}
