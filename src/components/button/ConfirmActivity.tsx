@@ -64,37 +64,37 @@ const ConfirmActivity: React.FC<ConfirmActivityProps> = (props) => {
   }
 
   ///listening when the result of quiz will changed to enable or disable the button "zapisz krok"
-  useEffect(() => {
-    const pointsRef = collection(database, "user_quiz_points");
-    const pointsQuery = query(pointsRef, where("user_id", "==", user?.uid));
-    const unsubscribe = onSnapshot(pointsQuery, (snapshot) => {
-      const newPoints: QuizCollection[] = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        user_id: doc.data().user_id,
-        result: doc.data().result,
-        etapId: doc.data().etap_id,
-        ...doc.data(),
-      }));
-      setPoints(newPoints);
+  // useEffect(() => {
+  //   const pointsRef = collection(database, "user_quiz_points");
+  //   const pointsQuery = query(pointsRef, where("user_id", "==", user?.uid));
+  //   const unsubscribe = onSnapshot(pointsQuery, (snapshot) => {
+  //     const newPoints: QuizCollection[] = snapshot.docs.map((doc) => ({
+  //       id: doc.id,
+  //       user_id: doc.data().user_id,
+  //       result: doc.data().result,
+  //       etapId: doc.data().etap_id,
+  //       ...doc.data(),
+  //     }));
+  //     setPoints(newPoints);
 
-      const userPoints: QuizCollection | undefined = newPoints.find((point) => point.user_id === user?.uid && point.etapId === etap_id);
-      console.log(userPoints?.result);
+  //     const userPoints: QuizCollection | undefined = newPoints.find((point) => point.user_id === user?.uid && point.etapId === etap_id);
+  //     console.log(userPoints?.result);
 
-      if (userPoints?.result && userPoints.result >= 75) {
-        setIsDisabled(false);
-        setActivityChecked(false);
-        props.confirmActivityProps.onActivityConfirmation(activiti);
-      } else {
-        setIsDisabled(true);
-        setActivityChecked(true);
-        props.confirmActivityProps.onActivityConfirmation(activiti);
-      }
-    });
+  //     if (userPoints?.result && userPoints.result >= 75) {
+  //       setIsDisabled(false);
+  //       setActivityChecked(false);
+  //       props.confirmActivityProps.onActivityConfirmation(activiti);
+  //     } else {
+  //       setIsDisabled(true);
+  //       setActivityChecked(true);
+  //       props.confirmActivityProps.onActivityConfirmation(activiti);
+  //     }
+  //   });
 
-    return () => {
-      unsubscribe();
-    };
-  }, []);
+  //   return () => {
+  //     unsubscribe();
+  //   };
+  // }, []);
 
   return (
     <button
