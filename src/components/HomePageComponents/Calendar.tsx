@@ -30,12 +30,9 @@ function isUniqueDate(date: Date, index: number, self: Date[]) {
 function Calendar() {
   const userName = useUser();
   const usersCollection = useFirebaseFetch<IUser>("users");
-  const userActivitiesCollection =
-    useFirebaseFetch<IUserActivity>("user_activities");
+  const userActivitiesCollection = useFirebaseFetch<IUserActivity>("user_activities");
 
-  const currentUser = usersCollection?.find(
-    (user) => user.uid === userName?.uid
-  );
+  const currentUser = usersCollection?.find((user) => user.uid === userName?.uid);
 
   const now = new Date();
   let daysUntilStart: string | number = "Nieznany";
@@ -68,19 +65,14 @@ function Calendar() {
       .sort((a, b) => a.getTime() - b.getTime());
 
     //check that currentdate is in array-sortedUserActivities
-    currentDayInActivities =
-      sortedUserActivities?.some(
-        (activityDate) => activityDate.getTime() === today.getTime()
-      ) ?? false;
+    currentDayInActivities = sortedUserActivities?.some((activityDate) => activityDate.getTime() === today.getTime()) ?? false;
 
     let previousDate: Date | null = null;
     let currentStreak = 0;
 
     for (const activityDate of sortedUserActivities || []) {
       if (previousDate) {
-        const dayDifference =
-          (activityDate.getTime() - previousDate.getTime()) /
-          (1000 * 3600 * 24); //days between current date and previous date
+        const dayDifference = (activityDate.getTime() - previousDate.getTime()) / (1000 * 3600 * 24); //days between current date and previous date
 
         if (dayDifference === 1) {
           currentStreak++;
@@ -107,13 +99,7 @@ function Calendar() {
   return (
     <>
       <Account />
-      <h2>
-        {daysUntilStart === 0
-          ? "Kurs się rozpoczął"
-          : `Kurs rozpocznie się za: ${daysUntilStart} ${
-              daysUntilStart === 1 ? "dzień" : "dni"
-            }!`}
-      </h2>
+      <h2>{daysUntilStart === 0 ? "Kurs się rozpoczął" : `Kurs rozpocznie się za: ${daysUntilStart} ${daysUntilStart === 1 ? "dzień" : "dni"}!`}</h2>
       <h4>Dni pracy pod rząd: {consecutiveActivities}</h4>
       <h4>Najlepszy wynik: {bestStreak}</h4>
     </>

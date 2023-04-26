@@ -1,18 +1,14 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { database } from "../../utils/firebase/firebase.config";
 import { collection, getDocs } from "firebase/firestore";
 import ConfirmActivity from "../button/ConfirmActivity";
 import CommentActivity from "./Comment";
-import {
-  DetailsWraper,
-  LinkFetched,
-  HeaderInfo,
-  HeaderInfoButton,
-} from "./Activities.styled";
+import { Quiz } from "../Quiz/Quiz";
+import { DetailsWraper, LinkFetched, HeaderInfo, HeaderInfoButton } from "./Activities.styled";
 import LinkFetchedHeader from "./LinkFetchedHeader";
 import IconFetchedHeader from "./IconFetchedHeader";
 
-interface Activity {
+export interface Activity {
   id: string;
   name: string;
   description: string;
@@ -20,8 +16,12 @@ interface Activity {
   comment?: string;
   link?: string;
   action?: string;
+  test: boolean;
+  currentActivity: {
+    test: boolean | undefined;
+  };
+  // setCurrentActivity: React.Dispatch<React.SetStateAction<boolean>>;
 }
-
 interface Props {
   detailProps: {
     activitiesId: string | null;
@@ -33,7 +33,7 @@ interface Props {
 function ActivitiesDetail(props: Props) {
   const [activitiesDetail, setActivitiesDetail] = useState<Activity[]>([]);
   const [fetchedLink, setFetchedLink] = useState<string | null>(null);
-
+  const [currentActivity, setCurrentActivity] = useState<Activity>();
   const confirmActivityProps = {
     activitiesId: props.detailProps.activitiesId,
     etap_id: props.detailProps.etap_id,
@@ -55,14 +55,14 @@ function ActivitiesDetail(props: Props) {
 
   useEffect(() => {
     // fetch only the link from the activities, if link =-1 change state
-    const activity = activitiesDetail.find(
-      (activity) => activity.id === props.detailProps.activitiesId
-    );
+    const activity = activitiesDetail.find((activity) => activity.id === props.detailProps.activitiesId);
+
     if (activity && activity.link && activity.link !== "-1") {
       setFetchedLink(activity.link);
     } else {
       setFetchedLink(null);
     }
+    setCurrentActivity(activity);
   }, [activitiesDetail, props.detailProps.activitiesId]);
 
   return (
@@ -71,11 +71,9 @@ function ActivitiesDetail(props: Props) {
         .filter((detail) => detail.id === props.detailProps.activitiesId)
         .map((filteredEtap) => {
           return (
-            <div
-              className="detailsContent"
-              key={filteredEtap.id}>
+            <div className="detailsContent" key={filteredEtap.id}>
               <h3>{filteredEtap.name}</h3>
-              <span>{filteredEtap.description}</span>
+              {currentActivity?.test === true ? <Quiz etapIdForQuiz={confirmActivityProps} /> : <span>{filteredEtap.description}</span>}
               <LinkFetched>
                 <HeaderInfo>
                   <IconFetchedHeader iconName={filteredEtap.type || ""} />
@@ -83,23 +81,14 @@ function ActivitiesDetail(props: Props) {
                 </HeaderInfo>
                 <HeaderInfoButton>
                   {fetchedLink && ( // render the button if in activities is link
-                    <a
-                      href={fetchedLink}
-                      target="_blank"
-                      rel="noopener noreferrer">
-                      <button className="confirmButton">
-                        Przejdź do strony
-                      </button>
+                    <a href={fetchedLink} target="_blank" rel="noopener noreferrer">
+                      <button className="confirmButton">Przejdź do strony</button>
                     </a>
                   )}
                 </HeaderInfoButton>
               </LinkFetched>
-              {filteredEtap.comment && (
-                <CommentActivity
-                  activitiesId={props.detailProps.activitiesId}
-                />
-              )}
-              <ConfirmActivity confirmActivityProps={confirmActivityProps} />
+              {filteredEtap.comment && <CommentActivity activitiesId={props.detailProps.activitiesId} />}
+              <ConfirmActivity confirmActivityProps={confirmActivityProps} currentActivity={currentActivity} />
             </div>
           );
         })}
