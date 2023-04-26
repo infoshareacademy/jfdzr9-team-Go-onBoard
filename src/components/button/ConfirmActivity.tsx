@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { database } from "../../utils/firebase/firebase.config";
 import { collection, query, where, getDocs, doc, setDoc, serverTimestamp, onSnapshot } from "firebase/firestore";
 import { useUser } from "../RequireAuth/context/AuthContext";
+import { Activity } from "../activities/ActivitiesDetail";
 
 interface ConfirmActivityProps {
   confirmActivityProps: {
@@ -9,9 +10,7 @@ interface ConfirmActivityProps {
     etap_id: string;
     onActivityConfirmation: (newActivityId: string) => void;
   };
-  currentActivity: {
-    test: boolean | undefined;
-  };
+  currentActivityy: Activity | undefined;
 }
 interface QuizCollection {
   result: number;
