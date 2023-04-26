@@ -74,7 +74,6 @@ function ActivitiesDetail(props: Props) {
           return (
             <div className="detailsContent" key={filteredEtap.id}>
               <h3>{filteredEtap.name}</h3>
-              <span>{filteredEtap.description}</span>
               {currentActivity?.test === true ? <Quiz etapIdForQuiz={confirmActivityProps} /> : <span>{filteredEtap.description}</span>}
               <LinkFetched>
                 <HeaderInfo>
