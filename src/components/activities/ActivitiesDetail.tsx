@@ -4,6 +4,9 @@ import { collection, getDocs } from "firebase/firestore";
 import ConfirmActivity from "../button/ConfirmActivity";
 import CommentActivity from "./Comment";
 import { Quiz } from "../Quiz/Quiz";
+import { DetailsWraper, LinkFetched, HeaderInfo, HeaderInfoButton } from "./Activities.styled";
+import LinkFetchedHeader from "./LinkFetchedHeader";
+import IconFetchedHeader from "./IconFetchedHeader";
 
 interface Activity {
   id: string;
@@ -11,7 +14,8 @@ interface Activity {
   description: string;
   type: string;
   comment?: string;
-  link?: string; // Add link to the Activity interface
+  link?: string;
+  action?: string;
   test: boolean;
 
   // setCurrentActivity: React.Dispatch<React.SetStateAction<boolean>>;
@@ -63,26 +67,34 @@ function ActivitiesDetail(props: Props) {
   }, [activitiesDetail, props.detailProps.activitiesId]);
 
   return (
-    <div>
+    <DetailsWraper>
       {activitiesDetail
         .filter((detail) => detail.id === props.detailProps.activitiesId)
         .map((filteredEtap) => {
           return (
-            <div style={{ display: "flex", flexDirection: "column" }} key={filteredEtap.id}>
-              <span>{filteredEtap.name}</span>
+            <div className="detailsContent" key={filteredEtap.id}>
+              <h3>{filteredEtap.name}</h3>
+              <span>{filteredEtap.description}</span>
               {currentActivity?.test === true ? <Quiz etapIdForQuiz={confirmActivityProps} /> : <span>{filteredEtap.description}</span>}
-
-              {fetchedLink && ( // render the button if in activities is link
-                <a href={fetchedLink} target="_blank" rel="noopener noreferrer">
-                  <button>Przejdź do strony</button>
-                </a>
-              )}
+              <LinkFetched>
+                <HeaderInfo>
+                  <IconFetchedHeader iconName={filteredEtap.type || ""} />
+                  <LinkFetchedHeader text={filteredEtap.action || ""} />
+                </HeaderInfo>
+                <HeaderInfoButton>
+                  {fetchedLink && ( // render the button if in activities is link
+                    <a href={fetchedLink} target="_blank" rel="noopener noreferrer">
+                      <button className="confirmButton">Przejdź do strony</button>
+                    </a>
+                  )}
+                </HeaderInfoButton>
+              </LinkFetched>
               {filteredEtap.comment && <CommentActivity activitiesId={props.detailProps.activitiesId} />}
               <ConfirmActivity confirmActivityProps={confirmActivityProps} currentActivity={currentActivity} />
             </div>
           );
         })}
-    </div>
+    </DetailsWraper>
   );
 }
 

@@ -1,6 +1,13 @@
 import React, { useRef, useState, useEffect } from "react";
 import { database } from "../../utils/firebase/firebase.config";
-import { collection, getDoc, doc, setDoc, serverTimestamp, updateDoc } from "firebase/firestore";
+import {
+  collection,
+  getDoc,
+  doc,
+  setDoc,
+  serverTimestamp,
+  updateDoc,
+} from "firebase/firestore";
 import { CommentContainer, CommentUser, StyledH5 } from "./Comment.styled";
 
 interface UserComment {
@@ -73,7 +80,11 @@ const CommentActivity: React.FC<Props> = (props) => {
 
         <CommentUser ref={userCommentRef} />
 
-        <button type="submit">{hasCommented ? "Zaktualizuj NOTATKĘ" : "Zapisz NOTATKĘ"}</button>
+        <button
+          type="submit"
+          className="confirmButton">
+          {hasCommented ? "Aktualizuj NOTATKĘ" : "Zapisz NOTATKĘ"}
+        </button>
       </CommentContainer>
     </form>
   );

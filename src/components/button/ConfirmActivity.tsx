@@ -35,7 +35,7 @@ const ConfirmActivity: React.FC<ConfirmActivityProps> = (props) => {
   // Fetch the user_activities collection and check if there's a document with a true value for the result field
   useEffect(() => {
     const fetchData = async () => {
-      const q = query(collection(database, "user_activities"), where("user_activity_id", "==", activiti), where("user_id", "==", user?.uid));
+      const q = query(collection(database, "user_activities"), where("user_activity_id", "==", activiti));
       const querySnapshot = await getDocs(q);
       const hasResult = querySnapshot.docs.some((doc) => doc.data().result);
       // setHasMounted(true); // set the flag to indicate that the component has mounted
@@ -101,6 +101,7 @@ const ConfirmActivity: React.FC<ConfirmActivityProps> = (props) => {
 
   return (
     <button
+      className="confirmButton"
       onClick={checkActivity}
       disabled={!hasMounted || isDisabled} // disable the button if the component hasn't mounted or the activity has already been checked, without this: button is mounted at first, so i could add few data to firebase
     >
