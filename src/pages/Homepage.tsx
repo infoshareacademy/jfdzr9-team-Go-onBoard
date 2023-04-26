@@ -1,7 +1,6 @@
 import { StagesContainer } from "../components/HomePageComponents/StagesContainer";
 import { WelcomeContainer } from "../components/HomePageComponents/WelcomeContainer";
 import "./../index.css";
-import { Link } from "react-router-dom";
 import { useUser } from "../components/RequireAuth/context/AuthContext";
 import { useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
