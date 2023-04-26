@@ -10,7 +10,7 @@ interface ConfirmActivityProps {
     onActivityConfirmation: (newActivityId: string) => void;
   };
   currentActivity: {
-    test: boolean;
+    test: boolean | undefined;
   };
 }
 interface QuizCollection {

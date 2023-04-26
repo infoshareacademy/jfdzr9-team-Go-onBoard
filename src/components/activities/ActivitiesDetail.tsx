@@ -8,7 +8,7 @@ import { DetailsWraper, LinkFetched, HeaderInfo, HeaderInfoButton } from "./Acti
 import LinkFetchedHeader from "./LinkFetchedHeader";
 import IconFetchedHeader from "./IconFetchedHeader";
 
-interface Activity {
+export interface Activity {
   id: string;
   name: string;
   description: string;
@@ -17,7 +17,9 @@ interface Activity {
   link?: string;
   action?: string;
   test: boolean;
-
+  currentActivity: {
+    test: boolean | undefined;
+  };
   // setCurrentActivity: React.Dispatch<React.SetStateAction<boolean>>;
 }
 interface Props {
@@ -25,9 +27,6 @@ interface Props {
     activitiesId: string | null;
     etap_id: string;
     onActivityConfirmation: (newActivityId: string) => void;
-  };
-  currentActivity: {
-    test: boolean;
   };
 }
 
