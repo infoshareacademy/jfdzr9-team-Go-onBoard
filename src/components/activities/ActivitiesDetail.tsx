@@ -13,14 +13,17 @@ interface Activity {
   comment?: string;
   link?: string; // Add link to the Activity interface
   test: boolean;
+
   // setCurrentActivity: React.Dispatch<React.SetStateAction<boolean>>;
 }
-
 interface Props {
   detailProps: {
     activitiesId: string | null;
     etap_id: string;
     onActivityConfirmation: (newActivityId: string) => void;
+  };
+  currentActivity: {
+    test: boolean;
   };
 }
 
@@ -75,7 +78,7 @@ function ActivitiesDetail(props: Props) {
                 </a>
               )}
               {filteredEtap.comment && <CommentActivity activitiesId={props.detailProps.activitiesId} />}
-              <ConfirmActivity confirmActivityProps={confirmActivityProps} />
+              <ConfirmActivity confirmActivityProps={confirmActivityProps} currentActivity={currentActivity} />
             </div>
           );
         })}

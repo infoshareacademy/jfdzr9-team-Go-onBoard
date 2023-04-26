@@ -9,8 +9,10 @@ interface ConfirmActivityProps {
     etap_id: string;
     onActivityConfirmation: (newActivityId: string) => void;
   };
+  currentActivity: {
+    test: boolean;
+  };
 }
-
 interface QuizCollection {
   result: number;
   user_id: string;
@@ -25,6 +27,7 @@ const ConfirmActivity: React.FC<ConfirmActivityProps> = (props) => {
   const [isDisabled, setIsDisabled] = useState<boolean>(true); // state to disable the button if the activity has already been checked
   const [hasMounted, setHasMounted] = useState<boolean>(false); // flag to indicate whether the component has mounted
   const [points, setPoints] = useState<QuizCollection[]>([]);
+  const [quizPassed, setQuizPassed] = useState<boolean>(false);
 
   const activiti: string = props.confirmActivityProps.activitiesId || "";
   const etap_id: string = props.confirmActivityProps.etap_id;
@@ -77,6 +80,7 @@ const ConfirmActivity: React.FC<ConfirmActivityProps> = (props) => {
   //     }));
   //     setPoints(newPoints);
 
+<<<<<<< HEAD
   //     const userPoints: QuizCollection | undefined = newPoints.find((point) => point.user_id === user?.uid && point.etapId === etap_id);
   //     console.log(userPoints?.result);
 
@@ -95,11 +99,31 @@ const ConfirmActivity: React.FC<ConfirmActivityProps> = (props) => {
   //     unsubscribe();
   //   };
   // }, []);
+=======
+      const userPoints: QuizCollection | undefined = newPoints.find((point) => point.user_id === user?.uid && point.etapId === etap_id);
+
+      console.log(userPoints?.result);
+
+      if (userPoints?.result && userPoints.result >= 75) {
+        setQuizPassed(userPoints.result >= 75);
+        setIsDisabled(!props.currentActivity.test === true || userPoints.result >= 75 ? false : true);
+      } else {
+        setQuizPassed(false);
+        setIsDisabled(false);
+      }
+      console.log(props.currentActivity.test);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [props.currentActivity]);
+>>>>>>> JFDZR9GO-45-test-for-user
 
   return (
     <button
       onClick={checkActivity}
-      disabled={!hasMounted || isDisabled} // disable the button if the component hasn't mounted or the activity has already been checked, without this: button is mounted at first, so i could add few data to firebase
+      disabled={!hasMounted || isDisabled || !quizPassed} // disable the button if the component hasn't mounted or the activity has already been checked, without this: button is mounted at first, so i could add few data to firebase
     >
       Zapisz krok
     </button>
