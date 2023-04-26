@@ -9,8 +9,10 @@ interface ConfirmActivityProps {
     etap_id: string;
     onActivityConfirmation: (newActivityId: string) => void;
   };
+  currentActivity: {
+    test: boolean;
+  };
 }
-
 interface QuizCollection {
   result: number;
   user_id: string;
@@ -25,6 +27,7 @@ const ConfirmActivity: React.FC<ConfirmActivityProps> = (props) => {
   const [isDisabled, setIsDisabled] = useState<boolean>(true); // state to disable the button if the activity has already been checked
   const [hasMounted, setHasMounted] = useState<boolean>(false); // flag to indicate whether the component has mounted
   const [points, setPoints] = useState<QuizCollection[]>([]);
+  const [quizPassed, setQuizPassed] = useState<boolean>(false);
 
   const activiti: string = props.confirmActivityProps.activitiesId || "";
   const etap_id: string = props.confirmActivityProps.etap_id;
@@ -64,42 +67,42 @@ const ConfirmActivity: React.FC<ConfirmActivityProps> = (props) => {
   }
 
   ///listening when the result of quiz will changed to enable or disable the button "zapisz krok"
-  // useEffect(() => {
-  //   const pointsRef = collection(database, "user_quiz_points");
-  //   const pointsQuery = query(pointsRef, where("user_id", "==", user?.uid));
-  //   const unsubscribe = onSnapshot(pointsQuery, (snapshot) => {
-  //     const newPoints: QuizCollection[] = snapshot.docs.map((doc) => ({
-  //       id: doc.id,
-  //       user_id: doc.data().user_id,
-  //       result: doc.data().result,
-  //       etapId: doc.data().etap_id,
-  //       ...doc.data(),
-  //     }));
-  //     setPoints(newPoints);
+  useEffect(() => {
+    const pointsRef = collection(database, "user_quiz_points");
+    const pointsQuery = query(pointsRef, where("user_id", "==", user?.uid));
+    const unsubscribe = onSnapshot(pointsQuery, (snapshot) => {
+      const newPoints: QuizCollection[] = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        user_id: doc.data().user_id,
+        result: doc.data().result,
+        etapId: doc.data().etap_id,
+        ...doc.data(),
+      }));
+      setPoints(newPoints);
 
-  //     const userPoints: QuizCollection | undefined = newPoints.find((point) => point.user_id === user?.uid && point.etapId === etap_id);
-  //     console.log(userPoints?.result);
+      const userPoints: QuizCollection | undefined = newPoints.find((point) => point.user_id === user?.uid && point.etapId === etap_id);
 
-  //     if (userPoints?.result && userPoints.result >= 75) {
-  //       setIsDisabled(false);
-  //       setActivityChecked(false);
-  //       props.confirmActivityProps.onActivityConfirmation(activiti);
-  //     } else {
-  //       setIsDisabled(true);
-  //       setActivityChecked(true);
-  //       props.confirmActivityProps.onActivityConfirmation(activiti);
-  //     }
-  //   });
+      console.log(userPoints?.result);
 
-  //   return () => {
-  //     unsubscribe();
-  //   };
-  // }, []);
+      if (userPoints?.result && userPoints.result >= 75) {
+        setQuizPassed(userPoints.result >= 75);
+        setIsDisabled(!props.currentActivity.test === true || userPoints.result >= 75 ? false : true);
+      } else {
+        setQuizPassed(false);
+        setIsDisabled(false);
+      }
+      console.log(props.currentActivity.test);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [props.currentActivity]);
 
   return (
     <button
       onClick={checkActivity}
-      disabled={!hasMounted || isDisabled} // disable the button if the component hasn't mounted or the activity has already been checked, without this: button is mounted at first, so i could add few data to firebase
+      disabled={!hasMounted || isDisabled || !quizPassed} // disable the button if the component hasn't mounted or the activity has already been checked, without this: button is mounted at first, so i could add few data to firebase
     >
       Zapisz krok
     </button>
