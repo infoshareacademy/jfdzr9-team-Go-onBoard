@@ -44,14 +44,12 @@ export const LogoImg = styled.img`
 
 export const Input = styled.input`
   box-sizing: border-box;
-
-  /* Auto layout */
-
   display: flex;
-  flex-direction: row;
-  align-items: center;
+  margin-left: 131px;
+  align-items: end;
   padding: 10px 14px;
   gap: 8px;
+  /* Auto layout */
 
   width: 320px;
   height: 44px;
@@ -76,6 +74,8 @@ export const Input = styled.input`
 `;
 
 export const Label = styled.label`
+  margin-left: 131px;
+
   font-family: "Inter";
   font-style: normal;
   font-weight: 500;
@@ -88,6 +88,7 @@ export const Label = styled.label`
 export const Button = styled.button`
   margin: 0 auto;
   display: block;
+  margin-top: 79px;
   gap: 8px;
   width: 161px;
   height: 48px;
@@ -107,6 +108,57 @@ export const LinkName = styled.p`
   color: #101828;
 `;
 
-export const Link = styled.Link`
+export const PageInfo = styled.div`
+  display: flex;
+  position: absolute;
+  width: 1600px;
+  height: 840px;
+  left: 0px;
+  top: 0px;
+
+  /* Secondary */
+
+  background: #eff0f7;
+  opacity: 0.8;
+`;
+
+export const PageImg = styled.div``;
+
+/* export const Link = styled.Link`
   font-family: "Inter";
+`; */
+
+export const MainImg = styled.div`
+  /* Inside auto layout */
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+`;
+
+export const ImgMain = styled.img`
+  /* Inside auto layout */
+  width: 764px;
+  height: 764px;
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+`;
+
+export const MainInfo = styled.div`
+  width: 582px;
+  height: 839px;
+
+  background: #ffffff;
+  /* Shadow field */
+
+  box-shadow: 8px 8px 24px rgba(2, 2, 70, 0.05);
+  border-radius: 31.2294px;
+
+  /* Inside auto layout */
+`;
+
+export const TextString = styled.p`
+  text-align: center;
 `;

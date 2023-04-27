@@ -240,13 +240,13 @@ h2 {
   flex-direction: column;
 }
 
-img {
+/*  img {
   width: 30px;
   height: 30px;
   color: crimson;
-  /* cursor: pointer; */
+   cursor: pointer; 
   filter: invert(93%) sepia(99%) saturate(5630%) hue-rotate(246deg) brightness(111%) contrast(148%);
-}
+}  */
 
 /* img:hover {
   width: 30px;
