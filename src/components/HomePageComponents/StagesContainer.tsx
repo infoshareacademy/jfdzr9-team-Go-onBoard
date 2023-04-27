@@ -169,7 +169,7 @@ export const StagesContainer = () => {
           {sortedStages.map(({ id, icon }) => {
             const imageUrlForStage = imageUrl[stagesName.findIndex((stage) => stage.id === id)];
             return (
-              <span key={id}>
+              <span key={id} className="stages-span">
                 <Link
                   className="etaps"
                   to={disabledMap[id] ? `/etaps/${id}` : "#"}

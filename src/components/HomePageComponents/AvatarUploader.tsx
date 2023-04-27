@@ -4,6 +4,7 @@ import { storage } from "../../utils/firebase/firebase.config";
 import { getFirestore, setDoc, doc, getDoc } from "firebase/firestore";
 import { useUser } from "../RequireAuth/context/AuthContext";
 import { useFirebaseFetch } from "../hooks/useFirebaseFetch";
+import "../../index.css";
 
 const AvatarUploader: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -43,20 +44,12 @@ const AvatarUploader: React.FC = () => {
         const url = await getDownloadURL(uploadTask.snapshot.ref);
         setImageUrl(url);
         setUploading(false);
-        await setDoc(
-          doc(getFirestore(), "users", user.uid),
-          { avatar: file.name },
-          { merge: true }
-        );
+        await setDoc(doc(getFirestore(), "users", user.uid), { avatar: file.name }, { merge: true });
       }
     );
   };
 
-  const currentUserAvatar =
-    user &&
-    useFirebaseFetch<{ avatar: string }>("users").find(
-      (u) => u.id === user.uid
-    );
+  const currentUserAvatar = user && useFirebaseFetch<{ avatar: string }>("users").find((u) => u.id === user.uid);
 
   useEffect(() => {
     if (!user) return;
@@ -67,9 +60,7 @@ const AvatarUploader: React.FC = () => {
       if (userDoc.exists()) {
         const userData = userDoc.data();
         if (userData && userData.avatar && userData.avatar !== "-1") {
-          const avatarUrl = await getDownloadURL(
-            ref(storage, `/files/${userData.avatar}`)
-          );
+          const avatarUrl = await getDownloadURL(ref(storage, `/files/${userData.avatar}`));
           setImageUrl(avatarUrl);
           setAvatarLoaded(true);
         }
@@ -86,11 +77,7 @@ const AvatarUploader: React.FC = () => {
     <div>
       <label htmlFor="fileInput">
         {imageUrl && avatarLoaded ? (
-          <img
-            src={imageUrl}
-            alt="Uploaded"
-            style={{ borderRadius: "50%" }}
-          />
+          <img className="avatar" src={imageUrl} alt="Uploaded" style={{ borderRadius: "50%" }} />
         ) : (
           <div
             style={{
@@ -107,13 +94,7 @@ const AvatarUploader: React.FC = () => {
           </div>
         )}
       </label>
-      <input
-        id="fileInput"
-        type="file"
-        onChange={handleChange}
-        accept="image/*"
-        style={{ display: "none" }}
-      />
+      <input id="fileInput" type="file" onChange={handleChange} accept="image/*" style={{ display: "none" }} />
     </div>
   );
 };
