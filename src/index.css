@@ -273,7 +273,7 @@ img {
   width: 696px;
   height: 28px;
 
-  background: var(--primary-2);
+  background: #687ec9;
   color: var(--secondary-1);
   /* Shadow field */
   box-shadow: 8px 8px 24px rgba(2, 2, 70, 0.05);
@@ -291,4 +291,11 @@ img {
 
   margin-left: auto;
   margin-right: auto;
+}
+
+.avatar {
+  width: 60px;
+  height: 60px;
+  color: auto;
+  filter: none;
 }

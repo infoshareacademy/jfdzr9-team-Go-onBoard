@@ -37,7 +37,6 @@ export const HomePageLayout = () => {
       </div>
       <div className="middle-container">
         <p className="title-etaps">
-          <span></span>
           <span>Dział</span>
           <span>Realizacja</span>
           <span>Wykonano</span>

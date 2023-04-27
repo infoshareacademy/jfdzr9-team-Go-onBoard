@@ -65,38 +65,39 @@ const ConfirmActivity: React.FC<ConfirmActivityProps> = (props) => {
       .catch(() => console.log("Error"));
   }
 
-  ///listening when the result of quiz will changed to enable or disable the button "zapisz krok"
-  // useEffect(() => {
-  //   const pointsRef = collection(database, "user_quiz_points");
-  //   const pointsQuery = query(pointsRef, where("user_id", "==", user?.uid));
-  //   const unsubscribe = onSnapshot(pointsQuery, (snapshot) => {
-  //     const newPoints: QuizCollection[] = snapshot.docs.map((doc) => ({
-  //       id: doc.id,
-  //       user_id: doc.data().user_id,
-  //       result: doc.data().result,
-  //       etapId: doc.data().etap_id,
-  //       ...doc.data(),
-  //     }));
-  //     setPoints(newPoints);
+  // /listening when the result of quiz will changed to enable or disable the button "zapisz krok"
+  useEffect(() => {
+    const pointsRef = collection(database, "user_quiz_points");
+    const pointsQuery = query(pointsRef, where("user_id", "==", user?.uid));
+    const unsubscribe = onSnapshot(pointsQuery, (snapshot) => {
+      const newPoints: QuizCollection[] = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        user_id: doc.data().user_id,
+        result: doc.data().result,
+        etapId: doc.data().etap_id,
+        ...doc.data(),
+      }));
+      setPoints(newPoints);
 
-  //     const userPoints: QuizCollection | undefined = newPoints.find((point) => point.user_id === user?.uid && point.etapId === etap_id);
+      const userPoints: QuizCollection | undefined = newPoints.find((point) => point.user_id === user?.uid && point.etapId === etap_id);
 
-  //     console.log(userPoints?.result);
+      if (userPoints?.result === undefined && props.currentActivityy?.test === true) {
+        setIsDisabled(true);
+      } else if (userPoints?.result && props.currentActivityy?.test === true && userPoints?.result >= 75) {
+        // setQuizPassed(userPoints.result >= 75);
+        setIsDisabled(false);
+        // setIsDisabled(!props.currentActivityy?.test === true || userPoints.result >= 75 ? false : true);
+      } else if (props.currentActivityy?.test && userPoints?.result && userPoints?.result < 75) {
+        setIsDisabled(true);
+      }
+      console.log("czy aktynowść ma test", props.currentActivityy?.test);
+      console.log("wynik quizu", userPoints?.result);
+    });
 
-  //     if (userPoints?.result && userPoints.result >= 75) {
-  //       setQuizPassed(userPoints.result >= 75);
-  //       setIsDisabled(!props.currentActivity.test === true || userPoints.result >= 75 ? false : true);
-  //     } else {
-  //       setQuizPassed(false);
-  //       setIsDisabled(false);
-  //     }
-  //     console.log(props.currentActivity.test);
-  //   });
-
-  //   return () => {
-  //     unsubscribe();
-  //   };
-  // }, [props.currentActivity]);
+    return () => {
+      unsubscribe();
+    };
+  }, [props.currentActivityy]);
 
   return (
     <button
