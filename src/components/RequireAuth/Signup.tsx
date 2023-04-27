@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword, signOut, getAuth, updateProfile } from "firebase/auth";
 import { auth, database } from "../../utils/firebase/firebase.config";
 import { collection, query, where, getDocs, doc, setDoc } from "firebase/firestore";
+import { Button, Input, Label, LinkName, LogoImg, LogoName, NamePage } from "./Sign.styled";
 
 interface CreateUserError {
   message: string;
@@ -96,31 +97,40 @@ export const Signup = () => {
   return (
     <>
       <div>
-        <h3>GO! onBoard</h3>
-        <h1>Zarejestruj się</h1>
+        <LogoImg src="/assets/Asset.png"></LogoImg>
+
+        <LogoName>
+          <b>GO!</b> onBoard
+        </LogoName>
+        <NamePage>Zarejestruj się</NamePage>
         <form onSubmit={handleSubmit}>
           <div>
-            <label>Name</label>
-            <input onChange={(e) => setProfileName(e.target.value)} type="name" placeholder="Wpisz swóje imię" />
+            <Label>Name</Label>
+            <br />
+            <Input onChange={(e) => setProfileName(e.target.value)} type="name" placeholder="Wpisz swóje imię" />
           </div>
           <div>
-            <label>Email</label>
-            <input onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Wpisz swój email" />
+            <Label>Email</Label>
+            <br />
+            <Input onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Wpisz swój email" />
           </div>
           <div>
-            <label>Password</label>
-            <input onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Wpisz swoje hasło" />
+            <Label>Password</Label>
+            <br />
+            <Input onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Wpisz swoje hasło" />
             <p>{error}</p>
           </div>
-          <button type="submit">Zarejestruj</button>
+          <div>
+            <Button type="submit">Zarejestruj</Button>
+          </div>
         </form>
         <div>
-          <p>
+          <LinkName>
             <Link to="/signin">Logowanie</Link>
-          </p>
-          <p>
-            <Link to="/signpassword">Nie pamietam hasla</Link>
-          </p>
+          </LinkName>
+          <LinkName>
+            <a href="/signpassword">Nie pamietam hasla</a>
+          </LinkName>
         </div>
       </div>
     </>
