@@ -137,7 +137,7 @@ function ProgressUser() {
           </option>
         ))}
       </select>
-      <table style={{ border: "1px solid black" }}>
+      <table style={{ border: "1px solid black", minWidth: "800px" }}>
         <thead>
           <tr>
             {columns.map((column) => (
