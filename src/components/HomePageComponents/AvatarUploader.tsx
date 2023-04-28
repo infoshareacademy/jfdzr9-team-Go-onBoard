@@ -4,14 +4,12 @@ import { storage } from "../../utils/firebase/firebase.config";
 import { getFirestore, setDoc, doc, getDoc } from "firebase/firestore";
 import { useUser } from "../RequireAuth/context/AuthContext";
 import { useFirebaseFetch } from "../hooks/useFirebaseFetch";
-import "../../index.css";
 
 const AvatarUploader: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
   const [imageUrl, setImageUrl] = useState<string>("");
   const [uploading, setUploading] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [avatarLoaded, setAvatarLoaded] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const user = useUser();
 
@@ -23,12 +21,14 @@ const AvatarUploader: React.FC = () => {
   };
 
   const handleUpload = async (file: File) => {
-    if (!user) return alert("User not found");
+    if (!user) return alert("Nie znaleziono użytkownika");
 
+    setIsLoading(true);
     setUploading(true);
     if (file.size > 1.5 * 1024 * 1024) {
-      alert("File size should not exceed 1.5 MB.");
-      return setUploading(false);
+      alert("Plik powinien być miejszy niż 1.5 MB.");
+      setUploading(false);
+      return setIsLoading(false);
     }
 
     const storageRef = ref(storage, `/files/${file.name}`);
@@ -39,17 +39,21 @@ const AvatarUploader: React.FC = () => {
       (err) => {
         console.log(err);
         setUploading(false);
+        setIsLoading(false);
       },
       async () => {
         const url = await getDownloadURL(uploadTask.snapshot.ref);
         setImageUrl(url);
         setUploading(false);
-        await setDoc(doc(getFirestore(), "users", user.uid), { avatar: file.name }, { merge: true });
+        await setDoc(
+          doc(getFirestore(), "users", user.uid),
+          { avatar: file.name },
+          { merge: true }
+        );
+        setIsLoading(false);
       }
     );
   };
-
-  const currentUserAvatar = user && useFirebaseFetch<{ avatar: string }>("users").find((u) => u.id === user.uid);
 
   useEffect(() => {
     if (!user) return;
@@ -60,24 +64,39 @@ const AvatarUploader: React.FC = () => {
       if (userDoc.exists()) {
         const userData = userDoc.data();
         if (userData && userData.avatar && userData.avatar !== "-1") {
-          const avatarUrl = await getDownloadURL(ref(storage, `/files/${userData.avatar}`));
+          const avatarUrl = await getDownloadURL(
+            ref(storage, `/files/${userData.avatar}`)
+          );
           setImageUrl(avatarUrl);
-          setAvatarLoaded(true);
         }
       }
-      setLoading(false);
+      setIsLoading(false);
     };
 
     fetchAvatar();
   }, [user]);
 
-  return loading ? (
-    <div />
-  ) : (
+  return (
     <div>
       <label htmlFor="fileInput">
-        {imageUrl && avatarLoaded ? (
-          <img className="avatar" src={imageUrl} alt="Uploaded" style={{ borderRadius: "50%" }} />
+        {isLoading ? (
+          <div>Czekaj</div>
+        ) : imageUrl ? (
+          <img
+            className="avatar"
+            src={imageUrl}
+            alt="Uploaded"
+            style={{
+              borderRadius: "50%",
+              width: "150px",
+              height: "150px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              cursor: "pointer",
+              background: uploading ? "#f3f3f3" : undefined,
+            }}
+          />
         ) : (
           <div
             style={{
@@ -90,14 +109,19 @@ const AvatarUploader: React.FC = () => {
               alignItems: "center",
               cursor: "pointer",
             }}>
-            {uploading ? "..." : "+"}
+            Dodaj avatar
           </div>
         )}
       </label>
-      <input id="fileInput" type="file" onChange={handleChange} accept="image/*" style={{ display: "none" }} />
+      <input
+        id="fileInput"
+        type="file"
+        onChange={handleChange}
+        accept="image/*"
+        style={{ display: "none" }}
+      />
     </div>
   );
 };
 
 export default AvatarUploader;
-``;
