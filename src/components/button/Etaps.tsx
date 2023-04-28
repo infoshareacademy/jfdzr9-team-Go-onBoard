@@ -115,7 +115,7 @@ function Etaps() {
   const sortedEtaps = [...etaps].sort((a, b) => a.sort - b.sort);
 
   if (isLoading) {
-    return <div>Loading...</div>; // Show a loading indicator while fetching data
+    return <div>Ładowanie...</div>; // Show a loading indicator while fetching data
   }
 
   return (
@@ -123,10 +123,9 @@ function Etaps() {
       <Link to={`/dashboard/${user?.uid}`}>
         <button>BACK TO DASHBOARD</button>
       </Link>
+      <ProgressEtap />
       <div className="contentWrap">
         <>
-          <ProgressEtap />
-          <Outlet />
           <div className="listEtaps">
             {sortedEtaps.map((etap, index) => {
               //check previous etap if all activities are completed, next etap is enable
@@ -141,7 +140,6 @@ function Etaps() {
                     ).length);
 
               const enableLink = isPreviousEtapCompleted;
-
               return (
                 <Link
                   className="stages-links"
@@ -171,6 +169,7 @@ function Etaps() {
               );
             })}
           </div>
+          <Outlet />
         </>
       </div>
     </StagesContext.Provider>

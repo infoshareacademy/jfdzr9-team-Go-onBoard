@@ -4,7 +4,7 @@ export const ProgressWraper = styled.div`
   flex-direction: row;
   align-items: center;
   position: relative;
-  margin: 30px auto -65px;
+  margin: 30px auto 15px;
 `;
 
 export const DonutChart = styled.div`

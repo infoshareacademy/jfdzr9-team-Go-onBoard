@@ -9,6 +9,7 @@ export const ActivitiesContainer = styled.div`
   padding: 2rem;
   box-shadow: rgb(0 0 0 / 15%) 4px 5px 10px;
   border-radius: 31.2294px;
+  height: 380px;
 `;
 export const ActivitiName = styled.div`
   font-family: "Inter";
@@ -23,6 +24,9 @@ export const Container = styled.div`
   flex-direction: row;
   align-items: flex-start;
   gap: 2rem;
+  @media only screen and (max-width: 1020px) {
+    flex-direction: column;
+  }
 `;
 export const EtapContainer = styled.div`
   display: flex;
@@ -69,6 +73,14 @@ export const DetailsWraper = styled.div`
   padding: 2rem;
   box-shadow: rgba(0, 0, 0, 0.15) 4px 5px 10px;
   border-radius: 31.2294px;
+
+  @media only screen and (max-width: 850px) {
+    width: 500px;
+  }
+
+  @media only screen and (max-width: 600px) {
+    width: 300px;
+  }
 `;
 
 export const LinkFetched = styled.div`

@@ -105,7 +105,7 @@ button:focus-visible {
 .contentWrap {
   display: flex;
   flex-direction: column;
-  gap: 6rem;
+  gap: 2rem;
   flex-wrap: nowrap;
   align-items: flex-start;
 }
@@ -245,7 +245,8 @@ img {
   height: 30px;
   color: crimson;
   /* cursor: pointer; */
-  filter: invert(93%) sepia(99%) saturate(5630%) hue-rotate(246deg) brightness(111%) contrast(148%);
+  filter: invert(93%) sepia(99%) saturate(5630%) hue-rotate(246deg)
+    brightness(111%) contrast(148%);
 }
 
 /* img:hover {
@@ -298,4 +299,13 @@ img {
   height: 60px;
   color: auto;
   filter: none;
+}
+
+@media only screen and (max-width: 1020px) {
+  .contentWrap {
+    flex-direction: row;
+  }
+  .listEtaps {
+    flex-direction: column;
+  }
 }
