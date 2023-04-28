@@ -322,31 +322,32 @@ img {
   .contentWrap {
     align-items: center;
   }
+}
 
-  @media only screen and (max-width: 640px) {
-    .confirmButton {
-      width: 55%;
-    }
-  
-    .listEtaps {
-      gap: 0.5rem;
-    }
-  
-    .stages-links {
-      width: 70px;
-     
-      padding-left: 0.2em;
-      padding-right: 1em;
-      padding-top: 0.2em;
-      padding-bottom: 0.2em;
-    }
-  
-    .title-etaps {
-      padding: 2px;
-      margin: 4px;
-    }
-  
-    .contentWrap {
-      align-items: center;
-    }
+@media only screen and (max-width: 640px) {
+  .confirmButton {
+    width: 55%;
+  }
+
+  .listEtaps {
+    gap: 0.5rem;
+  }
+
+  .stages-links {
+    width: 70px;
+
+    padding-left: 0.2em;
+    padding-right: 1em;
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+  }
+
+  .title-etaps {
+    padding: 2px;
+    margin: 4px;
+  }
+
+  .contentWrap {
+    align-items: center;
+  }
 }
