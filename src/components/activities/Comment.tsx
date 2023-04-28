@@ -29,8 +29,10 @@ const CommentActivity: React.FC<Props> = (props) => {
 
   const userCommentRef = useRef<HTMLInputElement>(null);
   const [hasCommented, setHasCommented] = useState(false); //state to check if user add comment
+  const [isLoading, setIsLoading] = useState(true); //state to check if data is still being loaded
 
   useEffect(() => {
+    setIsLoading(true);
     const commentRef = collection(database, "user_comment");
     const userCommentDocRef = doc(
       commentRef,
@@ -50,6 +52,7 @@ const CommentActivity: React.FC<Props> = (props) => {
           }
         }
       }
+      setIsLoading(false);
     });
   }, [activiti, user]);
 
@@ -97,8 +100,13 @@ const CommentActivity: React.FC<Props> = (props) => {
 
         <button
           type="submit"
-          className="confirmButton">
-          {hasCommented ? "Aktualizuj NOTATKĘ" : "Zapisz NOTATKĘ"}
+          className="confirmButton"
+          disabled={isLoading}>
+          {isLoading
+            ? "..."
+            : hasCommented
+            ? "Aktualizuj NOTATKĘ"
+            : "Zapisz NOTATKĘ"}
         </button>
       </CommentContainer>
     </form>
