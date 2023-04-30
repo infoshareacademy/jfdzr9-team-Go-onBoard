@@ -34,7 +34,6 @@ const ConfirmActivity: React.FC<ConfirmActivityProps> = (props) => {
   const [isDisabled, setIsDisabled] = useState<boolean>(true); // state to disable the button if the activity has already been checked
   const [hasMounted, setHasMounted] = useState<boolean>(false); // flag to indicate whether the component has mounted
   const [points, setPoints] = useState<QuizCollection[]>([]);
-  const [quizPassed, setQuizPassed] = useState<boolean>(false);
 
   const activiti: string = props.confirmActivityProps.activitiesId || "";
   const etap_id: string = props.confirmActivityProps.etap_id;
@@ -96,7 +95,7 @@ const ConfirmActivity: React.FC<ConfirmActivityProps> = (props) => {
 
       const userPoints: QuizCollection | undefined = newPoints.find((point) => point.user_id === user?.uid && point.etapId === etap_id);
 
-      if (userPoints?.result === undefined && (props.currentActivityy?.test === undefined || props.currentActivityy.test === false)) {
+      if (userPoints?.result === undefined && (props.currentActivityy?.test === undefined || props.currentActivityy.test === true)) {
         setIsDisabled(true);
       } else if (userPoints?.result !== undefined && props.currentActivityy?.test === true && userPoints.result >= 75) {
         setIsDisabled(false);

@@ -4,11 +4,12 @@ import { EtapIdProps, QuestionesData } from "./ModelsQuizTypes";
 import { QuestionCard } from "./QuizQuestion";
 
 export const Quiz = ({ etapIdForQuiz }: EtapIdProps) => {
-  const { etap_id } = etapIdForQuiz;
+  const { etap_id, activitiesId } = etapIdForQuiz;
   const [quizIndex, setQuizIndex] = useState("");
   const [questionIndex, setQuestionIndex] = useState(0);
   const quizes = useFirebaseFetch<QuestionesData>("quiz");
   const currentQuiz = quizes.find((quizByEtapId) => quizByEtapId.etap_id === quizIndex);
+  console.log(activitiesId);
 
   useEffect(() => {
     setQuizIndex(etap_id);
@@ -33,6 +34,7 @@ export const Quiz = ({ etapIdForQuiz }: EtapIdProps) => {
         lengthOfQuestions={currentQuiz.questiones.length}
         setQuestionIndex={setQuestionIndex}
         etapId={etap_id}
+        currentActivityId={activitiesId}
       />
     </div>
   );
