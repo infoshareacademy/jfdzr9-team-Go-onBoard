@@ -52,7 +52,6 @@ export const QuestionCard = ({ question, currentQuestion, lengthOfQuestions, set
   const userQuizPointsCollection = collection(database, "user_quiz_points");
   const userActivitiesCollection = useFirebaseFetch<UserActivitiesCollection>("user_activities");
   const currentUserActivity = userActivitiesCollection.find((currentId) => currentId?.user_activity_id === currentActivityId);
-  console.log(currentUserActivity?.user_activity_id, currentActivityId);
 
   useEffect(() => {
     if (quizEnded) {
@@ -74,7 +73,11 @@ export const QuestionCard = ({ question, currentQuestion, lengthOfQuestions, set
         } else {
           // if exist update the document
           const docId = snapshot.docs[0].id;
-          updateDoc(doc(userQuizPointsCollection, docId), { result: userResult, save_quiz: true, user_activity_id: currentActivityId })
+          updateDoc(doc(userQuizPointsCollection, docId), {
+            result: userResult,
+            save_quiz: currentUserActivity?.user_activity_id === currentActivityId ? true : null,
+            user_activity_id: currentActivityId,
+          })
             .then(() => {})
             .catch(() => console.log("Error"));
         }
@@ -88,7 +91,6 @@ export const QuestionCard = ({ question, currentQuestion, lengthOfQuestions, set
           const docId = snapshot.docs[0].id;
           const result = snapshot.docs[0].data().result;
           setCurrentUserResult(result);
-          console.log("wynik quizu z QuizQuestion:", result);
         }
       });
       return () => unsubscribe();
@@ -110,7 +112,7 @@ export const QuestionCard = ({ question, currentQuestion, lengthOfQuestions, set
               </h2>
               {quizResult >= 75 ? (
                 <div className="save-quiz">
-                  {currentUserResult && currentUserResult >= 75 && currentUserActivity?.user_activity_id === currentActivityId ? (
+                  {currentUserResult && currentUserResult < 75 && currentUserActivity?.user_activity_id === currentActivityId ? (
                     <h3>Brawo zaliczyłeś(aś) quiz. Przy poprzedniej próbie takze zaliczyłeś test i zapisałeś ten krok. Mozesz przejść do kolejnego etapu.</h3>
                   ) : (
                     <h3>Brawo zaliczyłeś(aś) quiz. Mozesz przejść do kolejnego etapu lub wykonać test kolejny raz.</h3>
@@ -161,13 +163,13 @@ export const QuestionCard = ({ question, currentQuestion, lengthOfQuestions, set
             kliknąć przycisk "zapisz krok", powodzenia!
             {currentUserResult !== undefined ? (
               <p>
-                Dotychczasowy wynik Twojego quizu to{" "}
+                Ostatni wynik Twojego quizu to{" "}
                 {currentUserActivity?.user_activity_id === currentActivityId ? (
                   <>
                     {currentUserResult >= 75 ? (
                       <>{`${currentUserResult}%. Jeśli chcesz mozesz wykonać quiz jeszcze raz, ale kliknąłeś juz przycisk "zapisz krok" więc ten etap masz juz zaliczony!`}</>
                     ) : (
-                      <>{`${currentUserResult}%. Jeśli chcesz mozesz wykonać quiz jeszcze raz, ale kliknąłeś juz przycisk "zapisz krok" więc ten etap masz juz zaliczony!`}</>
+                      <>{`${currentUserResult}%. Jeśli chcesz mozesz wykonać quiz jeszcze raz, ale przy poprzednich próbach juz zaliczyłeś test i kliknąłeś juz przycisk "zapisz krok" więc ten etap masz juz zaliczony!`}</>
                     )}
                   </>
                 ) : (

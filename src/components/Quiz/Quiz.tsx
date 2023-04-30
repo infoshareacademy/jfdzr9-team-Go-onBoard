@@ -9,7 +9,6 @@ export const Quiz = ({ etapIdForQuiz }: EtapIdProps) => {
   const [questionIndex, setQuestionIndex] = useState(0);
   const quizes = useFirebaseFetch<QuestionesData>("quiz");
   const currentQuiz = quizes.find((quizByEtapId) => quizByEtapId.etap_id === quizIndex);
-  console.log(activitiesId);
 
   useEffect(() => {
     setQuizIndex(etap_id);

@@ -73,10 +73,9 @@ const ConfirmActivity: React.FC<ConfirmActivityProps> = (props) => {
       .catch(() => console.log("Error"));
   }
 
+  //fetch collection user_activities to check if user already checked current activitie
   const userActivitiesCollection = useFirebaseFetch<UserActivitiesCollection>("user_activities");
   const currentUserActivity = userActivitiesCollection.find((currentId) => currentId?.user_activity_id === activiti);
-
-  console.log(currentUserActivity);
 
   // /listening when the result of quiz will changed to enable or disable the button "zapisz krok"
   useEffect(() => {
@@ -106,10 +105,6 @@ const ConfirmActivity: React.FC<ConfirmActivityProps> = (props) => {
       if (activiti === currentUserActivity?.user_activity_id && userPoints?.result !== undefined && props.currentActivityy?.test === true && userPoints.result >= 75) {
         setIsDisabled(true);
       }
-
-      console.log("czy aktynowść ma test", props.currentActivityy?.test);
-      console.log("wynik quizu", userPoints?.result);
-      console.log("status save_quiz:", userPoints?.save_quiz);
     });
 
     return () => {
