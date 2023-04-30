@@ -16,7 +16,7 @@ export interface Activity {
   comment?: string;
   link?: string;
   action?: string;
-  test: boolean;
+  test: boolean | string;
   currentActivityy: {
     test: boolean;
   };
