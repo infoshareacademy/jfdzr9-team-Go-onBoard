@@ -33,4 +33,10 @@ export interface QuestionProps {
   lengthOfQuestions: number;
   setQuestionIndex: React.Dispatch<React.SetStateAction<number>>;
   etapId: string;
+  currentActivityId: string | null;
+}
+
+export interface UserActivitiesCollection {
+  id: string;
+  user_activity_id: string;
 }
