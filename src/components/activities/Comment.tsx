@@ -9,11 +9,13 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { CommentContainer, CommentUser, StyledH5 } from "./Comment.styled";
+import { useUser } from "../RequireAuth/context/AuthContext";
 
 interface UserComment {
   comment: string;
   user_activity_id: string;
   create: any;
+  user_id: string;
 }
 
 interface Props {
@@ -21,31 +23,48 @@ interface Props {
 }
 
 const CommentActivity: React.FC<Props> = (props) => {
+  const user = useUser() || null;
+
   const activiti = props.activitiesId;
 
   const userCommentRef = useRef<HTMLInputElement>(null);
   const [hasCommented, setHasCommented] = useState(false); //state to check if user add comment
+  const [isLoading, setIsLoading] = useState(true); //state to check if data is still being loaded
 
   useEffect(() => {
+    setIsLoading(true);
     const commentRef = collection(database, "user_comment");
-    const userCommentDocRef = doc(commentRef, `${activiti}`);
+    const userCommentDocRef = doc(
+      commentRef,
+      `${activiti}`,
+      "users",
+      user?.uid || ""
+    );
 
     // check if the user has already added a comment for this activity
     getDoc(userCommentDocRef).then((docSnapshot) => {
       if (docSnapshot.exists()) {
-        setHasCommented(true);
         const commentData = docSnapshot.data();
-        if (userCommentRef.current) {
-          userCommentRef.current.value = commentData?.comment;
+        if (commentData?.user_id === (user?.uid || "")) {
+          setHasCommented(true);
+          if (userCommentRef.current) {
+            userCommentRef.current.value = commentData?.comment;
+          }
         }
       }
+      setIsLoading(false);
     });
-  }, [activiti]);
+  }, [activiti, user]);
 
   function addComment(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const commentRef = collection(database, "user_comment");
-    const userCommentDocRef = doc(commentRef, `${activiti}`);
+    const userCommentDocRef = doc(
+      commentRef,
+      `${activiti}`,
+      "users",
+      user?.uid || ""
+    );
 
     // check if the document with user comment exists
     getDoc(userCommentDocRef).then((docSnapshot) => {
@@ -59,9 +78,8 @@ const CommentActivity: React.FC<Props> = (props) => {
         const newComment: UserComment = {
           comment: userCommentRef.current?.value ?? "",
           user_activity_id: activiti || "",
+          user_id: user?.uid || "",
           create: serverTimestamp(),
-
-          // user_id: props.user.uid, TODO
         };
         setDoc(userCommentDocRef, newComment)
           .then(() => {
@@ -82,8 +100,13 @@ const CommentActivity: React.FC<Props> = (props) => {
 
         <button
           type="submit"
-          className="confirmButton">
-          {hasCommented ? "Aktualizuj NOTATKĘ" : "Zapisz NOTATKĘ"}
+          className="confirmButton"
+          disabled={isLoading}>
+          {isLoading
+            ? "..."
+            : hasCommented
+            ? "Aktualizuj NOTATKĘ"
+            : "Zapisz NOTATKĘ"}
         </button>
       </CommentContainer>
     </form>

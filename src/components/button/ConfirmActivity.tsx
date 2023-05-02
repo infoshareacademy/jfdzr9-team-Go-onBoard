@@ -3,6 +3,8 @@ import { database } from "../../utils/firebase/firebase.config";
 import { collection, query, where, getDocs, doc, setDoc, serverTimestamp, onSnapshot } from "firebase/firestore";
 import { useUser } from "../RequireAuth/context/AuthContext";
 import { Activity } from "../activities/ActivitiesDetail";
+import { useFirebaseFetch } from "../hooks/useFirebaseFetch";
+import { result } from "cypress/types/lodash";
 
 interface ConfirmActivityProps {
   confirmActivityProps: {
@@ -17,6 +19,12 @@ interface QuizCollection {
   user_id: string;
   id: string;
   etapId: string;
+  save_quiz: boolean;
+}
+
+interface UserActivitiesCollection {
+  id: string;
+  user_activity_id: string;
 }
 
 const ConfirmActivity: React.FC<ConfirmActivityProps> = (props) => {
@@ -26,7 +34,6 @@ const ConfirmActivity: React.FC<ConfirmActivityProps> = (props) => {
   const [isDisabled, setIsDisabled] = useState<boolean>(true); // state to disable the button if the activity has already been checked
   const [hasMounted, setHasMounted] = useState<boolean>(false); // flag to indicate whether the component has mounted
   const [points, setPoints] = useState<QuizCollection[]>([]);
-  const [quizPassed, setQuizPassed] = useState<boolean>(false);
 
   const activiti: string = props.confirmActivityProps.activitiesId || "";
   const etap_id: string = props.confirmActivityProps.etap_id;
@@ -48,12 +55,13 @@ const ConfirmActivity: React.FC<ConfirmActivityProps> = (props) => {
   function checkActivity(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     e.preventDefault();
     const checkRef = collection(database, "user_activities");
+    if (!user?.uid) return;
     const newCheck = {
       result: true, // set the result field to true
       check_date: serverTimestamp(),
       user_activity_id: activiti,
       etap_id: etap_id,
-      user_id: user?.uid,
+      user_id: user.uid,
     };
     setDoc(doc(checkRef), newCheck)
       .then(() => {
@@ -65,6 +73,10 @@ const ConfirmActivity: React.FC<ConfirmActivityProps> = (props) => {
       .catch(() => console.log("Error"));
   }
 
+  //fetch collection user_activities to check if user already checked current activitie
+  const userActivitiesCollection = useFirebaseFetch<UserActivitiesCollection>("user_activities");
+  const currentUserActivity = userActivitiesCollection.find((currentId) => currentId?.user_activity_id === activiti);
+
   // /listening when the result of quiz will changed to enable or disable the button "zapisz krok"
   useEffect(() => {
     const pointsRef = collection(database, "user_quiz_points");
@@ -75,29 +87,30 @@ const ConfirmActivity: React.FC<ConfirmActivityProps> = (props) => {
         user_id: doc.data().user_id,
         result: doc.data().result,
         etapId: doc.data().etap_id,
+        save_quiz: doc.data().save_quiz,
         ...doc.data(),
       }));
       setPoints(newPoints);
 
       const userPoints: QuizCollection | undefined = newPoints.find((point) => point.user_id === user?.uid && point.etapId === etap_id);
 
-      if (userPoints?.result === undefined && props.currentActivityy?.test === true) {
+      if (userPoints?.result === undefined && (props.currentActivityy?.test === undefined || props.currentActivityy.test === true)) {
         setIsDisabled(true);
-      } else if (userPoints?.result && props.currentActivityy?.test === true && userPoints?.result >= 75) {
-        // setQuizPassed(userPoints.result >= 75);
+      } else if (userPoints?.result !== undefined && props.currentActivityy?.test === true && userPoints.result >= 75) {
         setIsDisabled(false);
-        // setIsDisabled(!props.currentActivityy?.test === true || userPoints.result >= 75 ? false : true);
-      } else if (props.currentActivityy?.test && userPoints?.result && userPoints?.result < 75) {
+      } else if (userPoints?.result !== undefined && props.currentActivityy?.test === true && userPoints.result < 75) {
         setIsDisabled(true);
       }
-      console.log("czy aktynowść ma test", props.currentActivityy?.test);
-      console.log("wynik quizu", userPoints?.result);
+
+      if (activiti === currentUserActivity?.user_activity_id && userPoints?.result !== undefined && props.currentActivityy?.test === true && userPoints.result >= 75) {
+        setIsDisabled(true);
+      }
     });
 
     return () => {
       unsubscribe();
     };
-  }, [props.currentActivityy]);
+  }, [props.currentActivityy, currentUserActivity]);
 
   return (
     <button

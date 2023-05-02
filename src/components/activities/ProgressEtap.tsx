@@ -5,6 +5,7 @@ import { Doughnut } from "react-chartjs-2";
 import { Chart } from "chart.js";
 import { ArcElement, DoughnutController } from "chart.js";
 import { collection, getFirestore, onSnapshot } from "firebase/firestore";
+import { DonutChart, ProgressWraper } from "./ProgressEtap.styled";
 
 Chart.register(ArcElement, DoughnutController);
 
@@ -57,10 +58,10 @@ function ProgressEtap() {
 
   return (
     <>
-      <div style={{ position: "relative" }}>
+      <ProgressWraper>
         <h2>Twój wynik</h2>
         {user && userProgress !== null ? (
-          <div key={user.uid}>
+          <DonutChart key={user.uid}>
             <Doughnut
               data={data}
               style={{ zIndex: "1", width: "100px", height: "100px" }}
@@ -69,17 +70,14 @@ function ProgressEtap() {
               style={{
                 zIndex: "3",
                 position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
               }}>
               {userProgress.toFixed(0)}%
             </div>
-          </div>
+          </DonutChart>
         ) : (
-          <div>Loading user progress...</div>
+          <div>Ładowanie...</div>
         )}
-      </div>
+      </ProgressWraper>
     </>
   );
 }
