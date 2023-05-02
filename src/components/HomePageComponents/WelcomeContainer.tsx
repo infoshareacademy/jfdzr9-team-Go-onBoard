@@ -1,7 +1,7 @@
 import "../../index.css";
 import { useUser } from "../RequireAuth/context/AuthContext";
 import { useFirebaseFetch } from "../hooks/useFirebaseFetch";
-interface IUser {
+export interface IUser {
   email: string;
   name: string;
   age: number;
@@ -9,7 +9,7 @@ interface IUser {
   uid: string;
 }
 
-interface Courses {
+export interface Courses {
   greeting: string;
   name: string;
   id_course: string;
@@ -38,8 +38,13 @@ export const WelcomeContainer = () => {
 
   return (
     <div className="greetingsContainer">
-      <h2>Hej,{userName?.displayName}!</h2>
-      <div>{filteredCourse?.greeting}</div>
+      <div className="img-block">
+        <img src="/src/assets/pliki svg- dashboard/man_10 1.svg" className="man-greetins-logo"></img>
+      </div>
+      <div className="greeting-block">
+        <h2>Hej,{userName?.displayName}!</h2>
+        <div className="dashboard-greeting">{filteredCourse?.greeting}</div>
+      </div>
     </div>
   );
 };

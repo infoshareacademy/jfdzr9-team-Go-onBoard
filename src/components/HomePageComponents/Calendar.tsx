@@ -99,9 +99,9 @@ function Calendar() {
   return (
     <>
       <Account />
-      <h2>{daysUntilStart === 0 ? "Kurs się rozpoczął" : `Kurs rozpocznie się za: ${daysUntilStart} ${daysUntilStart === 1 ? "dzień" : "dni"}!`}</h2>
-      <h4>Dni pracy pod rząd: {consecutiveActivities}</h4>
-      <h4>Najlepszy wynik: {bestStreak}</h4>
+      <p>{daysUntilStart === 0 ? "Kurs się rozpoczął" : `Kurs rozpocznie się za: ${daysUntilStart} ${daysUntilStart === 1 ? "dzień" : "dni"}!`}</p>
+      <p>Dni pracy pod rząd: {consecutiveActivities}</p>
+      <p>Najlepszy wynik: {bestStreak}</p>
     </>
   );
 }

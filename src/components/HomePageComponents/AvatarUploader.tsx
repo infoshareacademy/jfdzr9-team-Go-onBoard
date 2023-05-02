@@ -45,11 +45,7 @@ const AvatarUploader: React.FC = () => {
         const url = await getDownloadURL(uploadTask.snapshot.ref);
         setImageUrl(url);
         setUploading(false);
-        await setDoc(
-          doc(getFirestore(), "users", user.uid),
-          { avatar: file.name },
-          { merge: true }
-        );
+        await setDoc(doc(getFirestore(), "users", user.uid), { avatar: file.name }, { merge: true });
         setIsLoading(false);
       }
     );
@@ -64,9 +60,7 @@ const AvatarUploader: React.FC = () => {
       if (userDoc.exists()) {
         const userData = userDoc.data();
         if (userData && userData.avatar && userData.avatar !== "-1") {
-          const avatarUrl = await getDownloadURL(
-            ref(storage, `/files/${userData.avatar}`)
-          );
+          const avatarUrl = await getDownloadURL(ref(storage, `/files/${userData.avatar}`));
           setImageUrl(avatarUrl);
         }
       }
@@ -77,7 +71,7 @@ const AvatarUploader: React.FC = () => {
   }, [user]);
 
   return (
-    <div>
+    <div style={{ display: "flex", alignItems: "center" }}>
       <label htmlFor="fileInput">
         {isLoading ? (
           <div>Czekaj</div>
@@ -98,28 +92,12 @@ const AvatarUploader: React.FC = () => {
             }}
           />
         ) : (
-          <div
-            style={{
-              width: "150px",
-              height: "150px",
-              borderRadius: "50%",
-              border: "2px solid",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              cursor: "pointer",
-            }}>
-            Dodaj avatar
+          <div>
+            <img src="/src/assets/pliki svg- dashboard/ikona od avatara.svg" style={{ filter: "none", width: "66px", height: "66px" }} />
           </div>
         )}
       </label>
-      <input
-        id="fileInput"
-        type="file"
-        onChange={handleChange}
-        accept="image/*"
-        style={{ display: "none" }}
-      />
+      <input id="fileInput" type="file" onChange={handleChange} accept="image/*" style={{ display: "none" }} />
     </div>
   );
 };

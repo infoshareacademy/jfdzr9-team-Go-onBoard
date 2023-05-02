@@ -14,7 +14,7 @@ function ButtonLogout() {
     // await auth.signOut();
     // navigate("/signin");
   };
-  return <button onClick={handleLogout}>Logout</button>;
+  return <button className="dashboard-logout-btn" onClick={handleLogout}></button>;
 }
 
 export default ButtonLogout;
