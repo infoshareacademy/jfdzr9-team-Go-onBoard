@@ -24,7 +24,7 @@ export interface Activity {
   link?: string;
   movie?: string;
   action?: string;
-  test: boolean;
+  test: boolean | string;
   currentActivityy: {
     test: boolean;
   };
