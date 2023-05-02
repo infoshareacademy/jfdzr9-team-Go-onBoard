@@ -9,6 +9,11 @@ export const ActivitiesContainer = styled.div`
   padding: 2rem;
   box-shadow: rgb(0 0 0 / 15%) 4px 5px 10px;
   border-radius: 31.2294px;
+  height: 380px;
+  @media only screen and (max-width: 1020px) {
+    height: 300px;
+    padding: 15px;
+  }
 `;
 export const ActivitiName = styled.div`
   font-family: "Inter";
@@ -23,6 +28,11 @@ export const Container = styled.div`
   flex-direction: row;
   align-items: flex-start;
   gap: 2rem;
+  @media only screen and (max-width: 1020px) {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
 `;
 export const EtapContainer = styled.div`
   display: flex;
@@ -69,6 +79,14 @@ export const DetailsWraper = styled.div`
   padding: 2rem;
   box-shadow: rgba(0, 0, 0, 0.15) 4px 5px 10px;
   border-radius: 31.2294px;
+
+  @media only screen and (max-width: 950px) {
+    width: 500px;
+  }
+
+  @media only screen and (max-width: 600px) {
+    width: 300px;
+  }
 `;
 
 export const LinkFetched = styled.div`
@@ -84,6 +102,9 @@ export const StyledLinkFetchedHeader = styled.div`
   gap: 4px;
   filter: brightness(0) saturate(100%) invert(9%) sepia(34%) saturate(5579%)
     hue-rotate(234deg) brightness(90%) contrast(121%);
+  @media only screen and (max-width: 950px) {
+    padding: 6px 2px 6px 6px;
+  }
 `;
 
 export const HeaderInfo = styled.div`
