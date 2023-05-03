@@ -81,7 +81,7 @@ export const DetailsWraper = styled.div`
   background-color: white;
   border-radius: 31.2294px;
 
-  @media only screen and (max-width: 950px) {
+  @media only screen and (max-width: 800px) {
     width: 500px;
   }
 

@@ -20,14 +20,6 @@ interface Activity {
   sort: number;
 }
 
-function saveIconNameToLocalStorage(iconName: string) {
-  localStorage.setItem("iconName", iconName);
-}
-
-function getIconNameFromLocalStorage(): string | null {
-  return localStorage.getItem("iconName");
-}
-
 function Activities() {
   const { etapId, handleActivityConfirmation } = useStages();
   const etapsID = useParamsStagesHook();
@@ -76,14 +68,11 @@ function Activities() {
         {sortedActivities
           .filter((activit) => activit.etap_id === etapsID)
           .map((filteredEtap) => {
-            const iconName = filteredEtap.type || "";
-
             return (
               <Transparent
                 onClick={() => {
                   setActivitiesId(filteredEtap.id);
                   setSelectedActivitiesId(filteredEtap.id);
-                  saveIconNameToLocalStorage(iconName);
                 }}
                 style={{
                   color:
@@ -97,9 +86,7 @@ function Activities() {
                 }}
                 key={filteredEtap.id}>
                 <ActivitiName>{filteredEtap.name}</ActivitiName>
-                <IconFetchedHeader
-                  iconName={getIconNameFromLocalStorage() || iconName}
-                />
+                <IconFetchedHeader iconName={filteredEtap.type || ""} />
               </Transparent>
             );
           })}

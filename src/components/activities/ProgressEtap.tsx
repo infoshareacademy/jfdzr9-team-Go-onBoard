@@ -56,6 +56,19 @@ function ProgressEtap() {
     ],
   };
 
+  const chartOptions = {
+    plugins: {
+      legend: {
+        display: false, // display legend
+      },
+    },
+    elements: {
+      arc: {
+        borderWidth: 0, // display border
+      },
+    },
+  };
+
   return (
     <>
       <ProgressWraper>
@@ -64,6 +77,7 @@ function ProgressEtap() {
           <DonutChart key={user.uid}>
             <Doughnut
               data={data}
+              options={chartOptions} // Dodajemy opcje konfiguracji
               style={{ zIndex: "1", width: "100px", height: "100px" }}
             />
             <div
