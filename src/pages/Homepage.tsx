@@ -31,9 +31,7 @@ export const HomePageLayout = () => {
       {showIntroduction && <Introduction />}
       <div className="up-container">
         <WelcomeContainer />
-        <div className="calendar">
-          <Calendar />
-        </div>
+        <Calendar />
       </div>
       <div className="middle-container">
         <p className="title-etaps">

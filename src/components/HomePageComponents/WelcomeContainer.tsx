@@ -39,7 +39,7 @@ export const WelcomeContainer = () => {
   return (
     <div className="greetingsContainer">
       <div className="img-block">
-        <img src="/src/assets/pliki svg- dashboard/man_10 1.svg" className="man-greetins-logo"></img>
+        <img src="/src/assets/pliki-svg-dashboard/man_10 1.svg" className="man-greetins-logo"></img>
       </div>
       <div className="greeting-block">
         <h2>Hej,{userName?.displayName}!</h2>

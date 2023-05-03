@@ -4,6 +4,8 @@ import ButtonLogout from "./ButtonLogout";
 import AvatarUploader from "../HomePageComponents/AvatarUploader";
 import { useFirebaseFetch } from "../hooks/useFirebaseFetch";
 import { Courses, IUser } from "../HomePageComponents/WelcomeContainer";
+import { AccountBlock, AccountContainer, AccountInfo, LogOutBlock } from "./Account.styled";
+import { UserInfo } from "../HomePageComponents/Calendar.styled";
 
 const Account = () => {
   const user = useUser();
@@ -23,16 +25,18 @@ const Account = () => {
   const filteredCourse = courses.find((course) => course.id_course === idCourse);
 
   return (
-    <div>
-      <ButtonLogout />
-      <div className="account-block">
+    <AccountContainer>
+      <LogOutBlock>
+        <ButtonLogout />
+      </LogOutBlock>
+      <AccountBlock>
         <AvatarUploader />
         <div>
-          <p>{user?.email}</p>
-          <p>{filteredCourse?.name}</p>
+          <AccountInfo>{user?.email}</AccountInfo>
+          <AccountInfo>{filteredCourse?.name}</AccountInfo>
         </div>
-      </div>
-    </div>
+      </AccountBlock>
+    </AccountContainer>
   );
 };
 export default Account;

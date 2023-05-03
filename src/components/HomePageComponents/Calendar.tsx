@@ -5,6 +5,7 @@ import { useFirebaseFetch } from "../hooks/useFirebaseFetch";
 import { Timestamp } from "firebase/firestore";
 import { FieldValue } from "firebase/firestore";
 import Account from "../RequireAuth/Account";
+import { CalendarBlock, CourseDetails, UserInfo, UserInfoClock, UserInfoImgGift, UserInfoResult } from "./Calendar.styled";
 
 interface IUser {
   uid: string;
@@ -97,12 +98,23 @@ function Calendar() {
   }
 
   return (
-    <>
+    <CalendarBlock>
       <Account />
-      <p>{daysUntilStart === 0 ? "Kurs się rozpoczął" : `Kurs rozpocznie się za: ${daysUntilStart} ${daysUntilStart === 1 ? "dzień" : "dni"}!`}</p>
-      <p>Dni pracy pod rząd: {consecutiveActivities}</p>
-      <p>Najlepszy wynik: {bestStreak}</p>
-    </>
+      <CourseDetails>
+        <UserInfo>
+          <UserInfoImgGift src="/src/assets/pliki-svg-dashboard/prezent.svg" />{" "}
+          {daysUntilStart === 0 ? "Kurs się rozpoczął" : `Kurs rozpocznie się za: ${daysUntilStart} ${daysUntilStart === 1 ? "dzień" : "dni"}!`}
+        </UserInfo>
+        <UserInfo>
+          <UserInfoResult src="/src/assets/pliki-svg-dashboard/Najlepszy wynik.svg" />
+          Dni pracy pod rząd: {consecutiveActivities}
+        </UserInfo>
+        <UserInfo>
+          <UserInfoClock src="/src/assets/pliki-svg-dashboard/zegarek.svg" />
+          Najlepszy wynik: {bestStreak}
+        </UserInfo>
+      </CourseDetails>
+    </CalendarBlock>
   );
 }
 

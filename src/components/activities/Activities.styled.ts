@@ -75,7 +75,7 @@ export const DetailsWraper = styled.div`
 
   display: flex;
   flex-direction: column;
-
+  background-color: white;
   padding: 2rem;
   box-shadow: rgba(0, 0, 0, 0.15) 4px 5px 10px;
   border-radius: 31.2294px;
@@ -100,8 +100,7 @@ export const StyledLinkFetchedHeader = styled.div`
   align-items: center;
   padding: 16px 20px 16px 16px;
   gap: 4px;
-  filter: brightness(0) saturate(100%) invert(9%) sepia(34%) saturate(5579%)
-    hue-rotate(234deg) brightness(90%) contrast(121%);
+  filter: brightness(0) saturate(100%) invert(9%) sepia(34%) saturate(5579%) hue-rotate(234deg) brightness(90%) contrast(121%);
   @media only screen and (max-width: 950px) {
     padding: 6px 2px 6px 6px;
   }

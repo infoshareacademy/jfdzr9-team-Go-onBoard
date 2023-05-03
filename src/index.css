@@ -18,6 +18,7 @@
   --secondary-1: #eff0f7;
   --secondary-2: #d3d3d3;
   --active: #46ad2c;
+  /* height: 100%; */
 }
 
 a {
@@ -33,12 +34,18 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0px 89px;
+  /* padding: 0px 89px; */
   gap: 3px;
   /* position: absolute; */
   /* width: 100vh; */
-  height: 816px;
+  /* height: 100%; */
   top: 31px;
+  /* background: radial-gradient(50% 66.49% at 50% 50%, rgba(255, 255, 255, 0) 0%, rgba(0, 255, 194, 0.15) 100%); */
+  margin: 0px;
+}
+
+html {
+  height: 100%;
   background: radial-gradient(50% 66.49% at 50% 50%, rgba(255, 255, 255, 0) 0%, rgba(0, 255, 194, 0.15) 100%);
 }
 
@@ -66,7 +73,7 @@ button:focus-visible {
 .stages-links {
   height: 40px;
   width: 126px;
-
+  border-radius: 8px;
   padding: 0.6em 1.2em;
   /* font-size: 1em; */
   font-weight: 500;
@@ -79,6 +86,7 @@ button:focus-visible {
   flex-wrap: nowrap;
   justify-content: space-between;
   align-items: center;
+  filter: none;
 }
 
 .stages-links:hover {
@@ -140,25 +148,9 @@ button:focus-visible {
   align-items: flex-start;
   padding: 0px;
   gap: 40px;
-
+  margin-top: 30px;
   width: 1223px;
   height: 320px;
-}
-
-.account-block {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  gap: 20px;
-  width: 387px;
-}
-
-.dashboard-logout-btn {
-  background-image: url("/src/assets/pliki\ svg-\ dashboard/logout-svgrepo-com.svg");
-  background-size: cover;
-  background-color: white;
-  width: 40px;
-  height: 30px;
 }
 
 .down-container {
@@ -169,7 +161,7 @@ button:focus-visible {
   gap: 60px;
 
   width: 1223px;
-  height: 320px;
+  height: fit-content;
 }
 
 .middle-container {
@@ -189,7 +181,7 @@ button:focus-visible {
   width: 696px;
   height: fit-content;
   background: linear-gradient(89.82deg, #687ec9 1.25%, #5971c3 98.38%);
-
+  color: #ffffff;
   /* Shadow field */
   box-shadow: 8px 8px 24px rgba(2, 2, 70, 0.05);
   border-radius: 31.2294px;
@@ -215,21 +207,6 @@ button:focus-visible {
   height: auto;
 }
 
-.calendar {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 0px;
-  gap: 10px;
-  width: 387px;
-  height: fit-content;
-  box-shadow: rgb(0 0 0 / 15%) 4px 5px 10px;
-  border-radius: 31.2294px;
-  flex: none;
-  order: 1;
-  flex-grow: 0;
-}
-
 .buddy {
   display: flex;
   flex-direction: column;
@@ -243,6 +220,7 @@ button:focus-visible {
   flex: none;
   order: 1;
   flex-grow: 0;
+  background-color: #ffffff;
 }
 
 h1 {
@@ -280,19 +258,6 @@ img {
   filter: invert(93%) sepia(10%) saturate(5630%) hue-rotate(246deg) brightness(40%) contrast(148%) hue-rotate(246deg);
 }
 
-/* img:hover {
-  width: 30px;
-  height: 30px;
-  color: crimson;
-  cursor: pointer;
-  filter: invert(9%) sepia(99%) saturate(5630%) hue-rotate(246deg)
-    brightness(111%) contrast(148%);
-} */
-
-/* .etaps:hover {
-  color: #747bff;
-} */
-
 .etaps,
 .title-etaps {
   cursor: pointer;
@@ -305,7 +270,7 @@ img {
   width: 596px;
   height: 28px;
 
-  /* background: #687ec9; */
+  background: #ffffff;
   color: var(--primary-1);
   /* Shadow field */
 
