@@ -150,7 +150,12 @@ function ActivitiesDetail(props: Props) {
                             isOpen={isModalOpen}
                             onRequestClose={() => setIsModalOpen(false)}>
                             <div className="modalContent">
-                              <ReactPlayer url={fetchedMovie} />
+                              <ReactPlayer
+                                url={fetchedMovie}
+                                className="react-player"
+                                playing
+                                controls
+                              />
                               <button
                                 className="closeButton"
                                 onClick={() => setIsModalOpen(false)}>

@@ -321,6 +321,7 @@ img:hover {
   right: 0;
   bottom: 0;
   background-color: rgb(255, 255, 255);
+  z-index: 5;
 }
 @media only screen and (max-width: 1160px) {
   .confirmButton {
