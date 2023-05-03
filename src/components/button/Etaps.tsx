@@ -28,9 +28,7 @@ function Etaps() {
   const user = useUser();
   const [etaps, setEtaps] = useState<Etap[]>([]);
   const [etapId, setEtapId] = useState<string | null>(null);
-  const [activitiesByEtap, setActivitiesByEtap] = useState<
-    Record<string, { etap_id: string; id: string }[]>
-  >({});
+  const [activitiesByEtap, setActivitiesByEtap] = useState<Record<string, { etap_id: string; id: string }[]>>({});
   const [userActivityIds, setUserActivityIds] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedEtapId, setSelectedEtapId] = useState<string | null>(null);
@@ -43,9 +41,7 @@ function Etaps() {
       //make array with etpaid and activities
       const activitiesRef = collection(database, "activities");
       const activitiesData = await getDocs(activitiesRef);
-      const activitiesByEtap = activitiesData.docs.reduce<
-        Record<string, { etap_id: string; id: string }[]>
-      >((acc, doc) => {
+      const activitiesByEtap = activitiesData.docs.reduce<Record<string, { etap_id: string; id: string }[]>>((acc, doc) => {
         const etapId = doc.data().etap_id;
 
         if (!acc[etapId]) {
@@ -64,9 +60,9 @@ function Etaps() {
       //make array from user_activities with etpaid and activityid
       const userActivitiesRef = collection(database, "user_activities");
       const useractivitiesData = await getDocs(userActivitiesRef);
-      const userActivityIds = useractivitiesData.docs.map(
-        (doc) => doc.data().user_activity_id
-      );
+      const userActivityIds = useractivitiesData.docs
+        .filter((doc) => doc.data().user_id === user?.uid) // Filter based on user ID
+        .map((doc) => doc.data().user_activity_id);
 
       setUserActivityIds(userActivityIds);
 
@@ -101,10 +97,7 @@ function Etaps() {
   //props to confirm button-after confirm check status to show etpas when all activ in etap are completed
 
   const handleActivityConfirmation = (newActivityId: string) => {
-    setUserActivityIds((prevActivityIds) => [
-      ...prevActivityIds,
-      newActivityId,
-    ]);
+    setUserActivityIds((prevActivityIds) => [...prevActivityIds, newActivityId]);
   };
 
   const stagesContextValue: StagesContextValue = {
@@ -133,11 +126,7 @@ function Etaps() {
                 index === 0 ||
                 (index > 0 &&
                   activitiesByEtap[sortedEtaps[index - 1].id]?.length ===
-                    userActivityIds.filter((activityId) =>
-                      activitiesByEtap[sortedEtaps[index - 1].id].some(
-                        (activity) => activity.id === activityId
-                      )
-                    ).length);
+                    userActivityIds.filter((activityId) => activitiesByEtap[sortedEtaps[index - 1].id].some((activity) => activity.id === activityId)).length);
 
               const enableLink = isPreviousEtapCompleted;
               return (
@@ -151,19 +140,9 @@ function Etaps() {
                   }}
                   style={{
                     pointerEvents: enableLink ? "auto" : "none",
-                    backgroundColor:
-                      etap.id === selectedEtapId
-                        ? "var(--active)"
-                        : enableLink
-                        ? ""
-                        : "var(--primary-2)", // Kolor dla etapów niedostępnych
+                    backgroundColor: etap.id === selectedEtapId ? "var(--active)" : enableLink ? "" : "var(--primary-2)", // Kolor dla etapów niedostępnych
                   }}>
-                  {etap.icon && (
-                    <EtapsIcon
-                      src={etap.icon}
-                      alt={etap.name}
-                    />
-                  )}
+                  {etap.icon && <EtapsIcon src={etap.icon} alt={etap.name} />}
                   <span className="title-etaps">{etap.name}</span>
                 </Link>
               );
