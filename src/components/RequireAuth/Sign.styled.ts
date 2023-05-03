@@ -103,7 +103,7 @@ export const Button = styled.button`
   gap: 8px;
   width: 161px;
   height: 48px;
-  background: #020246;
+  background: var(--primary-1);
   border: 1px solid #020246;
   box-shadow: 8px 8px 24px rgba(2, 2, 70, 0.15);
   border-radius: 8px;
@@ -121,16 +121,7 @@ export const LinkName = styled.p`
 
 export const PageInfo = styled.div`
   display: flex;
-  position: absolute;
-  width: 1600px;
-  height: 840px;
-  left: 0px;
-  top: 0px;
-
-  /* Secondary */
-
-  background: #eff0f7;
-  opacity: 0.8;
+  align-items: center;
 `;
 
 export const PageImg = styled.div``;
@@ -140,11 +131,12 @@ export const PageImg = styled.div``;
 `; */
 
 export const MainImg = styled.div`
-  /* Inside auto layout */
+  margin: -60px;
+  z-index: -1;
 
-  flex: none;
-  order: 0;
-  flex-grow: 0;
+  @media (max-width: 1250px) {
+    margin: -390px;
+  }
 `;
 
 export const ImgMain = styled.img`
@@ -169,15 +161,18 @@ export const ImgMain = styled.img`
 
 export const MainInfo = styled.div`
   width: 582px;
-  height: 839px;
-
-  background: #ffffff;
+  min-height: 839px;
+  height: auto;
+  background: white;
   /* Shadow field */
-
   box-shadow: 8px 8px 24px rgba(2, 2, 70, 0.05);
   border-radius: 31.2294px;
+  margin: 40px;
 
   /* Inside auto layout */
+  @media (max-width: 1250px) {
+    background: rgba(255, 255, 255, 0.95);
+  }
 `;
 
 export const TextString = styled.p`
