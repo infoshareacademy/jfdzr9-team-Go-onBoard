@@ -4,16 +4,17 @@ import { auth } from "../../utils/firebase/firebase.config";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import {
   Button,
+  Card,
+  Card2,
+  Cards,
+  FormSign,
   ImgMain,
   Input,
   Label,
   LinkName,
   LogoImg,
   LogoName,
-  MainImg,
-  MainInfo,
   NamePage,
-  PageInfo,
   TextString,
 } from "./Sign.styled";
 
@@ -60,18 +61,18 @@ export const Signin = () => {
 
   return (
     <>
-      <PageInfo>
-        <MainImg>
+      <Cards>
+        <Card2>
           <ImgMain src="/assets/Chlopak.png"></ImgMain>
-        </MainImg>
-        <MainInfo>
+        </Card2>
+        <Card>
           <LogoImg src="/assets/Asset.png"></LogoImg>
 
           <LogoName>
             <b>GO!</b> onBoard
           </LogoName>
-          <NamePage>Zarejestruj się</NamePage>
-          <form onSubmit={handleSubmit}>
+          <NamePage>Zaloguj się</NamePage>
+          <FormSign onSubmit={handleSubmit}>
             <div>
               <Label>Email</Label>
               <br />
@@ -94,7 +95,7 @@ export const Signin = () => {
             <div>
               <Button type="submit">Zaloguj</Button>
             </div>
-          </form>
+          </FormSign>
           <div>
             <LinkName>
               <Link to="/signup">Zarejestruj się</Link>
@@ -103,8 +104,8 @@ export const Signin = () => {
               <a href="/signpassword">Nie pamiętam hasła</a>
             </LinkName>
           </div>
-        </MainInfo>
-      </PageInfo>
+        </Card>
+      </Cards>
     </>
   );
 };
