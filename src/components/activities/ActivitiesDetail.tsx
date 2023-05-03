@@ -9,7 +9,6 @@ import {
   LinkFetched,
   HeaderInfo,
   HeaderInfoButton,
-  Modal,
 } from "./Activities.styled";
 import LinkFetchedHeader from "./LinkFetchedHeader";
 import IconFetchedHeader from "./IconFetchedHeader";
@@ -148,7 +147,8 @@ function ActivitiesDetail(props: Props) {
                             className="Modal"
                             overlayClassName="Overlay"
                             isOpen={isModalOpen}
-                            onRequestClose={() => setIsModalOpen(false)}>
+                            onRequestClose={() => setIsModalOpen(false)}
+                            shouldCloseOnOverlayClick={false}>
                             <div className="modalContent">
                               <ReactPlayer
                                 url={fetchedMovie}
