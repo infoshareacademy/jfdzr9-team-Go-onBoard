@@ -240,29 +240,27 @@ h2 {
   flex-direction: column;
 }
 
-/*  img {
+img {
   width: 30px;
   height: 30px;
   color: crimson;
-<<<<<<< HEAD
-   cursor: pointer; 
-  filter: invert(93%) sepia(99%) saturate(5630%) hue-rotate(246deg) brightness(111%) contrast(148%);
-}  */
-=======
+
+  cursor: pointer;
+  filter: invert(93%) sepia(99%) saturate(5630%) hue-rotate(246deg)
+    brightness(111%) contrast(148%);
+
   /* cursor: pointer; */
   filter: invert(93%) sepia(99%) saturate(5630%) hue-rotate(246deg)
     brightness(111%) contrast(148%);
 }
->>>>>>> 8f45a7cd4135de997bfdd63d10a9e0721a5b675a
-
-/* img:hover {
+img:hover {
   width: 30px;
   height: 30px;
   color: crimson;
   cursor: pointer;
   filter: invert(9%) sepia(99%) saturate(5630%) hue-rotate(246deg)
     brightness(111%) contrast(148%);
-} */
+}
 
 /* .etaps:hover {
   color: #747bff;
@@ -307,7 +305,24 @@ h2 {
   filter: none;
 }
 
-@media only screen and (max-width: 950px) {
+.Modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  transform: translate(-50%, -50%);
+}
+
+.Overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgb(255, 255, 255);
+}
+@media only screen and (max-width: 1160px) {
   .confirmButton {
     width: 35%;
   }
@@ -330,7 +345,7 @@ h2 {
   }
 }
 
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 740px) {
   .confirmButton {
     width: 55%;
   }

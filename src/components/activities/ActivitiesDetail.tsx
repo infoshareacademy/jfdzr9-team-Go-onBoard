@@ -9,6 +9,7 @@ import {
   LinkFetched,
   HeaderInfo,
   HeaderInfoButton,
+  Modal,
 } from "./Activities.styled";
 import LinkFetchedHeader from "./LinkFetchedHeader";
 import IconFetchedHeader from "./IconFetchedHeader";
@@ -91,6 +92,18 @@ function ActivitiesDetail(props: Props) {
     setCurrentActivity(activity);
   }, [activitiesDetail, props.detailProps.activitiesId]);
 
+  const customStyles = {
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+      zIndex: "4",
+    },
+  };
+
   return (
     <DetailsWraper>
       {activitiesDetail
@@ -130,7 +143,10 @@ function ActivitiesDetail(props: Props) {
                             onClick={() => setIsModalOpen(true)}>
                             Obejrzyj film
                           </button>
+
                           <ReactModal
+                            className="Modal"
+                            overlayClassName="Overlay"
                             isOpen={isModalOpen}
                             onRequestClose={() => setIsModalOpen(false)}>
                             <div className="modalContent">
