@@ -67,6 +67,7 @@ function ProgressEtap() {
         borderWidth: 0, // display border
       },
     },
+    cutout: "70%", // Dodajemy właściwość cutout i ustawiamy wartość procentową
   };
 
   return (
@@ -78,7 +79,7 @@ function ProgressEtap() {
             <Doughnut
               data={data}
               options={chartOptions} // Dodajemy opcje konfiguracji
-              style={{ zIndex: "1", width: "100px", height: "100px" }}
+              style={{ zIndex: "1", width: "70px", height: "70px" }}
             />
             <div
               style={{

@@ -12,6 +12,7 @@ export const ProgressWraper = styled.div`
   position: relative;
   justify-content: center;
   margin: 30px auto 15px;
+  gap: 25px;
 `;
 
 export const DonutChart = styled.div`
