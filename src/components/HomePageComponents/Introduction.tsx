@@ -50,20 +50,21 @@ function Introduction() {
   return (
     <div>
       <ReactModal
+        overlayClassName="Overlay"
+        className="ModalIntro"
         isOpen={showModal}
         contentLabel="Minimal Modal Example">
         {fileName && (
           <ReactPlayer
             key={key}
             url={downloadURL}
-            playing={true}
+            playing
             controls={false}
-            style={{ width: "100%", height: "100%", outline: "none" }}
             onReady={handlePlayerReady}
           />
         )}
         <button onClick={handleRestartVideo}>Odtwórz jeszcze raz</button>
-        <button onClick={handleCloseModal}>Przejdź do dashboardu</button>
+        <button onClick={handleCloseModal}>Rozpocznij kurs</button>
       </ReactModal>
     </div>
   );
