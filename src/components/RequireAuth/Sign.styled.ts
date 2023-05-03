@@ -49,16 +49,10 @@ export const FormSign = styled.form`
 `;
 
 export const Button = styled.button`
-  margin: 0 auto;
-  display: block;
   margin-top: 79px;
-  gap: 8px;
   width: 161px;
   height: 48px;
-  background: var(--primary-1);
-  border: 1px solid #020246;
   box-shadow: 8px 8px 24px rgba(2, 2, 70, 0.15);
-  border-radius: 8px;
 `;
 
 export const LinkName = styled.p`
