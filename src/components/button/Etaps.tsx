@@ -64,11 +64,12 @@ function Etaps() {
       //make array from user_activities with etpaid and activityid
       const userActivitiesRef = collection(database, "user_activities");
       const useractivitiesData = await getDocs(userActivitiesRef);
-      const userActivityIds = useractivitiesData.docs.map(
-        (doc) => doc.data().user_activity_id
-      );
+      const userActivityIds = useractivitiesData.docs
+        .filter((doc) => doc.data().user_id === user?.uid) // Filter based on user ID
+        .map((doc) => doc.data().user_activity_id);
 
       setUserActivityIds(userActivityIds);
+      console.log(userActivityIds);
 
       //icon part, take from storage and push in button
       const etapsArray: Etap[] = await Promise.all(
