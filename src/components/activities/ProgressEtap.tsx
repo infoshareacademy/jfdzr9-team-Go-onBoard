@@ -56,6 +56,20 @@ function ProgressEtap() {
     ],
   };
 
+  const chartOptions = {
+    plugins: {
+      legend: {
+        display: false, // display legend
+      },
+    },
+    elements: {
+      arc: {
+        borderWidth: 0, // display border
+      },
+    },
+    cutout: "70%", // Dodajemy właściwość cutout i ustawiamy wartość procentową
+  };
+
   return (
     <>
       <ProgressWraper>
@@ -64,7 +78,8 @@ function ProgressEtap() {
           <DonutChart key={user.uid}>
             <Doughnut
               data={data}
-              style={{ zIndex: "1", width: "100px", height: "100px" }}
+              options={chartOptions} // Dodajemy opcje konfiguracji
+              style={{ zIndex: "1", width: "70px", height: "70px" }}
             />
             <div
               style={{

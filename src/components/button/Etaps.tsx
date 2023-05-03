@@ -3,12 +3,12 @@ import { database } from "../../utils/firebase/firebase.config"; // import stora
 import { collection, getDocs } from "firebase/firestore";
 import { ref, getDownloadURL, getStorage } from "firebase/storage";
 import { getApp } from "firebase/app";
-import Activities from "../activities/Activities";
 import { Outlet, Link } from "react-router-dom";
 import "../../index.css";
 import { StagesContext, StagesContextValue } from "./Context/StagesContext";
 import { useUser } from "../RequireAuth/context/AuthContext";
 import ProgressEtap from "../activities/ProgressEtap";
+import { EtapsIcon, StagesLinks } from "../activities/ProgressEtap.styled";
 
 interface Etap {
   id: string;
@@ -121,7 +121,7 @@ function Etaps() {
   return (
     <StagesContext.Provider value={stagesContextValue}>
       <Link to={`/dashboard/${user?.uid}`}>
-        <button>BACK TO DASHBOARD</button>
+        <button>Powrót</button>
       </Link>
       <ProgressEtap />
       <div className="contentWrap">
@@ -159,7 +159,7 @@ function Etaps() {
                         : "var(--primary-2)", // Kolor dla etapów niedostępnych
                   }}>
                   {etap.icon && (
-                    <img
+                    <EtapsIcon
                       src={etap.icon}
                       alt={etap.name}
                     />

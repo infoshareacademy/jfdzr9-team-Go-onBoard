@@ -1,14 +1,45 @@
 import { useState, FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { createUserWithEmailAndPassword, signOut, getAuth, updateProfile } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signOut,
+  getAuth,
+  updateProfile,
+} from "firebase/auth";
 import { auth, database } from "../../utils/firebase/firebase.config";
-import { collection, query, where, getDocs, doc, setDoc } from "firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  doc,
+  setDoc,
+} from "firebase/firestore";
+import {
+  Button,
+  ImgMain,
+  Input,
+  Label,
+  LinkName,
+  LogoImg,
+  LogoName,
+  MainImg,
+  MainInfo,
+  NamePage,
+  PageInfo,
+  TextString,
+} from "./Sign.styled";
 
 interface CreateUserError {
   message: string;
 }
 
-type FirebaseErrorCode = "auth/email-already-in-use" | "auth/invalid-email" | "auth/user-not-found" | "auth/wrong-password" | "auth/weak-password";
+type FirebaseErrorCode =
+  | "auth/email-already-in-use"
+  | "auth/invalid-email"
+  | "auth/user-not-found"
+  | "auth/wrong-password"
+  | "auth/weak-password";
 
 type FirebaseErrorMessages = {
   [key in FirebaseErrorCode]: string;
@@ -44,7 +75,11 @@ export const Signup = () => {
           const { gender, id_course, role, name } = docSnapshot.data();
 
           try {
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const userCredential = await createUserWithEmailAndPassword(
+              auth,
+              email,
+              password
+            );
             const uid = userCredential.user.uid;
             const usersRef = collection(database, "users");
             const newUser = {
@@ -85,7 +120,9 @@ export const Signup = () => {
           }
         });
       } else {
-        setError("E-mail, nie moze zostać zrejestrowany. Jeśli opłaciłeś kurs, skontaktuj się z działem Sprzedaż. ");
+        setError(
+          "E-mail, nie moze zostać zrejestrowany. Jeśli opłaciłeś kurs, skontaktuj się z działem Sprzedaż. "
+        );
       }
     } catch (e: any) {
       setError("Wystąpił błąd podczas weryfikowania e-mail.");
@@ -95,34 +132,60 @@ export const Signup = () => {
 
   return (
     <>
-      <div>
-        <h3>GO! onBoard</h3>
-        <h1>Zarejestruj się</h1>
-        <form onSubmit={handleSubmit}>
+      <PageInfo>
+        <MainImg>
+          <ImgMain src="/assets/Chlopak.png"></ImgMain>
+        </MainImg>
+        <MainInfo>
+          <LogoImg src="/assets/Asset.png"></LogoImg>
+
+          <LogoName>
+            <b>GO!</b> onBoard
+          </LogoName>
+          <NamePage>Zarejestruj się</NamePage>
+          <form onSubmit={handleSubmit}>
+            <div>
+              <Label>Imię</Label>
+              <br />
+              <Input
+                onChange={(e) => setProfileName(e.target.value)}
+                type="name"
+                placeholder="Wpisz swóje imię"
+              />
+            </div>
+            <div>
+              <Label>Email</Label>
+              <br />
+              <Input
+                onChange={(e) => setEmail(e.target.value)}
+                type="email"
+                placeholder="Wpisz swój email"
+              />
+            </div>
+            <div>
+              <Label>Hasło</Label>
+              <br />
+              <Input
+                onChange={(e) => setPassword(e.target.value)}
+                type="password"
+                placeholder="Wpisz swoje hasło"
+              />
+              <TextString>{error}</TextString>
+            </div>
+            <div>
+              <Button type="submit">Zarejestruj</Button>
+            </div>
+          </form>
           <div>
-            <label>Name</label>
-            <input onChange={(e) => setProfileName(e.target.value)} type="name" placeholder="Wpisz swóje imię" />
+            <LinkName>
+              <Link to="/signin">Logowanie</Link>
+            </LinkName>
+            <LinkName>
+              <a href="/signpassword">Nie pamiętam hasła</a>
+            </LinkName>
           </div>
-          <div>
-            <label>Email</label>
-            <input onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Wpisz swój email" />
-          </div>
-          <div>
-            <label>Password</label>
-            <input onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Wpisz swoje hasło" />
-            <p>{error}</p>
-          </div>
-          <button type="submit">Zarejestruj</button>
-        </form>
-        <div>
-          <p>
-            <Link to="/signin">Logowanie</Link>
-          </p>
-          <p>
-            <Link to="/signpassword">Nie pamietam hasla</Link>
-          </p>
-        </div>
-      </div>
+        </MainInfo>
+      </PageInfo>
     </>
   );
 };
