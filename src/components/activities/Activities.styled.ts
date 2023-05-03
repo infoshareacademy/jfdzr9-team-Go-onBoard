@@ -74,6 +74,7 @@ export const DetailsWraper = styled.div`
 
   padding: 2rem;
   box-shadow: rgba(0, 0, 0, 0.15) 4px 5px 10px;
+  background-color: white;
   border-radius: 31.2294px;
 
   @media only screen and (max-width: 950px) {

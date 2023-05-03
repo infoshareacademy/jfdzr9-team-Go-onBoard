@@ -39,7 +39,18 @@ export const LogoImg = styled.img`
   height: 89.95px;
   flex: none;
   order: 1;
+  cursor: context-menu;
   flex-grow: 0;
+  filter: invert(0%) sepia(0%) saturate(100%) hue-rotate(0deg) brightness(100%)
+    contrast(100%);
+
+  &:hover {
+    cursor: context-menu;
+    width: 75px;
+    height: 89.95px;
+    filter: invert(0%) sepia(0%) saturate(100%) hue-rotate(0deg)
+      brightness(100%) contrast(100%);
+  }
 `;
 
 export const Input = styled.input`
@@ -140,10 +151,20 @@ export const ImgMain = styled.img`
   /* Inside auto layout */
   width: 764px;
   height: 764px;
-
+  cursor: default;
+  filter: invert(0%) sepia(0%) saturate(100%) hue-rotate(0deg) brightness(100%)
+    contrast(100%);
   flex: none;
   order: 0;
   flex-grow: 0;
+
+  &:hover {
+    cursor: context-menu;
+    width: 764px;
+    height: 764px;
+    filter: invert(0%) sepia(0%) saturate(100%) hue-rotate(0deg)
+      brightness(100%) contrast(100%);
+  }
 `;
 
 export const MainInfo = styled.div`
