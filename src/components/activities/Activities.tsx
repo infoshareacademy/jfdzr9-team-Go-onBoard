@@ -2,12 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import { database } from "../../utils/firebase/firebase.config";
 import { collection, getDocs } from "firebase/firestore";
 import ActivitiesDetail from "./ActivitiesDetail";
-import {
-  ActivitiesContainer,
-  ActivitiName,
-  Container,
-  Transparent,
-} from "./Activities.styled";
+import { ActivitiesContainer, ActivitiName, Container, Transparent } from "./Activities.styled";
 import { useParamsStagesHook } from "../hooks/useParamsStagesHook";
 import { useStages } from "../button/Context/StagesContext";
 import IconFetchedHeader from "./IconFetchedHeader";
@@ -25,21 +20,16 @@ function Activities() {
   const etapsID = useParamsStagesHook();
   const [activities, setActivities] = useState<Activity[]>([]);
   const [activitiesId, setActivitiesId] = useState<string | null>(null);
-  const [selectedActivitiesId, setSelectedActivitiesId] = useState<
-    string | null
-  >(null);
+  const [selectedActivitiesId, setSelectedActivitiesId] = useState<string | null>(null);
 
-  const detailProps = useMemo(
-    () =>
-      activitiesId && etapsID
-        ? {
-            activitiesId: activitiesId,
-            etap_id: etapsID,
-            onActivityConfirmation: handleActivityConfirmation,
-          }
-        : null,
-    [activitiesId, etapsID, handleActivityConfirmation]
-  );
+  const detailProps =
+    activitiesId && etapsID
+      ? {
+          activitiesId: activitiesId,
+          etap_id: etapsID,
+          onActivityConfirmation: handleActivityConfirmation,
+        }
+      : null;
 
   useEffect(() => {
     const getActivities = async () => {
@@ -64,9 +54,7 @@ function Activities() {
     setActivitiesId(null); // Reset activitiesId state when etap prop changes
   }, [etapsID]);
 
-  const sortedActivities = useMemo(() => {
-    return [...activities].sort((a, b) => a.sort - b.sort);
-  }, [activities]);
+  const sortedActivities = [...activities].sort((a, b) => a.sort - b.sort);
 
   return (
     <Container>
@@ -81,14 +69,8 @@ function Activities() {
                   setSelectedActivitiesId(filteredEtap.id);
                 }}
                 style={{
-                  color:
-                    filteredEtap.id === selectedActivitiesId
-                      ? "var(--active)"
-                      : "var(--primary-1)",
-                  filter:
-                    filteredEtap.id === selectedActivitiesId
-                      ? "invert(53%) sepia(7%) saturate(6913%) hue-rotate(67deg) brightness(106%) contrast(70%)"
-                      : "",
+                  color: filteredEtap.id === selectedActivitiesId ? "var(--active)" : "var(--primary-1)",
+                  filter: filteredEtap.id === selectedActivitiesId ? "invert(53%) sepia(7%) saturate(6913%) hue-rotate(67deg) brightness(106%) contrast(70%)" : "",
                 }}
                 key={filteredEtap.id}>
                 <ActivitiName>{filteredEtap.name}</ActivitiName>

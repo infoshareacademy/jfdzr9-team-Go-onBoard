@@ -107,11 +107,12 @@ function Calendar() {
         </UserInfo>
         <UserInfo>
           <UserInfoResult src="/src/assets/pliki-svg-dashboard/Najlepszy wynik.svg" />
-          Dni pracy pod rząd: {consecutiveActivities}
+          Dni pracy pod rząd:
+          <span style={{ fontWeight: "bold" }}>&nbsp; {consecutiveActivities}</span>
         </UserInfo>
         <UserInfo>
           <UserInfoClock src="/src/assets/pliki-svg-dashboard/zegarek.svg" />
-          Najlepszy wynik: {bestStreak}
+          Najlepszy wynik: <span style={{ fontWeight: "bold" }}>&nbsp; {bestStreak}</span>
         </UserInfo>
       </CourseDetails>
     </CalendarBlock>
