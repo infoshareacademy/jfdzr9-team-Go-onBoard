@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState, FormEvent } from "react";
 import { auth } from "../../utils/firebase/firebase.config";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { Button, ImgMain, Input, Label, LinkName, LogoImg, LogoName, MainImg, MainInfo, NamePage, PageInfo, TextString } from "./Sign.styled";
 
 type FirebaseErrorCode = "auth/email-already-in-use" | "auth/invalid-email" | "auth/user-not-found" | "auth/wrong-password" | "auth/weak-password";
 
@@ -41,31 +42,43 @@ export const Signin = () => {
 
   return (
     <>
-      <div>
-        <h3>GO! onBoard</h3>
-        <h1>Zaloguj się</h1>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label>Email</label>
-            <input onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Wpisz swój email" />
-          </div>
-          <div>
-            <label>Password</label>
-            <input onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Wpisz swoje hasło" />
-            <p>{error}</p>
-          </div>
-          <button type="submit">Zaloguj</button>
-        </form>
+      <PageInfo>
+        <MainImg>
+          <ImgMain src="/assets/Chlopak.png"></ImgMain>
+        </MainImg>
+        <MainInfo>
+          <LogoImg src="/assets/Asset.png"></LogoImg>
 
-        <div>
-          <p>
-            <Link to="/signup">Zarejestruj się</Link>
-          </p>
-          <p>
-            <Link to="/signpassword">Nie pamietam hasla</Link>
-          </p>
-        </div>
-      </div>
+          <LogoName>
+            <b>GO!</b> onBoard
+          </LogoName>
+          <NamePage>Zarejestruj się</NamePage>
+          <form onSubmit={handleSubmit}>
+            <div>
+              <Label>Email</Label>
+              <br />
+              <Input onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Wpisz swój email" />
+            </div>
+            <div>
+              <Label>Hasło</Label>
+              <br />
+              <Input onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Wpisz swoje hasło" />
+              <TextString>{error}</TextString>
+            </div>
+            <div>
+              <Button type="submit">Zaloguj</Button>
+            </div>
+          </form>
+          <div>
+            <LinkName>
+              <Link to="/signup">Zarejestruj się</Link>
+            </LinkName>
+            <LinkName>
+              <a href="/signpassword">Nie pamietam hasla</a>
+            </LinkName>
+          </div>
+        </MainInfo>
+      </PageInfo>
     </>
   );
 };

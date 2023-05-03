@@ -3,6 +3,7 @@ import React, { useState, FormEvent } from "react";
 import { auth, passwordReset } from "../../utils/firebase/firebase.config";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { log } from "console";
+import { Button, ImgMain, Input, Label, LinkName, LogoImg, LogoName, MainImg, MainInfo, NamePage, PageInfo, TextString } from "./Sign.styled";
 
 export const Signpassword = () => {
   const [email, setEmail] = useState("");
@@ -35,26 +36,37 @@ export const Signpassword = () => {
   };
   return (
     <>
-      <div>
-        <h3>GO! onBoard</h3>
-        <h1>Przypomnij hasło</h1>
-        <form onSubmit={handleSubmit}>
+      <PageInfo>
+        <MainImg>
+          <ImgMain src="/assets/Chlopak.png"></ImgMain>
+        </MainImg>
+        <MainInfo>
+          <LogoImg src="/assets/Asset.png"></LogoImg>
+
+          <LogoName>
+            <b>GO!</b> onBoard
+          </LogoName>
+
+          <NamePage>Przypomnij hasło</NamePage>
+
+          <form onSubmit={handleSubmit}>
+            <div>
+              <Label>Email</Label>
+              <Input type="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Wpisz swój email" />
+              <TextString>{error}</TextString>
+            </div>
+            <Button type="submit">Wyślij</Button>
+          </form>
           <div>
-            <label>Email</label>
-            <input type="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Wpisz swój email" />
-            <p>{error}</p>
+            <LinkName>
+              <Link to="/signup">Rejestracja</Link>
+            </LinkName>
+            <LinkName>
+              <a href="/">Logowanie</a>
+            </LinkName>
           </div>
-          <button type="submit">Wyślij</button>
-        </form>
-        <div>
-          <p>
-            <Link to="/signup">Rejestracja</Link>
-          </p>
-          <p>
-            <Link to="/">Logowanie</Link>
-          </p>
-        </div>
-      </div>
+        </MainInfo>
+      </PageInfo>
     </>
   );
 };
