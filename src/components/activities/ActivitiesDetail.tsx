@@ -4,12 +4,7 @@ import { collection, getDocs } from "firebase/firestore";
 import ConfirmActivity from "../button/ConfirmActivity";
 import CommentActivity from "./Comment";
 import { Quiz } from "../Quiz/Quiz";
-import {
-  DetailsWraper,
-  LinkFetched,
-  HeaderInfo,
-  HeaderInfoButton,
-} from "./Activities.styled";
+import { DetailsWraper, LinkFetched, HeaderInfo, HeaderInfoButton } from "./Activities.styled";
 import LinkFetchedHeader from "./LinkFetchedHeader";
 import IconFetchedHeader from "./IconFetchedHeader";
 import ReactModal from "react-modal";
@@ -42,9 +37,7 @@ interface Props {
 function ActivitiesDetail(props: Props) {
   const [activitiesDetail, setActivitiesDetail] = useState<Activity[]>([]);
   const [fetchedLink, setFetchedLink] = useState<string | undefined>(undefined);
-  const [fetchedMovie, setFetchedMovie] = useState<string | undefined>(
-    undefined
-  );
+  const [fetchedMovie, setFetchedMovie] = useState<string | undefined>(undefined);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [currentActivity, setCurrentActivity] = useState<Activity>();
@@ -69,9 +62,7 @@ function ActivitiesDetail(props: Props) {
 
   useEffect(() => {
     // fetch only the link and movie from the activities, if link/movie =-1 change state
-    const activity = activitiesDetail.find(
-      (activity) => activity.id === props.detailProps.activitiesId
-    );
+    const activity = activitiesDetail.find((activity) => activity.id === props.detailProps.activitiesId);
     if (activity) {
       if (activity.link && activity.link !== "-1") {
         setFetchedLink(activity.link || undefined);
@@ -109,15 +100,9 @@ function ActivitiesDetail(props: Props) {
         .filter((detail) => detail.id === props.detailProps.activitiesId)
         .map((filteredEtap) => {
           return (
-            <div
-              className="detailsContent"
-              key={filteredEtap.id}>
+            <div className="detailsContent" key={filteredEtap.id}>
               <h3>{filteredEtap.name}</h3>
-              {currentActivity && currentActivity?.test === true ? (
-                <Quiz etapIdForQuiz={confirmActivityProps} />
-              ) : (
-                <span>{filteredEtap.description}</span>
-              )}
+              {currentActivity && currentActivity?.test === true ? <Quiz etapIdForQuiz={confirmActivityProps} /> : <span>{filteredEtap.description}</span>}
               <LinkFetched>
                 <HeaderInfo>
                   <IconFetchedHeader iconName={filteredEtap.type || ""} />
@@ -126,20 +111,13 @@ function ActivitiesDetail(props: Props) {
                 <HeaderInfoButton>
                   {(fetchedLink || fetchedMovie) &&
                     (fetchedLink ? (
-                      <a
-                        href={fetchedLink}
-                        target="_blank"
-                        rel="noopener noreferrer">
-                        <button className="confirmButton">
-                          Przejdź do strony
-                        </button>
+                      <a href={fetchedLink} target="_blank" rel="noopener noreferrer">
+                        <button className="confirmButton">Przejdź do strony</button>
                       </a>
                     ) : (
                       fetchedMovie && (
                         <>
-                          <button
-                            className="confirmButton"
-                            onClick={() => setIsModalOpen(true)}>
+                          <button className="confirmButton" onClick={() => setIsModalOpen(true)}>
                             Obejrzyj film
                           </button>
 
@@ -150,15 +128,8 @@ function ActivitiesDetail(props: Props) {
                             onRequestClose={() => setIsModalOpen(false)}
                             shouldCloseOnOverlayClick={false}>
                             <div className="modalContent">
-                              <ReactPlayer
-                                url={fetchedMovie}
-                                className="react-player"
-                                playing
-                                controls
-                              />
-                              <button
-                                className="closeButton"
-                                onClick={() => setIsModalOpen(false)}>
+                              <ReactPlayer url={fetchedMovie} className="react-player" playing controls />
+                              <button className="closeButton" onClick={() => setIsModalOpen(false)}>
                                 Zamknij
                               </button>
                             </div>
@@ -168,15 +139,8 @@ function ActivitiesDetail(props: Props) {
                     ))}
                 </HeaderInfoButton>
               </LinkFetched>
-              {filteredEtap.comment && (
-                <CommentActivity
-                  activitiesId={props.detailProps.activitiesId}
-                />
-              )}
-              <ConfirmActivity
-                confirmActivityProps={confirmActivityProps}
-                currentActivityy={currentActivity}
-              />
+              {filteredEtap.comment && <CommentActivity activitiesId={props.detailProps.activitiesId} />}
+              <ConfirmActivity confirmActivityProps={confirmActivityProps} currentActivityy={currentActivity} />
             </div>
           );
         })}

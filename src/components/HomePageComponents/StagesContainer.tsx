@@ -8,6 +8,7 @@ import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { useFirebaseFetch } from "../hooks/useFirebaseFetch";
 import { Link } from "react-router-dom";
 import { useUser } from "../RequireAuth/context/AuthContext";
+import { AllStagesContainer, StagesBlocks, StagesLink } from "./StagesContainer.styled";
 
 interface Stage {
   id: string;
@@ -164,30 +165,29 @@ export const StagesContainer = () => {
 
   return (
     <>
-      <div className="stages-container">
-        <div className="stages-bloks">
+      <AllStagesContainer>
+        <StagesBlocks>
           {sortedStages.map(({ id, icon, name }) => {
             const imageUrlForStage = imageUrl[stagesName.findIndex((stage) => stage.id === id)];
             return (
-              <span key={id} className="stages-span">
-                <Link
-                  className="etaps"
-                  to={disabledMap[id] ? `/etaps/${id}` : "#"}
-                  style={{
-                    pointerEvents: disabledMap[id] ? "auto" : "auto",
-                    opacity: disabledMap[id] ? 1 : 0.5,
-                    cursor: disabledMap[id] ? "pointer" : "not-allowed",
-                  }}>
-                  <img src={imageUrlForStage} alt={icon} className="icons" />
-                  <span>{name}</span>
-                  <span>{averagesByEtapId[id]}%</span>
-                  <span>{checkDatesByEtapId[id]}</span>
-                </Link>
-              </span>
+              <Link
+                key={id}
+                className="etaps"
+                to={disabledMap[id] ? `/etaps/${id}` : "#"}
+                style={{
+                  pointerEvents: disabledMap[id] ? "auto" : "auto",
+                  backgroundColor: disabledMap[id] ? "white" : "rgba(10, 10, 10, 0.575)",
+                  cursor: disabledMap[id] ? "pointer" : "not-allowed",
+                }}>
+                <img src={imageUrlForStage} alt={icon} className="icons" />
+                <span>{name}</span>
+                <span>{averagesByEtapId[id]}%</span>
+                <span>{checkDatesByEtapId[id]}</span>
+              </Link>
             );
           })}
-        </div>
-      </div>
+        </StagesBlocks>
+      </AllStagesContainer>
     </>
   );
 };

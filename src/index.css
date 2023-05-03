@@ -230,43 +230,8 @@ button:disabled {
   height: auto;
 }
 
-.buddy {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 39px 0px;
-  gap: 23px;
-  width: 387px;
-  height: fit-content;
-  box-shadow: rgb(0 0 0 / 15%) 4px 5px 10px;
-  border-radius: 31.2294px;
-  flex: none;
-  order: 1;
-  flex-grow: 0;
-  background-color: #ffffff;
-}
-
 h2 {
   text-align: end;
-}
-
-.stages-container {
-  border-radius: 31.2294px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 0px;
-  gap: 14px;
-  width: 696px;
-  height: fit-content;
-  flex: none;
-  order: 0;
-  flex-grow: 0;
-}
-
-.stages-bloks {
-  display: flex;
-  flex-direction: column;
 }
 
 img {
@@ -285,9 +250,9 @@ img {
   justify-content: space-between;
   align-items: center;
   padding: 0px 32px;
-  margin: 10px;
-  width: 596px;
-  height: 28px;
+  margin: 5px;
+  width: 646px;
+  height: 58px;
 
   background: #ffffff;
   color: var(--primary-1);
@@ -302,10 +267,6 @@ img {
   border-radius: none;
   box-shadow: none;
 }
-
-/* .title-etaps:hover {
-  color: var(--primary-1);
-} */
 
 .confirmButton {
   width: 35%;

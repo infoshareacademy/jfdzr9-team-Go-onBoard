@@ -5,8 +5,6 @@ export const CalendarBlock = styled.div`
   flex-direction: column;
   align-content: center;
   align-items: center;
-  /* justify-content: center; */
-  /* padding: 5px; */
   gap: 5px;
   width: 387px;
   min-height: 337px;

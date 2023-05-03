@@ -103,7 +103,16 @@ function Calendar() {
       <CourseDetails>
         <UserInfo>
           <UserInfoImgGift src="/src/assets/pliki-svg-dashboard/prezent.svg" />{" "}
-          {daysUntilStart === 0 ? "Kurs się rozpoczął" : `Kurs rozpocznie się za: ${daysUntilStart} ${daysUntilStart === 1 ? "dzień" : "dni"}!`}
+          {daysUntilStart === 0 ? (
+            "Kurs się rozpoczął"
+          ) : (
+            <>
+              Kurs rozpocznie się za:{" "}
+              <span style={{ fontWeight: "bold" }}>
+                &nbsp;{daysUntilStart} {daysUntilStart === 1 ? "dzień" : "dni"}!
+              </span>
+            </>
+          )}
         </UserInfo>
         <UserInfo>
           <UserInfoResult src="/src/assets/pliki-svg-dashboard/Najlepszy wynik.svg" />
