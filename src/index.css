@@ -6,6 +6,7 @@
   --secondary-1: #eff0f7;
   --secondary-2: #d3d3d3;
   --active: #46ad2c;
+  --secondary-3: #4a4a7b;
   --white: #fff;
 }
 
@@ -28,6 +29,7 @@
   --primary-2: #ffcde4;
   --secondary-1: #eff0f7;
   --secondary-2: #d3d3d3;
+  --secondary-3: #4a4a7b;
   --active: #46ad2c;
 
   background-color: var(--secondary-1);
@@ -75,9 +77,7 @@ button {
 }
 
 button:hover {
-  background-color: var(--primary-2);
-  color: var(--primary-1);
-  font-weight: 800;
+  opacity: 0.7;
 }
 
 .stages-links {
@@ -100,16 +100,15 @@ button:hover {
 }
 
 .stages-links:hover {
-  background-color: var(--primary-2);
-  color: var(--primary-1);
-  border-color: var(--primary-1);
+  opacity: 0.7;
   /* filter: brightness(0) saturate(100%) invert(5%) sepia(80%) saturate(6202%)
     hue-rotate(240deg) brightness(74%) contrast(105%); */
 }
 
 .stages-links:disabled {
   border-color: var(--secondary-1);
-  color: var(--primary-1);
+
+  cursor: not-allowed;
 }
 
 .stages-links:focus,
@@ -138,6 +137,15 @@ button:hover {
   gap: 10px;
 }
 
+button:disabled {
+  background-color: var(--primary-2);
+  color: var(--secondary-1);
+  cursor: not-allowed;
+}
+
+.etpasimg {
+}
+
 /* @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
@@ -150,10 +158,7 @@ button:hover {
     background-color: #020246;
     color: white;
   }
-  button:disabled {
-    background-color: var(--primary-2);
-    cursor: not-allowed;
-  }
+
 } */
 
 .up-container {
@@ -270,7 +275,7 @@ img {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 32px;
+  padding: 0px 32px;
   margin: 10px;
   width: 696px;
   height: 28px;
@@ -288,9 +293,9 @@ img {
   box-shadow: none;
 }
 
-.title-etaps:hover {
+/* .title-etaps:hover {
   color: var(--primary-1);
-}
+} */
 
 .confirmButton {
   width: 35%;

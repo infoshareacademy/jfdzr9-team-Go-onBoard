@@ -2,7 +2,12 @@ import React, { useState, useEffect } from "react";
 import { database } from "../../utils/firebase/firebase.config";
 import { collection, getDocs } from "firebase/firestore";
 import ActivitiesDetail from "./ActivitiesDetail";
-import { ActivitiesContainer, ActivitiName, Container, Transparent } from "./Activities.styled";
+import {
+  ActivitiesContainer,
+  ActivitiName,
+  Container,
+  Transparent,
+} from "./Activities.styled";
 import { useParamsStagesHook } from "../hooks/useParamsStagesHook";
 import { useStages } from "../button/Context/StagesContext";
 import IconFetchedHeader from "./IconFetchedHeader";
@@ -15,12 +20,22 @@ interface Activity {
   sort: number;
 }
 
+function saveIconNameToLocalStorage(iconName: string) {
+  localStorage.setItem("iconName", iconName);
+}
+
+function getIconNameFromLocalStorage(): string | null {
+  return localStorage.getItem("iconName");
+}
+
 function Activities() {
   const { etapId, handleActivityConfirmation } = useStages();
   const etapsID = useParamsStagesHook();
   const [activities, setActivities] = useState<Activity[]>([]);
   const [activitiesId, setActivitiesId] = useState<string | null>(null);
-  const [selectedActivitiesId, setSelectedActivitiesId] = useState<string | null>(null);
+  const [selectedActivitiesId, setSelectedActivitiesId] = useState<
+    string | null
+  >(null);
 
   const detailProps =
     activitiesId && etapsID
@@ -61,19 +76,30 @@ function Activities() {
         {sortedActivities
           .filter((activit) => activit.etap_id === etapsID)
           .map((filteredEtap) => {
+            const iconName = filteredEtap.type || "";
+
             return (
               <Transparent
                 onClick={() => {
                   setActivitiesId(filteredEtap.id);
                   setSelectedActivitiesId(filteredEtap.id);
+                  saveIconNameToLocalStorage(iconName);
                 }}
                 style={{
-                  color: filteredEtap.id === selectedActivitiesId ? "var(--active)" : "var(--primary-1)",
-                  filter: filteredEtap.id === selectedActivitiesId ? "invert(53%) sepia(7%) saturate(6913%) hue-rotate(67deg) brightness(106%) contrast(70%)" : "",
+                  color:
+                    filteredEtap.id === selectedActivitiesId
+                      ? "var(--active)"
+                      : "var(--primary-1)",
+                  filter:
+                    filteredEtap.id === selectedActivitiesId
+                      ? "invert(53%) sepia(7%) saturate(6913%) hue-rotate(67deg) brightness(106%) contrast(70%)"
+                      : "",
                 }}
                 key={filteredEtap.id}>
                 <ActivitiName>{filteredEtap.name}</ActivitiName>
-                <IconFetchedHeader iconName={filteredEtap.type || ""} />
+                <IconFetchedHeader
+                  iconName={getIconNameFromLocalStorage() || iconName}
+                />
               </Transparent>
             );
           })}

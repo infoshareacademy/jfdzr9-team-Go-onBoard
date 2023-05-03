@@ -48,9 +48,13 @@ export const Transparent = styled.button`
   align-items: center;
   width: 100%;
   justify-content: space-between;
-  /* filter: brightness(0) saturate(100%) invert(9%) sepia(34%) saturate(5579%)
-    hue-rotate(234deg) brightness(90%) contrast(121%); */
+
+  &:hover {
+    background-color: transparent;
+    color: var(--active);
+  }
 `;
+
 export const StyledH4 = styled.h4`
   font-family: "Inter";
   font-style: normal;

@@ -121,7 +121,7 @@ function Etaps() {
   return (
     <StagesContext.Provider value={stagesContextValue}>
       <Link to={`/dashboard/${user?.uid}`}>
-        <button>BACK TO DASHBOARD</button>
+        <button>Powrót</button>
       </Link>
       <ProgressEtap />
       <div className="contentWrap">
@@ -159,7 +159,7 @@ function Etaps() {
                         : "var(--primary-2)", // Kolor dla etapów niedostępnych
                   }}>
                   {etap.icon && (
-                    <img
+                    <EtapsIcon
                       src={etap.icon}
                       alt={etap.name}
                     />

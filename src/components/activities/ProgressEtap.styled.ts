@@ -44,3 +44,7 @@ export const StagesLinks = styled(Link)<StagesLinksProps>`
   justify-content: space-between;
   align-items: center;
 `;
+
+export const StagesSrc = styled.a`
+  color: var(--secondary-2);
+`;
