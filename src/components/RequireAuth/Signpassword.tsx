@@ -3,7 +3,21 @@ import React, { useState, FormEvent } from "react";
 import { auth, passwordReset } from "../../utils/firebase/firebase.config";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { log } from "console";
-import { Button, ImgMain, Input, Label, LinkName, LogoImg, LogoName, MainImg, MainInfo, NamePage, PageInfo, TextString } from "./Sign.styled";
+import {
+  Button,
+  Card,
+  Card2,
+  Cards,
+  FormSign,
+  ImgMain,
+  Input,
+  Label,
+  LinkName,
+  LogoImg,
+  LogoName,
+  NamePage,
+  TextString,
+} from "./Sign.styled";
 
 export const Signpassword = () => {
   const [email, setEmail] = useState("");
@@ -36,11 +50,11 @@ export const Signpassword = () => {
   };
   return (
     <>
-      <PageInfo>
-        <MainImg>
+      <Cards>
+        <Card2>
           <ImgMain src="/assets/Chlopak.png"></ImgMain>
-        </MainImg>
-        <MainInfo>
+        </Card2>
+        <Card>
           <LogoImg src="/assets/Asset.png"></LogoImg>
 
           <LogoName>
@@ -49,14 +63,21 @@ export const Signpassword = () => {
 
           <NamePage>Przypomnij hasło</NamePage>
 
-          <form onSubmit={handleSubmit}>
+          <FormSign onSubmit={handleSubmit}>
             <div>
               <Label>Email</Label>
-              <Input type="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Wpisz swój email" />
+              <br></br>
+              <Input
+                type="email"
+                name="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Wpisz swój email"
+              />
               <TextString>{error}</TextString>
             </div>
             <Button type="submit">Wyślij</Button>
-          </form>
+          </FormSign>
           <div>
             <LinkName>
               <Link to="/signup">Rejestracja</Link>
@@ -65,8 +86,8 @@ export const Signpassword = () => {
               <a href="/">Logowanie</a>
             </LinkName>
           </div>
-        </MainInfo>
-      </PageInfo>
+        </Card>
+      </Cards>
     </>
   );
 };

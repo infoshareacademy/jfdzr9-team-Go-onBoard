@@ -65,6 +65,7 @@ function Etaps() {
         .map((doc) => doc.data().user_activity_id);
 
       setUserActivityIds(userActivityIds);
+      console.log(userActivityIds);
 
       //icon part, take from storage and push in button
       const etapsArray: Etap[] = await Promise.all(

@@ -2,7 +2,23 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState, FormEvent } from "react";
 import { auth } from "../../utils/firebase/firebase.config";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { Button, ImgMain, Input, Label, LinkName, LogoImg, LogoName, MainImg, MainInfo, NamePage, PageInfo, TextString } from "./Sign.styled";
+
+import {
+  Button,
+  Card,
+  Card2,
+  Cards,
+  FormSign,
+  ImgMain,
+  Input,
+  Label,
+  LinkName,
+  LogoImg,
+  LogoName,
+  NamePage,
+  TextString,
+} from "./Sign.styled";
+
 
 type FirebaseErrorCode = "auth/email-already-in-use" | "auth/invalid-email" | "auth/user-not-found" | "auth/wrong-password" | "auth/weak-password";
 
@@ -42,18 +58,20 @@ export const Signin = () => {
 
   return (
     <>
-      <PageInfo>
-        <MainImg>
+      <Cards>
+        <Card2>
           <ImgMain src="/assets/Chlopak.png"></ImgMain>
-        </MainImg>
-        <MainInfo>
+        </Card2>
+        <Card>
           <LogoImg src="/assets/Asset.png"></LogoImg>
 
           <LogoName>
             <b>GO!</b> onBoard
           </LogoName>
           <NamePage>Zaloguj się</NamePage>
-          <form onSubmit={handleSubmit}>
+
+          <FormSign onSubmit={handleSubmit}>
+
             <div>
               <Label>Email</Label>
               <br />
@@ -68,7 +86,7 @@ export const Signin = () => {
             <div>
               <Button type="submit">Zaloguj</Button>
             </div>
-          </form>
+          </FormSign>
           <div>
             <LinkName>
               <Link to="/signup">Zarejestruj się</Link>
@@ -77,8 +95,8 @@ export const Signin = () => {
               <a href="/signpassword">Nie pamiętam hasła</a>
             </LinkName>
           </div>
-        </MainInfo>
-      </PageInfo>
+        </Card>
+      </Cards>
     </>
   );
 };

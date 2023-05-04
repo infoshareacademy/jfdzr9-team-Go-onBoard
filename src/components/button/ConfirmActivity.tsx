@@ -1,10 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { database } from "../../utils/firebase/firebase.config";
-import { collection, query, where, getDocs, doc, setDoc, serverTimestamp, onSnapshot } from "firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  doc,
+  setDoc,
+  serverTimestamp,
+  onSnapshot,
+} from "firebase/firestore";
 import { useUser } from "../RequireAuth/context/AuthContext";
 import { Activity } from "../activities/ActivitiesDetail";
 import { useFirebaseFetch } from "../hooks/useFirebaseFetch";
-import { result } from "cypress/types/lodash";
+import { QuerySnapshot } from "firebase/firestore";
 
 interface ConfirmActivityProps {
   confirmActivityProps: {
@@ -14,6 +23,7 @@ interface ConfirmActivityProps {
   };
   currentActivityy: Activity | undefined;
 }
+
 interface QuizCollection {
   result: number;
   user_id: string;
@@ -31,7 +41,9 @@ interface UserActivitiesCollection {
 const ConfirmActivity: React.FC<ConfirmActivityProps> = (props) => {
   const user = useUser();
   const [activityChecked, setActivityChecked] = useState<boolean>(false); // flag for check button
-  const [checkedActivityId, setCheckedActivityId] = useState<string | null>(null); // state to track the checked activity
+  const [checkedActivityId, setCheckedActivityId] = useState<string | null>(
+    null
+  ); // state to track the checked activity
   const [isDisabled, setIsDisabled] = useState<boolean>(true); // state to disable the button if the activity has already been checked
   const [hasMounted, setHasMounted] = useState<boolean>(false); // flag to indicate whether the component has mounted
   const [points, setPoints] = useState<QuizCollection[]>([]);
@@ -49,10 +61,17 @@ const ConfirmActivity: React.FC<ConfirmActivityProps> = (props) => {
       );
       const querySnapshot = await getDocs(q);
       const hasResult = querySnapshot.docs.some((doc) => doc.data().result);
-      const hasActivity = querySnapshot.docs.some((doc) => doc.data().user_activity_id === activiti && doc.data().user_id === user?.uid);
+
+      const hasActivity = querySnapshot.docs.some(
+        (doc) =>
+          doc.data().user_activity_id === activiti &&
+          doc.data().user_id === user?.uid
+      );
+
       setIsDisabled(hasResult || hasActivity); // disable the button if the activity has already been checked or user_id doesn't match or activity already exists
       setHasMounted(true);
     };
+
     fetchData();
   }, [activiti, user?.uid]);
 
@@ -78,7 +97,13 @@ const ConfirmActivity: React.FC<ConfirmActivityProps> = (props) => {
   }
 
   //fetch collection user_activities to check if user already checked current activitie
-  const userActivitiesCollection = useFirebaseFetch<UserActivitiesCollection>("user_activities");
+
+  const userActivitiesCollection =
+    useFirebaseFetch<UserActivitiesCollection>("user_activities");
+  const currentUserActivity = userActivitiesCollection.find(
+    (currentId) => currentId?.user_activity_id === activiti
+  );
+
 
   // /listening when the result of quiz will changed to enable or disable the button "zapisz krok"
   useEffect(() => {
@@ -95,19 +120,37 @@ const ConfirmActivity: React.FC<ConfirmActivityProps> = (props) => {
       }));
       setPoints(newPoints);
 
-      const userPoints: QuizCollection | undefined = newPoints.find((point) => point.user_id === user?.uid && point.etapId === etap_id);
+      const userPoints: QuizCollection | undefined = newPoints.find(
+        (point) => point.user_id === user?.uid && point.etapId === etap_id
+      );
 
-      const currentUserActivity = userActivitiesCollection.find((currentId) => currentId?.user_activity_id === activiti && currentId.user_id === user?.uid);
+      if (
+        userPoints?.result === undefined &&
+        (props.currentActivityy?.test === undefined ||
+          props.currentActivityy.test === true)
+      ) {
 
-      if (userPoints?.result === undefined && (props.currentActivityy?.test === undefined || props.currentActivityy.test === true)) {
         setIsDisabled(true);
-      } else if (userPoints?.result !== undefined && props.currentActivityy?.test === true && userPoints.result >= 75) {
+      } else if (
+        userPoints?.result !== undefined &&
+        props.currentActivityy?.test === true &&
+        userPoints.result >= 75
+      ) {
         setIsDisabled(false);
-      } else if (userPoints?.result !== undefined && props.currentActivityy?.test === true && userPoints.result < 75) {
+      } else if (
+        userPoints?.result !== undefined &&
+        props.currentActivityy?.test === true &&
+        userPoints.result < 75
+      ) {
         setIsDisabled(true);
       }
 
-      if (activiti === currentUserActivity?.user_activity_id && userPoints?.result !== undefined && props.currentActivityy?.test === true && userPoints.result >= 75) {
+      if (
+        activiti === currentUserActivity?.user_activity_id &&
+        userPoints?.result !== undefined &&
+        props.currentActivityy?.test === true &&
+        userPoints.result >= 75
+      ) {
         setIsDisabled(true);
       }
 

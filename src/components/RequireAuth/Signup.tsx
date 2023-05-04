@@ -17,16 +17,17 @@ import {
 } from "firebase/firestore";
 import {
   Button,
+  Card,
+  Card2,
+  Cards,
+  FormSign,
   ImgMain,
   Input,
   Label,
   LinkName,
   LogoImg,
   LogoName,
-  MainImg,
-  MainInfo,
   NamePage,
-  PageInfo,
   TextString,
 } from "./Sign.styled";
 
@@ -132,18 +133,18 @@ export const Signup = () => {
 
   return (
     <>
-      <PageInfo>
-        <MainImg>
+      <Cards>
+        <Card2>
           <ImgMain src="/assets/Chlopak.png"></ImgMain>
-        </MainImg>
-        <MainInfo>
+        </Card2>
+        <Card>
           <LogoImg src="/assets/Asset.png"></LogoImg>
 
           <LogoName>
             <b>GO!</b> onBoard
           </LogoName>
           <NamePage>Zarejestruj się</NamePage>
-          <form onSubmit={handleSubmit}>
+          <FormSign onSubmit={handleSubmit}>
             <div>
               <Label>Imię</Label>
               <br />
@@ -170,12 +171,12 @@ export const Signup = () => {
                 type="password"
                 placeholder="Wpisz swoje hasło"
               />
-              <TextString>{error}</TextString>
             </div>
+            <TextString>{error}</TextString>
             <div>
               <Button type="submit">Zarejestruj</Button>
             </div>
-          </form>
+          </FormSign>
           <div>
             <LinkName>
               <Link to="/signin">Logowanie</Link>
@@ -184,8 +185,8 @@ export const Signup = () => {
               <a href="/signpassword">Nie pamiętam hasła</a>
             </LinkName>
           </div>
-        </MainInfo>
-      </PageInfo>
+        </Card>
+      </Cards>
     </>
   );
 };
