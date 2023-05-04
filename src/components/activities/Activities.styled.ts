@@ -1,16 +1,30 @@
 import styled from "styled-components";
+// export const ActivitiesContainer = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   align-items: flex-start;
+//   gap: 1rem;
+//   background: #ffffff;
+//   width: 300px;
+//   padding: 2rem;
+//   box-shadow: rgb(0 0 0 / 15%) 4px 5px 10px;
+//   border-radius: 31.2294px;
+//   height: 380px;
+// `;
+
 export const ActivitiesContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 1rem;
   background: #ffffff;
-  width: 300px;
+  max-width: 297px;
   padding: 2rem;
   box-shadow: rgb(0 0 0 / 15%) 4px 5px 10px;
   border-radius: 31.2294px;
   height: 380px;
 `;
+
 export const ActivitiName = styled.div`
   font-family: "Inter";
   font-style: normal;
@@ -19,17 +33,35 @@ export const ActivitiName = styled.div`
   font-weight: 700;
   text-align: start;
 `;
+
+// export const Container = styled.div`
+//   display: flex;
+//   flex-direction: row;
+//   align-items: flex-start;
+//   gap: 1.6rem;
+//   @media only screen and (max-width: 1160px) {
+//     flex-direction: column;
+//     align-items: center;
+//     gap: 1rem;
+//   }
+// `;
+
 export const Container = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  gap: 2rem;
-  @media only screen and (max-width: 1020px) {
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 0.6rem;
+  justify-items: center;
+  grid-auto-rows: minmax(
+    0,
+    auto
+  ); /* Automatyczna wysokość dla elementów siatki */
+
+  @media screen and (max-width: 830px) {
+    grid-template-columns: 1fr;
+    grid-auto-rows: minmax(0, auto);
   }
 `;
+
 export const EtapContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -42,6 +74,7 @@ export const EtapContainer = styled.div`
   box-shadow: 8px 8px 24px rgba(2, 2, 70, 0.05);
   border-radius: 31.2294px;
 `;
+
 export const Transparent = styled.button`
   background-color: transparent;
   display: flex;
@@ -70,7 +103,7 @@ export const StyledH3 = styled.h3`
   line-height: 20px;
 `;
 
-export const DetailsWraper = styled.div`
+/* export const DetailsWraper = styled.div`
   width: 700px;
 
   display: flex;
@@ -88,6 +121,16 @@ export const DetailsWraper = styled.div`
   @media only screen and (max-width: 600px) {
     width: 300px;
   }
+`; */
+
+export const DetailsWraper = styled.div`
+  max-width: 700px;
+
+  background-color: white;
+  padding: 2rem;
+  box-shadow: rgba(0, 0, 0, 0.15) 4px 5px 10px;
+  background-color: white;
+  border-radius: 31.2294px;
 `;
 
 export const LinkFetched = styled.div`
@@ -101,7 +144,8 @@ export const StyledLinkFetchedHeader = styled.div`
   align-items: center;
   padding: 16px 20px 16px 16px;
   gap: 4px;
-  filter: brightness(0) saturate(100%) invert(9%) sepia(34%) saturate(5579%) hue-rotate(234deg) brightness(90%) contrast(121%);
+  filter: brightness(0) saturate(100%) invert(9%) sepia(34%) saturate(5579%)
+    hue-rotate(234deg) brightness(90%) contrast(121%);
 `;
 
 export const HeaderInfo = styled.div`

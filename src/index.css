@@ -108,12 +108,12 @@ button:hover {
   justify-content: space-between;
   align-items: center;
   filter: none;
+  box-shadow: 4px 4px 10px rgb(0 0 0 / 25%);
 }
 
 .stages-links:hover {
   opacity: 0.7;
-  /* filter: brightness(0) saturate(100%) invert(5%) sepia(80%) saturate(6202%)
-    hue-rotate(240deg) brightness(74%) contrast(105%); */
+  box-shadow: 2px 2px 2px rgb(0 0 0 / 65%);
 }
 
 .stages-links:disabled {
@@ -130,8 +130,9 @@ button:hover {
 .listEtaps {
   display: flex;
   flex-direction: row;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   gap: 2rem;
+  justify-content: center;
 }
 
 .contentWrap {
@@ -153,21 +154,6 @@ button:disabled {
   color: var(--secondary-1);
   cursor: not-allowed;
 }
-
-/* @media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #020246;
-    color: white;
-  }
-
-} */
 
 .up-container {
   display: flex;
@@ -209,7 +195,6 @@ button:disabled {
   height: fit-content;
   background: linear-gradient(89.82deg, #687ec9 1.25%, #5971c3 98.38%);
   color: #ffffff;
-  /* Shadow field */
   box-shadow: 8px 8px 24px rgba(2, 2, 70, 0.05);
   border-radius: 31.2294px;
   /* overflow: hidden; */
@@ -303,10 +288,6 @@ img {
   box-shadow: none;
 }
 
-/* .title-etaps:hover {
-  color: var(--primary-1);
-} */
-
 .confirmButton {
   width: 35%;
 
@@ -363,26 +344,9 @@ img {
   z-index: 5;
 }
 
-@media only screen and (max-width: 1160px) {
+@media only screen and (max-width: 830px) {
   .confirmButton {
     width: 35%;
-  }
-
-  .listEtaps {
-    gap: 1rem;
-  }
-
-  .stages-links {
-    width: 70px;
-  }
-
-  .title-etaps {
-    padding: 2px;
-    margin: 4px;
-  }
-
-  .contentWrap {
-    align-items: center;
   }
 }
 
@@ -390,26 +354,10 @@ img {
   .confirmButton {
     width: 55%;
   }
+}
 
+@media only screen and (max-width: 740px) {
   .listEtaps {
-    gap: 0.5rem;
-  }
-
-  .stages-links {
-    width: 70px;
-
-    padding-left: 0.2em;
-    padding-right: 1em;
-    padding-top: 0.2em;
-    padding-bottom: 0.2em;
-  }
-
-  .title-etaps {
-    padding: 2px;
-    margin: 4px;
-  }
-
-  .contentWrap {
-    align-items: center;
+    gap: 1rem;
   }
 }
