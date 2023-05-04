@@ -18,6 +18,8 @@ import {
   NamePage,
   TextString,
 } from "./Sign.styled";
+import imgProgrammer from "../../assets/signin/Chlopak.png";
+import imgLogo from "../../assets/signin/Logo.png";
 
 type FirebaseErrorCode =
   | "auth/email-already-in-use"
@@ -65,12 +67,12 @@ export const Signin = () => {
       <Cards>
         <Card2>
           <ImgMain
-            src="/assets/Chlopak.png"
+            src={imgProgrammer}
             alt="programista"></ImgMain>
         </Card2>
         <Card>
           <LogoImg
-            src="/assets/Asset.png"
+            src={imgLogo}
             alt="logo"></LogoImg>
 
           <LogoName>

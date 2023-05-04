@@ -30,6 +30,8 @@ import {
   NamePage,
   TextString,
 } from "./Sign.styled";
+import imgProgrammer from "../../assets/signin/Chlopak.png";
+import imgLogo from "../../assets/signin/Logo.png";
 
 interface CreateUserError {
   message: string;
@@ -136,12 +138,12 @@ export const Signup = () => {
       <Cards>
         <Card2>
           <ImgMain
-            src="/assets/Chlopak.png"
+            src={imgProgrammer}
             alt="programista"></ImgMain>
         </Card2>
         <Card>
           <LogoImg
-            src="/assets/Asset.png"
+            src={imgLogo}
             alt="logo"></LogoImg>
 
           <LogoName>
