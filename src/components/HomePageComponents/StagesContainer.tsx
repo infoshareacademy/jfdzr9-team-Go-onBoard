@@ -8,7 +8,7 @@ import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { useFirebaseFetch } from "../hooks/useFirebaseFetch";
 import { Link } from "react-router-dom";
 import { useUser } from "../RequireAuth/context/AuthContext";
-import { AllStagesContainer, StagesBlocks, StagesLink } from "./StagesContainer.styled";
+import { AllStagesContainer, StagesBlocks, StagesDetails } from "./StagesContainer.styled";
 
 interface Stage {
   id: string;
@@ -179,10 +179,10 @@ export const StagesContainer = () => {
                   backgroundColor: disabledMap[id] ? "white" : "rgba(10, 10, 10, 0.575)",
                   cursor: disabledMap[id] ? "pointer" : "not-allowed",
                 }}>
-                <img src={imageUrlForStage} alt={icon} className="icons" />
-                <span>{name}</span>
-                <span>{averagesByEtapId[id]}%</span>
-                <span>{checkDatesByEtapId[id]}</span>
+                <img src={imageUrlForStage} alt={icon} />
+                <StagesDetails>{name}</StagesDetails>
+                <StagesDetails>{averagesByEtapId[id]}%</StagesDetails>
+                <StagesDetails>{checkDatesByEtapId[id]}</StagesDetails>
               </Link>
             );
           })}

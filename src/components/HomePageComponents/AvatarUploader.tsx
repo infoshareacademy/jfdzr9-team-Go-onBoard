@@ -93,7 +93,7 @@ const AvatarUploader: React.FC = () => {
           />
         ) : (
           <div>
-            <img src="/src/assets/pliki-svg-dashboard/ikona od avatara.svg" style={{ filter: "none", width: "66px", height: "66px" }} />
+            <img src="/src/assets/pliki-svg-dashboard/ikona od avatara.svg" style={{ filter: "none", width: "66px", height: "66px", cursor: "pointer" }} />
           </div>
         )}
       </label>

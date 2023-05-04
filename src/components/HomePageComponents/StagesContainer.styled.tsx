@@ -19,21 +19,6 @@ export const StagesBlocks = styled.div`
   flex-direction: column;
 `;
 
-export const StagesLink = styled.span`
-  /* cursor: pointer; */
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0px 32px;
-  margin: 10px;
-  width: 596px;
-  height: 28px;
-  filter: none;
-  background: #ffffff;
-  color: white;
-  /* Shadow field */
-
-  box-shadow: rgb(0 0 0 / 15%) 4px 5px 10px;
-  border-radius: 31.2294px;
+export const StagesDetails = styled.span`
+  width: 90px;
 `;
