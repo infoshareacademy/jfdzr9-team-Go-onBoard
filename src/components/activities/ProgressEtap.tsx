@@ -5,7 +5,7 @@ import { Doughnut } from "react-chartjs-2";
 import { Chart } from "chart.js";
 import { ArcElement, DoughnutController } from "chart.js";
 import { collection, getFirestore, onSnapshot } from "firebase/firestore";
-import { DonutChart, ProgressWraper } from "./ProgressEtap.styled";
+import { DonutChart, NumberChart, ProgressWraper } from "./ProgressEtap.styled";
 
 Chart.register(ArcElement, DoughnutController);
 
@@ -57,17 +57,12 @@ function ProgressEtap() {
   };
 
   const chartOptions = {
-    plugins: {
-      legend: {
-        display: false, // display legend
-      },
-    },
     elements: {
       arc: {
         borderWidth: 0, // display border
       },
     },
-    cutout: "70%", // Dodajemy właściwość cutout i ustawiamy wartość procentową
+    cutout: "70%", // circle inside chart
   };
 
   return (
@@ -78,16 +73,9 @@ function ProgressEtap() {
           <DonutChart key={user.uid}>
             <Doughnut
               data={data}
-              options={chartOptions} // Dodajemy opcje konfiguracji
-              style={{ zIndex: "1", width: "70px", height: "70px" }}
+              options={chartOptions}
             />
-            <div
-              style={{
-                zIndex: "3",
-                position: "absolute",
-              }}>
-              {userProgress.toFixed(0)}%
-            </div>
+            <NumberChart>{userProgress.toFixed(0)}%</NumberChart>
           </DonutChart>
         ) : (
           <div>Ładowanie...</div>

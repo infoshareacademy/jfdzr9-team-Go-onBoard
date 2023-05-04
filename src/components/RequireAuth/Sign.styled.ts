@@ -22,7 +22,6 @@ export const LogoImg = styled.img`
   padding-top: 39px;
   width: 75px;
   height: 89.95px;
-
 `;
 
 export const Input = styled.input`
@@ -71,7 +70,6 @@ export const TextString = styled.p`
   color: red;
 `;
 
-
 export const Card = styled.div`
   padding: 1rem;
   min-height: 839px;
@@ -82,7 +80,9 @@ export const Card = styled.div`
   background-color: white;
   @media (max-width: 1200px) {
     width: 470px;
-
+  }
+  @media (max-width: 500px) {
+    width: 300px;
   }
 `;
 
@@ -90,7 +90,6 @@ export const Card2 = styled.div`
   padding: 1rem;
   min-height: 839px;
   height: auto;
-
 
   @media (max-width: 1200px) {
     display: none;

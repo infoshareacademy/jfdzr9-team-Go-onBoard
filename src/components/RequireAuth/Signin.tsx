@@ -19,8 +19,12 @@ import {
   TextString,
 } from "./Sign.styled";
 
-
-type FirebaseErrorCode = "auth/email-already-in-use" | "auth/invalid-email" | "auth/user-not-found" | "auth/wrong-password" | "auth/weak-password";
+type FirebaseErrorCode =
+  | "auth/email-already-in-use"
+  | "auth/invalid-email"
+  | "auth/user-not-found"
+  | "auth/wrong-password"
+  | "auth/weak-password";
 
 type FirebaseErrorMessages = {
   [key in FirebaseErrorCode]: string;
@@ -60,10 +64,14 @@ export const Signin = () => {
     <>
       <Cards>
         <Card2>
-          <ImgMain src="/assets/Chlopak.png"></ImgMain>
+          <ImgMain
+            src="/assets/Chlopak.png"
+            alt="programista"></ImgMain>
         </Card2>
         <Card>
-          <LogoImg src="/assets/Asset.png"></LogoImg>
+          <LogoImg
+            src="/assets/Asset.png"
+            alt="logo"></LogoImg>
 
           <LogoName>
             <b>GO!</b> onBoard
@@ -71,16 +79,23 @@ export const Signin = () => {
           <NamePage>Zaloguj się</NamePage>
 
           <FormSign onSubmit={handleSubmit}>
-
             <div>
               <Label>Email</Label>
               <br />
-              <Input onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Wpisz swój email" />
+              <Input
+                onChange={(e) => setEmail(e.target.value)}
+                type="email"
+                placeholder="Wpisz swój email"
+              />
             </div>
             <div>
               <Label>Hasło</Label>
               <br />
-              <Input onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Wpisz swoje hasło" />
+              <Input
+                onChange={(e) => setPassword(e.target.value)}
+                type="password"
+                placeholder="Wpisz swoje hasło"
+              />
               <TextString>{error}</TextString>
             </div>
             <div>

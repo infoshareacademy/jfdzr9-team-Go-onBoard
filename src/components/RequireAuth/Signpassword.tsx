@@ -52,10 +52,14 @@ export const Signpassword = () => {
     <>
       <Cards>
         <Card2>
-          <ImgMain src="/assets/Chlopak.png"></ImgMain>
+          <ImgMain
+            src="/assets/Chlopak.png"
+            alt="programista"></ImgMain>
         </Card2>
         <Card>
-          <LogoImg src="/assets/Asset.png"></LogoImg>
+          <LogoImg
+            src="/assets/Asset.png"
+            alt="logo"></LogoImg>
 
           <LogoName>
             <b>GO!</b> onBoard
