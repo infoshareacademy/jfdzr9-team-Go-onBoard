@@ -2,27 +2,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState, FormEvent } from "react";
 import { auth } from "../../utils/firebase/firebase.config";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import {
-  Button,
-  ImgMain,
-  Input,
-  Label,
-  LinkName,
-  LogoImg,
-  LogoName,
-  MainImg,
-  MainInfo,
-  NamePage,
-  PageInfo,
-  TextString,
-} from "./Sign.styled";
+import { Button, ImgMain, Input, Label, LinkName, LogoImg, LogoName, MainImg, MainInfo, NamePage, PageInfo, TextString } from "./Sign.styled";
 
-type FirebaseErrorCode =
-  | "auth/email-already-in-use"
-  | "auth/invalid-email"
-  | "auth/user-not-found"
-  | "auth/wrong-password"
-  | "auth/weak-password";
+type FirebaseErrorCode = "auth/email-already-in-use" | "auth/invalid-email" | "auth/user-not-found" | "auth/wrong-password" | "auth/weak-password";
 
 type FirebaseErrorMessages = {
   [key in FirebaseErrorCode]: string;
@@ -70,25 +52,17 @@ export const Signin = () => {
           <LogoName>
             <b>GO!</b> onBoard
           </LogoName>
-          <NamePage>Zarejestruj się</NamePage>
+          <NamePage>Zaloguj się</NamePage>
           <form onSubmit={handleSubmit}>
             <div>
               <Label>Email</Label>
               <br />
-              <Input
-                onChange={(e) => setEmail(e.target.value)}
-                type="email"
-                placeholder="Wpisz swój email"
-              />
+              <Input onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Wpisz swój email" />
             </div>
             <div>
               <Label>Hasło</Label>
               <br />
-              <Input
-                onChange={(e) => setPassword(e.target.value)}
-                type="password"
-                placeholder="Wpisz swoje hasło"
-              />
+              <Input onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Wpisz swoje hasło" />
               <TextString>{error}</TextString>
             </div>
             <div>

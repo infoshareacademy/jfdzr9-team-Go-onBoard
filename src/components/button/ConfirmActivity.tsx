@@ -25,6 +25,7 @@ interface QuizCollection {
 interface UserActivitiesCollection {
   id: string;
   user_activity_id: string;
+  user_id: string;
 }
 
 const ConfirmActivity: React.FC<ConfirmActivityProps> = (props) => {
@@ -41,12 +42,15 @@ const ConfirmActivity: React.FC<ConfirmActivityProps> = (props) => {
   // Fetch the user_activities collection and check if there's a document with a true value for the result field
   useEffect(() => {
     const fetchData = async () => {
-      const q = query(collection(database, "user_activities"), where("user_activity_id", "==", activiti));
+      const q = query(
+        collection(database, "user_activities"),
+        where("user_activity_id", "==", activiti),
+        where("user_id", "==", user?.uid) // Add this condition
+      );
       const querySnapshot = await getDocs(q);
       const hasResult = querySnapshot.docs.some((doc) => doc.data().result);
-      // setHasMounted(true); // set the flag to indicate that the component has mounted
-      // Additional query to check if a document with the user_id exists
-      setIsDisabled(hasResult); // disable the button if the activity has already been checked or user_id doesn't match
+      const hasActivity = querySnapshot.docs.some((doc) => doc.data().user_activity_id === activiti && doc.data().user_id === user?.uid);
+      setIsDisabled(hasResult || hasActivity); // disable the button if the activity has already been checked or user_id doesn't match or activity already exists
       setHasMounted(true);
     };
     fetchData();
@@ -61,7 +65,7 @@ const ConfirmActivity: React.FC<ConfirmActivityProps> = (props) => {
       check_date: serverTimestamp(),
       user_activity_id: activiti,
       etap_id: etap_id,
-      user_id: user.uid,
+      user_id: user?.uid,
     };
     setDoc(doc(checkRef), newCheck)
       .then(() => {
@@ -75,7 +79,6 @@ const ConfirmActivity: React.FC<ConfirmActivityProps> = (props) => {
 
   //fetch collection user_activities to check if user already checked current activitie
   const userActivitiesCollection = useFirebaseFetch<UserActivitiesCollection>("user_activities");
-  const currentUserActivity = userActivitiesCollection.find((currentId) => currentId?.user_activity_id === activiti);
 
   // /listening when the result of quiz will changed to enable or disable the button "zapisz krok"
   useEffect(() => {
@@ -94,6 +97,8 @@ const ConfirmActivity: React.FC<ConfirmActivityProps> = (props) => {
 
       const userPoints: QuizCollection | undefined = newPoints.find((point) => point.user_id === user?.uid && point.etapId === etap_id);
 
+      const currentUserActivity = userActivitiesCollection.find((currentId) => currentId?.user_activity_id === activiti && currentId.user_id === user?.uid);
+
       if (userPoints?.result === undefined && (props.currentActivityy?.test === undefined || props.currentActivityy.test === true)) {
         setIsDisabled(true);
       } else if (userPoints?.result !== undefined && props.currentActivityy?.test === true && userPoints.result >= 75) {
@@ -105,12 +110,18 @@ const ConfirmActivity: React.FC<ConfirmActivityProps> = (props) => {
       if (activiti === currentUserActivity?.user_activity_id && userPoints?.result !== undefined && props.currentActivityy?.test === true && userPoints.result >= 75) {
         setIsDisabled(true);
       }
+
+      console.log(userPoints);
+      console.log(props.currentActivityy?.test);
+      console.log(props.currentActivityy?.id);
+      console.log(currentUserActivity?.user_id);
+      console.log(activiti);
     });
 
     return () => {
       unsubscribe();
     };
-  }, [props.currentActivityy, currentUserActivity]);
+  }, [props.currentActivityy]);
 
   return (
     <button

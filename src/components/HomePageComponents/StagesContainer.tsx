@@ -59,7 +59,7 @@ export const StagesContainer = () => {
 
   //stage sorting by "sort" key in firebase//
   const sortedStages = [...stagesName].sort((a, b) => a.sort - b.sort);
-
+  console.log(stagesName);
   //ganing access to id of stages in each activities and user_activities collections ( by used hook useFirebase) - needed to calculations the average of activities in each stages for log in user//
 
   interface Users {
@@ -166,7 +166,7 @@ export const StagesContainer = () => {
     <>
       <div className="stages-container">
         <div className="stages-bloks">
-          {sortedStages.map(({ id, icon }) => {
+          {sortedStages.map(({ id, icon, name }) => {
             const imageUrlForStage = imageUrl[stagesName.findIndex((stage) => stage.id === id)];
             return (
               <span key={id} className="stages-span">
@@ -179,6 +179,7 @@ export const StagesContainer = () => {
                     cursor: disabledMap[id] ? "pointer" : "not-allowed",
                   }}>
                   <img src={imageUrlForStage} alt={icon} className="icons" />
+                  <span>{name}</span>
                   <span>{averagesByEtapId[id]}%</span>
                   <span>{checkDatesByEtapId[id]}</span>
                 </Link>
