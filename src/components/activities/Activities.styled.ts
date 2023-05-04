@@ -23,8 +23,8 @@ export const Container = styled.div`
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  gap: 2rem;
-  @media only screen and (max-width: 1020px) {
+  gap: 1.6rem;
+  @media only screen and (max-width: 1160px) {
     flex-direction: column;
     align-items: center;
     gap: 1rem;
@@ -101,7 +101,8 @@ export const StyledLinkFetchedHeader = styled.div`
   align-items: center;
   padding: 16px 20px 16px 16px;
   gap: 4px;
-  filter: brightness(0) saturate(100%) invert(9%) sepia(34%) saturate(5579%) hue-rotate(234deg) brightness(90%) contrast(121%);
+  filter: brightness(0) saturate(100%) invert(9%) sepia(34%) saturate(5579%)
+    hue-rotate(234deg) brightness(90%) contrast(121%);
 `;
 
 export const HeaderInfo = styled.div`
