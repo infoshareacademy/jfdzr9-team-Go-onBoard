@@ -344,26 +344,9 @@ img {
   z-index: 5;
 }
 
-@media only screen and (max-width: 1160px) {
+@media only screen and (max-width: 830px) {
   .confirmButton {
     width: 35%;
-  }
-
-  .listEtaps {
-    gap: 1rem;
-  }
-
-  .stages-links {
-    width: 70px;
-  }
-
-  .title-etaps {
-    padding: 2px;
-    margin: 4px;
-  }
-
-  .contentWrap {
-    align-items: center;
   }
 }
 
@@ -371,22 +354,10 @@ img {
   .confirmButton {
     width: 55%;
   }
+}
 
+@media only screen and (max-width: 740px) {
   .listEtaps {
-    gap: 0.5rem;
-  }
-
-  .stages-links {
-    width: 70px;
-
-    padding-left: 0.2em;
-    padding-right: 1em;
-    padding-top: 0.2em;
-    padding-bottom: 0.2em;
-  }
-
-  .title-etaps {
-    padding: 2px;
-    margin: 4px;
+    gap: 1rem;
   }
 }
