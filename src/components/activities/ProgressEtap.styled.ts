@@ -20,6 +20,15 @@ export const DonutChart = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  z-index: 1;
+  width: 70px;
+  height: 70px;
+`;
+
+export const NumberChart = styled.div`
+  z-index: 3;
+  position: absolute;
+  font-weight: 700;
 `;
 
 export const EtapsIcon = styled.img`

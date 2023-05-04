@@ -100,10 +100,12 @@ const ConfirmActivity: React.FC<ConfirmActivityProps> = (props) => {
 
   const userActivitiesCollection =
     useFirebaseFetch<UserActivitiesCollection>("user_activities");
-  const currentUserActivity = userActivitiesCollection.find(
-    (currentId) => currentId?.user_activity_id === activiti
-  );
 
+  const currentUserActivity = userActivitiesCollection.find(
+    (currentId) =>
+      currentId?.user_activity_id === activiti &&
+      currentId.user_id === user?.uid
+  );
 
   // /listening when the result of quiz will changed to enable or disable the button "zapisz krok"
   useEffect(() => {
@@ -129,7 +131,6 @@ const ConfirmActivity: React.FC<ConfirmActivityProps> = (props) => {
         (props.currentActivityy?.test === undefined ||
           props.currentActivityy.test === true)
       ) {
-
         setIsDisabled(true);
       } else if (
         userPoints?.result !== undefined &&
