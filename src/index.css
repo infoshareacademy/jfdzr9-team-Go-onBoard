@@ -49,12 +49,19 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0px 89px;
+  /* padding: 0px 89px; */
   gap: 3px;
   /* position: absolute; */
   /* width: 100vh; */
-  height: 816px;
+  /* height: 100%; */
   top: 31px;
+  /* background: radial-gradient(50% 66.49% at 50% 50%, rgba(255, 255, 255, 0) 0%, rgba(0, 255, 194, 0.15) 100%); */
+  margin: 0px;
+}
+
+html {
+  height: 100%;
+  background: radial-gradient(50% 66.49% at 50% 50%, rgba(255, 255, 255, 0) 0%, rgba(0, 255, 194, 0.15) 100%);
 }
 
 h1 {
@@ -84,7 +91,6 @@ button:hover {
   height: 40px;
   width: 126px;
   border-radius: 8px;
-  border: 1px solid transparent;
   padding: 0.6em 1.2em;
   /* font-size: 1em; */
   font-weight: 500;
@@ -97,6 +103,7 @@ button:hover {
   flex-wrap: nowrap;
   justify-content: space-between;
   align-items: center;
+  filter: none;
 }
 
 .stages-links:hover {
@@ -164,7 +171,7 @@ button:disabled {
   align-items: flex-start;
   padding: 0px;
   gap: 40px;
-
+  margin-top: 30px;
   width: 1223px;
   height: 320px;
 }
@@ -174,10 +181,10 @@ button:disabled {
   flex-direction: row;
   align-items: flex-start;
   padding: 0px;
-  gap: 40px;
+  gap: 60px;
 
   width: 1223px;
-  height: 320px;
+  height: fit-content;
 }
 
 .middle-container {
@@ -190,33 +197,37 @@ button:disabled {
 
 .greetingsContainer {
   display: flex;
-  flex-direction: column;
-  align-items: end;
-  padding: 32px;
+  flex-direction: row;
+  align-items: center;
+  padding: 12px;
   gap: 30px;
-  width: 796px;
-  height: 320px;
-
+  width: 696px;
+  height: fit-content;
   background: linear-gradient(89.82deg, #687ec9 1.25%, #5971c3 98.38%);
+  color: #ffffff;
   /* Shadow field */
   box-shadow: 8px 8px 24px rgba(2, 2, 70, 0.05);
   border-radius: 31.2294px;
+  /* overflow: hidden; */
 }
 
-.calendar {
+.img-block {
+  width: fit-content;
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 0px;
-  gap: 10px;
-  width: 387px;
-  height: 380px;
-  border-color: #535bf2;
-  border-style: solid;
-  border-radius: 31.2294px;
-  flex: none;
-  order: 1;
-  flex-grow: 0;
+}
+
+.man-greetins-logo {
+  width: 244px;
+  height: 244px;
+  filter: none;
+}
+
+.greeting-block {
+  height: auto;
+}
+
+.dashboard-greeting {
+  height: auto;
 }
 
 .buddy {
@@ -226,13 +237,13 @@ button:disabled {
   padding: 39px 0px;
   gap: 23px;
   width: 387px;
-  height: 380px;
-  border-color: #535bf2;
-  border-style: solid;
+  height: fit-content;
+  box-shadow: rgb(0 0 0 / 15%) 4px 5px 10px;
   border-radius: 31.2294px;
   flex: none;
   order: 1;
   flex-grow: 0;
+  background-color: #ffffff;
 }
 
 h2 {
@@ -240,15 +251,13 @@ h2 {
 }
 
 .stages-container {
-  border-color: #535bf2;
-  border-style: solid;
   border-radius: 31.2294px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding: 0px;
   gap: 14px;
-  width: 796px;
+  width: 696px;
   height: fit-content;
   flex: none;
   order: 0;
@@ -263,6 +272,9 @@ h2 {
 img {
   width: 30px;
   height: 30px;
+  color: crimson;
+  /* cursor: pointer; */
+  filter: invert(93%) sepia(10%) saturate(5630%) hue-rotate(246deg) brightness(40%) contrast(148%) hue-rotate(246deg);
 }
 
 .etaps,
@@ -274,14 +286,15 @@ img {
   align-items: center;
   padding: 0px 32px;
   margin: 10px;
-  width: 696px;
+  width: 596px;
   height: 28px;
 
-  background: #687ec9;
-  color: var(--secondary-1);
+  background: #ffffff;
+  color: var(--primary-1);
   /* Shadow field */
-  box-shadow: 8px 8px 24px rgba(2, 2, 70, 0.05);
-  border-radius: 24px;
+
+  box-shadow: rgb(0 0 0 / 15%) 4px 5px 10px;
+  border-radius: 31.2294px;
 }
 
 .title-etaps {

@@ -35,6 +35,7 @@ interface QuizCollection {
 interface UserActivitiesCollection {
   id: string;
   user_activity_id: string;
+  user_id: string;
 }
 
 const ConfirmActivity: React.FC<ConfirmActivityProps> = (props) => {
@@ -60,11 +61,13 @@ const ConfirmActivity: React.FC<ConfirmActivityProps> = (props) => {
       );
       const querySnapshot = await getDocs(q);
       const hasResult = querySnapshot.docs.some((doc) => doc.data().result);
+
       const hasActivity = querySnapshot.docs.some(
         (doc) =>
           doc.data().user_activity_id === activiti &&
           doc.data().user_id === user?.uid
       );
+
       setIsDisabled(hasResult || hasActivity); // disable the button if the activity has already been checked or user_id doesn't match or activity already exists
       setHasMounted(true);
     };
@@ -81,7 +84,7 @@ const ConfirmActivity: React.FC<ConfirmActivityProps> = (props) => {
       check_date: serverTimestamp(),
       user_activity_id: activiti,
       etap_id: etap_id,
-      user_id: user.uid,
+      user_id: user?.uid,
     };
     setDoc(doc(checkRef), newCheck)
       .then(() => {
@@ -94,11 +97,13 @@ const ConfirmActivity: React.FC<ConfirmActivityProps> = (props) => {
   }
 
   //fetch collection user_activities to check if user already checked current activitie
+
   const userActivitiesCollection =
     useFirebaseFetch<UserActivitiesCollection>("user_activities");
   const currentUserActivity = userActivitiesCollection.find(
     (currentId) => currentId?.user_activity_id === activiti
   );
+
 
   // /listening when the result of quiz will changed to enable or disable the button "zapisz krok"
   useEffect(() => {
@@ -124,6 +129,7 @@ const ConfirmActivity: React.FC<ConfirmActivityProps> = (props) => {
         (props.currentActivityy?.test === undefined ||
           props.currentActivityy.test === true)
       ) {
+
         setIsDisabled(true);
       } else if (
         userPoints?.result !== undefined &&
@@ -147,12 +153,18 @@ const ConfirmActivity: React.FC<ConfirmActivityProps> = (props) => {
       ) {
         setIsDisabled(true);
       }
+
+      console.log(userPoints);
+      console.log(props.currentActivityy?.test);
+      console.log(props.currentActivityy?.id);
+      console.log(currentUserActivity?.user_id);
+      console.log(activiti);
     });
 
     return () => {
       unsubscribe();
     };
-  }, [props.currentActivityy, currentUserActivity]);
+  }, [props.currentActivityy]);
 
   return (
     <button

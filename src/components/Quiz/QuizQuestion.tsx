@@ -56,7 +56,7 @@ export const QuestionCard = ({ question, currentQuestion, lengthOfQuestions, set
   useEffect(() => {
     if (quizEnded) {
       // check if there is already a document for a given user and stage
-      const etapIdQuery = query(userQuizPointsCollection, where("etap_id", "==", etapId), where("user_id", "==", userName?.uid));
+      const etapIdQuery = query(collection(database, "user_quiz_points"), where("etap_id", "==", etapId), where("user_id", "==", userName?.uid));
       const unsubscribe = onSnapshot(etapIdQuery, (snapshot) => {
         if (snapshot.empty) {
           // if don't exist create new
