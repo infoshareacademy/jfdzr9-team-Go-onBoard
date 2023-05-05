@@ -8,7 +8,7 @@ import "../../index.css";
 import { StagesContext, StagesContextValue } from "./Context/StagesContext";
 import { useUser } from "../RequireAuth/context/AuthContext";
 import ProgressEtap from "../activities/ProgressEtap";
-import { EtapsIcon } from "../activities/ProgressEtap.styled";
+import { EtapsContainer, EtapsIcon } from "../activities/ProgressEtap.styled";
 
 interface Etap {
   id: string;
@@ -124,55 +124,57 @@ function Etaps() {
       <Link to={`/dashboard/${user?.uid}`}>
         <button>Powrót</button>
       </Link>
-      <ProgressEtap />
-      <div className="contentWrap">
-        <>
-          <div className="listEtaps">
-            {sortedEtaps.map((etap, index) => {
-              //check previous etap if all activities are completed, next etap is enable
-              const isPreviousEtapCompleted =
-                index === 0 ||
-                (index > 0 &&
-                  activitiesByEtap[sortedEtaps[index - 1].id]?.length ===
-                    userActivityIds.filter((activityId) =>
-                      activitiesByEtap[sortedEtaps[index - 1].id].some(
-                        (activity) => activity.id === activityId
-                      )
-                    ).length);
+      <EtapsContainer>
+        <ProgressEtap />
+        <div className="contentWrap">
+          <>
+            <div className="listEtaps">
+              {sortedEtaps.map((etap, index) => {
+                //check previous etap if all activities are completed, next etap is enable
+                const isPreviousEtapCompleted =
+                  index === 0 ||
+                  (index > 0 &&
+                    activitiesByEtap[sortedEtaps[index - 1].id]?.length ===
+                      userActivityIds.filter((activityId) =>
+                        activitiesByEtap[sortedEtaps[index - 1].id].some(
+                          (activity) => activity.id === activityId
+                        )
+                      ).length);
 
-              const enableLink = isPreviousEtapCompleted;
-              return (
-                <Link
-                  className="stages-links"
-                  to={enableLink ? `/etaps/${etap.id}` : "#"}
-                  key={etap.id}
-                  onClick={() => {
-                    setEtapId(etap.id);
-                    setSelectedEtapId(etap.id);
-                  }}
-                  style={{
-                    pointerEvents: enableLink ? "auto" : "none",
-                    backgroundColor:
-                      etap.id === selectedEtapId
-                        ? "var(--active)"
-                        : enableLink
-                        ? ""
-                        : "var(--primary-2)", // Kolor dla etapów niedostępnych
-                  }}>
-                  {etap.icon && (
-                    <EtapsIcon
-                      src={etap.icon}
-                      alt={etap.name}
-                    />
-                  )}
-                  <span className="title-etaps">{etap.name}</span>
-                </Link>
-              );
-            })}
-          </div>
-          <Outlet />
-        </>
-      </div>
+                const enableLink = isPreviousEtapCompleted;
+                return (
+                  <Link
+                    className="stages-links"
+                    to={enableLink ? `/etaps/${etap.id}` : "#"}
+                    key={etap.id}
+                    onClick={() => {
+                      setEtapId(etap.id);
+                      setSelectedEtapId(etap.id);
+                    }}
+                    style={{
+                      pointerEvents: enableLink ? "auto" : "none",
+                      backgroundColor:
+                        etap.id === selectedEtapId
+                          ? "var(--active)"
+                          : enableLink
+                          ? ""
+                          : "var(--primary-2)", // Kolor dla etapów niedostępnych
+                    }}>
+                    {etap.icon && (
+                      <EtapsIcon
+                        src={etap.icon}
+                        alt={etap.name}
+                      />
+                    )}
+                    <span className="title-etaps">{etap.name}</span>
+                  </Link>
+                );
+              })}
+            </div>
+            <Outlet />
+          </>
+        </div>
+      </EtapsContainer>
     </StagesContext.Provider>
   );
 }

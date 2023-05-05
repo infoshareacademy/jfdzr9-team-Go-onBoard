@@ -105,6 +105,10 @@ export const Cards = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
   gap: 1rem;
 
+  @media (max-width: 1200px) {
+    justify-items: center;
+  }
+
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
   }

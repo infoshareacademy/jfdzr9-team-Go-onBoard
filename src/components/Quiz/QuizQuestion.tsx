@@ -134,7 +134,7 @@ export const QuestionCard = ({
           <ResultContainer>
             <h4>Punkty: {score}</h4>
             <h4>
-              Pytanie: {currentQuestion} z {lengthOfQuestions}
+              Pytanie: {currentQuestion + 1} z {lengthOfQuestions}
             </h4>
           </ResultContainer>
           {/* Show results or show the question game  */}
@@ -157,7 +157,7 @@ export const QuestionCard = ({
                     <p>Brawo zaliczyłeś(aś) quiz.</p>
                   )}
 
-                  <button onClick={() => restartQuiz()}>Powtórz test</button>
+                  <button onClick={() => restartQuiz()}>Powtórz quiz</button>
                 </div>
               ) : (
                 <div className="save-quiz">
@@ -174,12 +174,12 @@ export const QuestionCard = ({
                   ) : (
                     <p>
                       Niestety nie uzyskałeś(aś) minimalnych 75% z quizu. Aby
-                      przejść do kolejnego etapu wykonaj test jeszcze raz.
+                      zapisać krok wykonaj test jeszcze raz.
                     </p>
                   )}
 
                   {/* <button onClick={() => saveQuiz()}>Zapisz wyniki quizu</button> */}
-                  <button onClick={() => restartQuiz()}>Powtórz test</button>
+                  <button onClick={() => restartQuiz()}>Powtórz quiz</button>
                 </div>
               )}
             </>
@@ -204,7 +204,7 @@ export const QuestionCard = ({
       ) : (
         <div className="start-quiz">
           <p>
-            {/* Witaj, poniżej znajduje się przycisk rozpoczynający quiz, klikając w niego zobaczysz pierwsze pytanie. Aby zaliczyć tę aktywność należy zdać test na minimum 75% oraz kliknąć przycisk "zapisz krok", powodzenia! */}
+            {/* Witaj, poniżej znajduje się przycisk rozpoczynający quiz, klikając w niego zobaczysz pierwsze pytanie. Aby zaliczyć krok należy zdać test na minimum 75% oraz kliknąć przycisk "zapisz krok", powodzenia! */}
             {currentUserResult !== undefined ? (
               <p>
                 Ostatni wynik Twojego quizu to{" "}
@@ -213,21 +213,21 @@ export const QuestionCard = ({
                     {currentUserResult >= 75 ? (
                       <>
                         <strong>{`${currentUserResult}%`}</strong>
-                        {`. Jeśli chcesz mozesz wykonać quiz jeszcze raz, ale kliknąłeś juz przycisk "zapisz krok" więc ten etap masz juz zaliczony!`}
+                        {`. Jeśli chcesz możesz wykonać quiz jeszcze raz, ale kliknąłeś juz przycisk "zapisz krok" więc tę aktywność masz juz zaliczoną!`}
                       </>
                     ) : (
                       <>
                         <strong>{`${currentUserResult}%`}</strong>
-                        {`. Jeśli chcesz mozesz wykonać quiz jeszcze raz, ale przy poprzednich próbach juz zaliczyłeś test i kliknąłeś juz przycisk "zapisz krok" więc ten etap masz juz zaliczony!`}
+                        {`. Jeśli chcesz możesz wykonać quiz jeszcze raz, ale przy poprzednich próbach juz zaliczyłeś test i kliknąłeś przycisk "zapisz krok" więc tę aktywnosć masz juz zaliczoną!`}
                       </>
                     )}
                   </>
                 ) : (
                   <>
                     {currentUserResult >= 75 ? (
-                      <>{`${currentUserResult}%. Mozesz kliknąć przycisk "zapisz krok" i przejść do kolejnego etapu. `}</>
+                      <>{`${currentUserResult}%. Możesz kliknąć przycisk "zapisz krok" i zaliczyć aktywność. `}</>
                     ) : (
-                      <>{`${currentUserResult}%. Wykonaj quiz jeszcze raz, aby zaliczyć ten etap.`}</>
+                      <>{`${currentUserResult}%. Wykonaj quiz jeszcze raz, aby zaliczyć ten krok.`}</>
                     )}
                   </>
                 )}
