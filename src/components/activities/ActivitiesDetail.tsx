@@ -113,11 +113,8 @@ function ActivitiesDetail(props: Props) {
               className="detailsContent"
               key={filteredEtap.id}>
               <h3>{filteredEtap.name}</h3>
-              {currentActivity && currentActivity?.test === true ? (
-                <Quiz etapIdForQuiz={confirmActivityProps} />
-              ) : (
-                <span>{filteredEtap.description}</span>
-              )}
+              <span>{filteredEtap.description}</span>
+
               <LinkFetched>
                 <HeaderInfo>
                   <IconFetchedHeader iconName={filteredEtap.type || ""} />
@@ -166,6 +163,11 @@ function ActivitiesDetail(props: Props) {
                         </>
                       )
                     ))}
+                  {currentActivity && currentActivity?.test === true ? (
+                    <Quiz etapIdForQuiz={confirmActivityProps} />
+                  ) : (
+                    ""
+                  )}
                 </HeaderInfoButton>
               </LinkFetched>
               {filteredEtap.comment && (

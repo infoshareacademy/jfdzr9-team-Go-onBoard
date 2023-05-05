@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 
 import { database } from "../utils/firebase/firebase.config";
 import { collection, addDoc } from "firebase/firestore";
+import { EtapsContainer } from "../components/activities/ProgressEtap.styled";
 
 interface ActivityData {
   etap_id: string;
@@ -14,6 +15,8 @@ interface ActivityData {
   sort: number;
   test: string;
   type: string;
+  movie: string;
+  action: string;
 }
 
 function AddActivity() {
@@ -27,6 +30,8 @@ function AddActivity() {
   const commentRef = useRef<HTMLInputElement>(null);
   const linkRef = useRef<HTMLInputElement>(null);
   const testRef = useRef<HTMLInputElement>(null);
+  const movieRef = useRef<HTMLInputElement>(null);
+  const actionRef = useRef<HTMLInputElement>(null);
   const [message, setMessage] = useState<string | null>(null);
 
   // Push Function
@@ -44,6 +49,8 @@ function AddActivity() {
       sort: parseInt(sortRef.current?.value ?? "0"),
       test: testRef.current?.value ?? "",
       type: typeRef.current?.value ?? "",
+      movie: movieRef.current?.value ?? "",
+      action: actionRef.current?.value ?? "",
     };
     addDoc(activityRef, newActivity)
       .then(() => {
@@ -54,7 +61,7 @@ function AddActivity() {
   }
 
   return (
-    <div>
+    <EtapsContainer>
       <p>Dodaj aktywność do bazy</p>
       <form
         onSubmit={onSubmit}
@@ -79,10 +86,14 @@ function AddActivity() {
         <input ref={testRef} />
         <label htmlFor="Name">type</label>
         <input ref={typeRef} />
+        <label htmlFor="Name">movie</label>
+        <input ref={movieRef} />
+        <label htmlFor="Name">action</label>
+        <input ref={actionRef} />
         <button type="submit">Submit</button>
       </form>
       {message && <p>{message}</p>}
-    </div>
+    </EtapsContainer>
   );
 }
 

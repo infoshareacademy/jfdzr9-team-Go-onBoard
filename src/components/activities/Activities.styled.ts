@@ -1,16 +1,4 @@
 import styled from "styled-components";
-// export const ActivitiesContainer = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   align-items: flex-start;
-//   gap: 1rem;
-//   background: #ffffff;
-//   width: 300px;
-//   padding: 2rem;
-//   box-shadow: rgb(0 0 0 / 15%) 4px 5px 10px;
-//   border-radius: 31.2294px;
-//   height: 380px;
-// `;
 
 export const ActivitiesContainer = styled.div`
   display: flex;
@@ -18,47 +6,35 @@ export const ActivitiesContainer = styled.div`
   align-items: flex-start;
   gap: 1rem;
   background: #ffffff;
-  max-width: 297px;
+  width: 300px;
   padding: 2rem;
-  box-shadow: rgb(0 0 0 / 15%) 4px 5px 10px;
+  box-shadow: rgba(0 0 0 / 15%) 4px 5px 10px;
   border-radius: 31.2294px;
   height: 380px;
+  @media screen and (max-width: 400px) {
+    width: auto;
+  }
 `;
 
 export const ActivitiName = styled.div`
   font-family: "Inter";
   font-style: normal;
   font-size: 1rem;
-  /* color: #020246; */
   font-weight: 700;
   text-align: start;
 `;
 
-// export const Container = styled.div`
-//   display: flex;
-//   flex-direction: row;
-//   align-items: flex-start;
-//   gap: 1.6rem;
-//   @media only screen and (max-width: 1160px) {
-//     flex-direction: column;
-//     align-items: center;
-//     gap: 1rem;
-//   }
-// `;
-
 export const Container = styled.div`
   display: grid;
   grid-template-columns: 1fr 2fr;
-  gap: 0.6rem;
-  justify-items: center;
-  grid-auto-rows: minmax(
-    0,
-    auto
-  ); /* Automatyczna wysokość dla elementów siatki */
+  gap: 1.1rem;
+
+  grid-auto-rows: minmax(0, auto);
 
   @media screen and (max-width: 830px) {
     grid-template-columns: 1fr;
     grid-auto-rows: minmax(0, auto);
+    justify-items: center;
   }
 `;
 
@@ -103,33 +79,12 @@ export const StyledH3 = styled.h3`
   line-height: 20px;
 `;
 
-/* export const DetailsWraper = styled.div`
-  width: 700px;
-
-  display: flex;
-  flex-direction: column;
-  background-color: white;
-  padding: 2rem;
-  box-shadow: rgba(0, 0, 0, 0.15) 4px 5px 10px;
-  background-color: white;
-  border-radius: 31.2294px;
-
-  @media only screen and (max-width: 800px) {
-    width: 500px;
-  }
-
-  @media only screen and (max-width: 600px) {
-    width: 300px;
-  }
-`; */
-
 export const DetailsWraper = styled.div`
-  max-width: 700px;
+  max-width: 755px;
 
   background-color: white;
-  padding: 2rem;
+
   box-shadow: rgba(0, 0, 0, 0.15) 4px 5px 10px;
-  background-color: white;
   border-radius: 31.2294px;
 `;
 

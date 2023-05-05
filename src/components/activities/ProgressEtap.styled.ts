@@ -36,6 +36,12 @@ export const EtapsIcon = styled.img`
     hue-rotate(46deg) brightness(102%) contrast(105%);
 `;
 
+export const EtapsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
 export const StagesLinks = styled(Link)<StagesLinksProps>`
   height: 40px;
   width: 126px;
