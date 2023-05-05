@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 
 import { database } from "../utils/firebase/firebase.config";
 import { collection, addDoc } from "firebase/firestore";
+import { EtapsContainer } from "../components/activities/ProgressEtap.styled";
 
 interface ActivityData {
   etap_id: string;
@@ -54,7 +55,7 @@ function AddActivity() {
   }
 
   return (
-    <div>
+    <EtapsContainer>
       <p>Dodaj aktywność do bazy</p>
       <form
         onSubmit={onSubmit}
@@ -82,7 +83,7 @@ function AddActivity() {
         <button type="submit">Submit</button>
       </form>
       {message && <p>{message}</p>}
-    </div>
+    </EtapsContainer>
   );
 }
 
