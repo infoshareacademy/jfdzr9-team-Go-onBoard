@@ -50,7 +50,7 @@ export const Container = styled.div`
   display: grid;
   grid-template-columns: 1fr 2fr;
   gap: 0.6rem;
-  justify-items: center;
+
   grid-auto-rows: minmax(
     0,
     auto
@@ -59,6 +59,7 @@ export const Container = styled.div`
   @media screen and (max-width: 830px) {
     grid-template-columns: 1fr;
     grid-auto-rows: minmax(0, auto);
+    justify-items: center;
   }
 `;
 

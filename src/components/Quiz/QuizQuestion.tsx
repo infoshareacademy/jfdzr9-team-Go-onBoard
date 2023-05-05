@@ -1,7 +1,7 @@
 import { QuestionProps, UserActivitiesCollection } from "./ModelsQuizTypes";
 import { useState, useEffect, useMemo } from "react";
 import { AnswersContainer } from "./Answers.Container.styled";
-import { Answer } from "./Answers.styled";
+import { Answer, ResultContainer } from "./Answers.styled";
 import {
   collection,
   doc,
@@ -131,7 +131,12 @@ export const QuestionCard = ({
       {!startQuiz ? (
         <div>
           {/* Current Score  */}
-          <h2>Punkty: {score}</h2>
+          <ResultContainer>
+            <h4>Punkty: {score}</h4>
+            <h4>
+              Pytanie: {currentQuestion} z {lengthOfQuestions}
+            </h4>
+          </ResultContainer>
           {/* Show results or show the question game  */}
           {showResults ? (
             <div className="final-results">
@@ -188,11 +193,7 @@ export const QuestionCard = ({
             </div>
           ) : (
             <div className="question-card">
-              <h2>
-                {/*/ Question position */}
-                Pytanie: {currentQuestion} z {lengthOfQuestions}
-              </h2>
-              <h3>{question.text}</h3>
+              <p>{question.text}</p>
               {/* List of possible answers  */}
               <AnswersContainer>
                 {question.options.map((option) => {

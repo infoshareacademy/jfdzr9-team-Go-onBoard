@@ -100,7 +100,6 @@ const ConfirmActivity: React.FC<ConfirmActivityProps> = (props) => {
 
   const userActivitiesCollection =
     useFirebaseFetch<UserActivitiesCollection>("user_activities");
-
   const currentUserActivity = userActivitiesCollection.find(
     (currentId) =>
       currentId?.user_activity_id === activiti &&
@@ -165,7 +164,7 @@ const ConfirmActivity: React.FC<ConfirmActivityProps> = (props) => {
     return () => {
       unsubscribe();
     };
-  }, [props.currentActivityy]);
+  }, [props.currentActivityy, currentUserActivity]);
 
   return (
     <button
