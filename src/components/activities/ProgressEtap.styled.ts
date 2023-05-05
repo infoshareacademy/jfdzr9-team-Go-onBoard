@@ -23,8 +23,7 @@ export const DonutChart = styled.div`
 `;
 
 export const EtapsIcon = styled.img`
-  filter: brightness(0) saturate(100%) invert(97%) sepia(97%) saturate(0%)
-    hue-rotate(46deg) brightness(102%) contrast(105%);
+  filter: brightness(0) saturate(100%) invert(97%) sepia(97%) saturate(0%) hue-rotate(46deg) brightness(102%) contrast(105%);
 `;
 
 export const StagesLinks = styled(Link)<StagesLinksProps>`

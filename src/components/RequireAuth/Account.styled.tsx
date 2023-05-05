@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import logoutImgUrl from "../../assets/pliki-svg-dashboard/logout-svgrepo-com.svg";
 
 export const AccountContainer = styled.div`
   display: flex;
@@ -14,7 +15,7 @@ export const LogOutBlock = styled.div`
 `;
 
 export const BtnLogOut = styled.button`
-  background-image: url("/src/assets/pliki-svg-dashboard/logout-svgrepo-com.svg");
+  background-image: url(${logoutImgUrl});
   background-size: cover;
   background-color: white;
   width: 40px;

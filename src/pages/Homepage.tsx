@@ -8,6 +8,9 @@ import Introduction from "../components/HomePageComponents/Introduction";
 import { database } from "../utils/firebase/firebase.config";
 import Calendar from "../components/HomePageComponents/Calendar";
 import { BuddyContainer, BuddyImg, BuddyImgContainer, BuddyNameBlock } from "../components/HomePageComponents/Buddy.styled";
+import buddyImgUrl from "../assets/pliki-svg-dashboard/buddy.svg";
+import "../index.css";
+import { StagesDescription } from "../components/HomePageComponents/StagesContainer.styled";
 
 export const HomePageLayout = () => {
   const user = useUser();
@@ -35,12 +38,12 @@ export const HomePageLayout = () => {
         <Calendar />
       </div>
       <div className="middle-container">
-        <p className="title-etaps">
+        <StagesDescription className="title-etaps">
           <span></span>
-          <span>Dział</span>
-          <span>Realizacja</span>
-          <span>Wykonano</span>
-        </p>
+          <span style={{ color: "#020246", width: "90px" }}>Dział</span>
+          <span style={{ color: "#020246" }}>Realizacja</span>
+          <span style={{ color: "#020246" }}>Wykonano</span>
+        </StagesDescription>
       </div>
       <div className="down-container">
         <StagesContainer />
@@ -49,7 +52,7 @@ export const HomePageLayout = () => {
             <h4>Buddy</h4>
           </BuddyNameBlock>
           <BuddyImgContainer>
-            <BuddyImg src="/src/assets/pliki-svg-dashboard/buddy.svg" />
+            <BuddyImg src={buddyImgUrl} alt="buddy" />
             <p style={{ marginBottom: "2px", fontSize: "13px" }}>FrontEnd Senior</p>
             <p style={{ marginTop: "2px", fontSize: "13px" }}>trener@infoShare.pl</p>
           </BuddyImgContainer>

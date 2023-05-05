@@ -142,7 +142,17 @@ function Etaps() {
                     pointerEvents: enableLink ? "auto" : "none",
                     backgroundColor: etap.id === selectedEtapId ? "var(--active)" : enableLink ? "" : "var(--primary-2)", // Kolor dla etapów niedostępnych
                   }}>
-                  {etap.icon && <EtapsIcon src={etap.icon} alt={etap.name} />}
+                  {etap.icon && (
+                    <EtapsIcon
+                      src={etap.icon}
+                      alt={etap.name}
+                      style={{
+                        filter: enableLink
+                          ? "brightness(0) saturate(100%) invert(97%) sepia(97%) saturate(0%) hue-rotate(46deg) brightness(102%) contrast(105%)"
+                          : "brightness(0) saturate(100%) invert(9%) sepia(34%) saturate(5579%) hue-rotate(234deg) brightness(90%) contrast(121%)",
+                      }}
+                    />
+                  )}
                   <span className="title-etaps">{etap.name}</span>
                 </Link>
               );

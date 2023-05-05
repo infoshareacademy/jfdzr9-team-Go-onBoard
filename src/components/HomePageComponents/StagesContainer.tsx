@@ -179,10 +179,18 @@ export const StagesContainer = () => {
                   backgroundColor: disabledMap[id] ? "white" : "rgba(10, 10, 10, 0.575)",
                   cursor: disabledMap[id] ? "pointer" : "not-allowed",
                 }}>
-                <img src={imageUrlForStage} alt={icon} />
-                <StagesDetails>{name}</StagesDetails>
-                <StagesDetails>{averagesByEtapId[id]}%</StagesDetails>
-                <StagesDetails>{checkDatesByEtapId[id]}</StagesDetails>
+                <img
+                  src={imageUrlForStage}
+                  alt={icon}
+                  style={{
+                    filter: disabledMap[id]
+                      ? "brightness(0) saturate(100%) invert(9%) sepia(34%) saturate(5579%) hue-rotate(234deg) brightness(90%) contrast(121%)"
+                      : "brightness(0) saturate(100%) invert(97%) sepia(97%) saturate(0%) hue-rotate(46deg) brightness(102%) contrast(105%)",
+                  }}
+                />
+                <StagesDetails style={{ color: disabledMap[id] ? "#020246" : "white" }}>{name}</StagesDetails>
+                <StagesDetails style={{ color: disabledMap[id] ? "#020246" : "white" }}>{averagesByEtapId[id]}%</StagesDetails>
+                <StagesDetails style={{ color: disabledMap[id] ? "#020246" : "white" }}>{checkDatesByEtapId[id]}</StagesDetails>
               </Link>
             );
           })}

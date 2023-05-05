@@ -92,7 +92,7 @@ button:hover {
   width: 126px;
   border-radius: 8px;
   padding: 0.6em 1.2em;
-  /* font-size: 1em; */
+  font-size: 1em;
   font-weight: 500;
   font-family: inherit;
   background-color: var(--primary-1);
@@ -114,7 +114,6 @@ button:hover {
 
 .stages-links:disabled {
   border-color: var(--secondary-1);
-
   cursor: not-allowed;
 }
 
@@ -237,9 +236,8 @@ h2 {
 img {
   width: 30px;
   height: 30px;
-  color: crimson;
-  /* cursor: pointer; */
-  filter: invert(93%) sepia(10%) saturate(5630%) hue-rotate(246deg) brightness(40%) contrast(148%) hue-rotate(246deg);
+  cursor: pointer;
+  /* filter: invert(93%) sepia(10%) saturate(5630%) hue-rotate(246deg) brightness(40%) contrast(148%) hue-rotate(246deg); */
 }
 
 .etaps,
@@ -256,6 +254,7 @@ img {
 
   background: #ffffff;
   color: var(--primary-1);
+
   /* Shadow field */
 
   box-shadow: rgb(0 0 0 / 15%) 4px 5px 10px;
@@ -266,6 +265,11 @@ img {
   background: none;
   border-radius: none;
   box-shadow: none;
+  color: #fff;
+}
+
+.stages-links[style*="background-color: var(--primary-2)"] .title-etaps {
+  color: var(--primary-1);
 }
 
 .confirmButton {

@@ -3,7 +3,7 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from "../../utils/firebase/firebase.config";
 import { getFirestore, setDoc, doc, getDoc } from "firebase/firestore";
 import { useUser } from "../RequireAuth/context/AuthContext";
-import { useFirebaseFetch } from "../hooks/useFirebaseFetch";
+import avatarUrl from "../../assets/pliki-svg-dashboard/ikona od avatara.svg";
 
 const AvatarUploader: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -93,7 +93,7 @@ const AvatarUploader: React.FC = () => {
           />
         ) : (
           <div>
-            <img src="/src/assets/pliki-svg-dashboard/ikona od avatara.svg" style={{ filter: "none", width: "66px", height: "66px", cursor: "pointer" }} />
+            <img src={avatarUrl} alt="ikona-dodaj-avatar" style={{ filter: "none", width: "66px", height: "66px", cursor: "pointer" }} />
           </div>
         )}
       </label>

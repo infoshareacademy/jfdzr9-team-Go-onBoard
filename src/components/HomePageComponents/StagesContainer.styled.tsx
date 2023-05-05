@@ -22,3 +22,8 @@ export const StagesBlocks = styled.div`
 export const StagesDetails = styled.span`
   width: 90px;
 `;
+
+export const StagesDescription = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;

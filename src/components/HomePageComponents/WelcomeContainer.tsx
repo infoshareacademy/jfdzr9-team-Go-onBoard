@@ -1,6 +1,7 @@
 import "../../index.css";
 import { useUser } from "../RequireAuth/context/AuthContext";
 import { useFirebaseFetch } from "../hooks/useFirebaseFetch";
+import manLogoUrl from "../../assets/pliki-svg-dashboard/man_10 1.svg";
 export interface IUser {
   email: string;
   name: string;
@@ -39,7 +40,7 @@ export const WelcomeContainer = () => {
   return (
     <div className="greetingsContainer">
       <div className="img-block">
-        <img src="/src/assets/pliki-svg-dashboard/man_10 1.svg" className="man-greetins-logo"></img>
+        <img src={manLogoUrl} alt="man-greeting-logo" className="man-greetins-logo"></img>
       </div>
       <div className="greeting-block">
         <h2>Hej,{userName?.displayName}!</h2>
