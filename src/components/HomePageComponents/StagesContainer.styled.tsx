@@ -5,7 +5,7 @@ export const StagesBlocks = styled.div`
   flex-direction: column;
   position: relative;
   flex: 1;
-  max-width: 750px;
+  max-width: 770px;
   padding: 15px;
   margin: 10px;
 `;
