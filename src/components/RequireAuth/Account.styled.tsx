@@ -4,7 +4,6 @@ import logoutImgUrl from "../../assets/pliki-svg-dashboard/logout-svgrepo-com.sv
 export const AccountContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: min-content;
 `;
 
 export const LogOutBlock = styled.div`
@@ -30,7 +29,7 @@ export const AccountBlock = styled.div`
   justify-content: center;
   align-items: center;
   gap: 20px;
-  width: 387px;
+  width: 385px;
 `;
 
 export const AccountInfo = styled.p`

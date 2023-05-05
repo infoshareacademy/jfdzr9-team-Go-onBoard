@@ -3,29 +3,26 @@ import styled from "styled-components";
 export const BuddyContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  padding: 40px 5px;
-
-  width: 387px;
-  min-height: 217px;
-  max-height: 217px;
+  align-content: center;
+  align-items: center;
+  max-width: 400px;
+  height: 300px;
   box-shadow: rgb(0 0 0 / 15%) 4px 5px 10px;
   border-radius: 31.2294px;
-  flex: none;
-  order: 1;
-  flex-grow: 0;
   background-color: #ffffff;
+  padding: 15px;
+  margin: 10px;
+  margin-top: 75px;
 `;
 
 export const BuddyNameBlock = styled.div`
-  width: 380px;
   display: flex;
   align-items: flex-start;
-  margin-left: 30px;
+  width: 385px;
 `;
 
 export const BuddyImgContainer = styled.div`
-  width: 380px;
+  /* width: 100px; */
   display: flex;
   flex-direction: column;
   align-items: center;

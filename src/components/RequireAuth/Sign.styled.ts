@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { Weight } from "tabler-icons-react";
 
 export const LogoName = styled.p`
   font-size: 24px;

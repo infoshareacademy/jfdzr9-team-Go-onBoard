@@ -1,29 +1,26 @@
 import styled from "styled-components";
 
-export const AllStagesContainer = styled.div`
-  border-radius: 31.2294px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 0px;
-  gap: 14px;
-  width: 696px;
-  height: fit-content;
-  flex: none;
-  order: 0;
-  flex-grow: 0;
-`;
-
 export const StagesBlocks = styled.div`
   display: flex;
   flex-direction: column;
+  position: relative;
+  flex: 1;
+  max-width: 750px;
+  padding: 15px;
+  margin: 10px;
 `;
 
 export const StagesDetails = styled.span`
   width: 90px;
+  text-align: center;
 `;
 
 export const StagesDescription = styled.div`
   display: flex;
   justify-content: space-between;
+  margin: 5px;
+  padding: 0px 32px;
+  max-width: 730px;
+  margin: 10px;
+  position: relative;
 `;

@@ -10,7 +10,8 @@ import Calendar from "../components/HomePageComponents/Calendar";
 import { BuddyContainer, BuddyImg, BuddyImgContainer, BuddyNameBlock } from "../components/HomePageComponents/Buddy.styled";
 import buddyImgUrl from "../assets/pliki-svg-dashboard/buddy.svg";
 import "../index.css";
-import { StagesDescription } from "../components/HomePageComponents/StagesContainer.styled";
+import { RowContainer } from "./HomepageContainer.styled";
+import { DashboardContainer } from "./HomepageContainer.styled";
 
 export const HomePageLayout = () => {
   const user = useUser();
@@ -31,21 +32,13 @@ export const HomePageLayout = () => {
   }, [user]);
 
   return (
-    <>
+    <DashboardContainer>
       {showIntroduction && <Introduction />}
-      <div className="up-container">
+      <RowContainer>
         <WelcomeContainer />
         <Calendar />
-      </div>
-      <div className="middle-container">
-        <StagesDescription className="title-etaps">
-          <span></span>
-          <span style={{ color: "#020246", width: "90px" }}>Dział</span>
-          <span style={{ color: "#020246" }}>Realizacja</span>
-          <span style={{ color: "#020246" }}>Wykonano</span>
-        </StagesDescription>
-      </div>
-      <div className="down-container">
+      </RowContainer>
+      <RowContainer>
         <StagesContainer />
         <BuddyContainer>
           <BuddyNameBlock>
@@ -57,7 +50,7 @@ export const HomePageLayout = () => {
             <p style={{ marginTop: "2px", fontSize: "13px" }}>trener@infoShare.pl</p>
           </BuddyImgContainer>
         </BuddyContainer>
-      </div>
-    </>
+      </RowContainer>
+    </DashboardContainer>
   );
 };

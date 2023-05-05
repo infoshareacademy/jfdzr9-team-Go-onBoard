@@ -5,15 +5,13 @@ export const CalendarBlock = styled.div`
   flex-direction: column;
   align-content: center;
   align-items: center;
-  gap: 5px;
-  width: 387px;
-  min-height: 337px;
-  max-height: 337px;
+  max-width: 400px;
+  height: 300px;
   box-shadow: rgb(0 0 0 / 15%) 4px 5px 10px;
   border-radius: 31.2294px;
-  order: 1;
-  flex-grow: 0;
   background-color: #ffffff;
+  padding: 15px;
+  margin: 10px;
 `;
 
 export const UserInfo = styled.span`
