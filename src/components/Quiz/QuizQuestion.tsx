@@ -127,9 +127,9 @@ export const QuestionCard = ({
   }, [quizEnded]);
 
   return (
-    <div>
+    <>
       {!startQuiz ? (
-        <div>
+        <>
           {/* Current Score  */}
           <ResultContainer>
             <h4>Punkty: {score}</h4>
@@ -139,32 +139,25 @@ export const QuestionCard = ({
           </ResultContainer>
           {/* Show results or show the question game  */}
           {showResults ? (
-            <div className="final-results">
-              <h2>Wynik końcowy</h2>
-              <h2>
-                {score} z {lengthOfQuestions} prawidłowych({quizResult}%)
-              </h2>
+            <>
+              <h4 style={{ display: "inline" }}>Wynik końcowy </h4>
+              <h2 style={{ display: "inline" }}>{quizResult}</h2>
+              <h5 style={{ display: "inline" }}>% </h5>
               {quizResult >= 75 ? (
                 <div className="save-quiz">
                   {currentUserResult &&
                   currentUserResult < 75 &&
                   currentUserActivity?.user_activity_id ===
                     currentActivityId ? (
-                    <h3>
-                      Brawo zaliczyłeś(aś) quiz. Przy poprzedniej próbie takze
-                      zaliczyłeś test i zapisałeś ten krok. Mozesz przejść do
-                      kolejnego etapu.
-                    </h3>
+                    <p>
+                      Brawo zaliczyłeś(aś) quiz. Przy poprzedniej próbie także
+                      zaliczyłeś test i zapisałeś ten krok.
+                    </p>
                   ) : (
-                    <h3>
-                      Brawo zaliczyłeś(aś) quiz. Mozesz przejść do kolejnego
-                      etapu lub wykonać test kolejny raz.
-                    </h3>
+                    <p>Brawo zaliczyłeś(aś) quiz.</p>
                   )}
 
-                  <button onClick={() => restartQuiz()}>
-                    Wykonaj test od nowa
-                  </button>
+                  <button onClick={() => restartQuiz()}>Powtórz test</button>
                 </div>
               ) : (
                 <div className="save-quiz">
@@ -172,25 +165,24 @@ export const QuestionCard = ({
                   currentUserResult < 75 &&
                   currentUserActivity?.user_activity_id ===
                     currentActivityId ? (
-                    <h3>
-                      Niestety nie uzyskałeś(aś) minimalnych 75% z quizu.
+                    <p>
+                      Niestety nie uzyskałeś(aś) minimalnych <b>75%</b> z quizu.
+                      <br></br>
                       Natomiast przy poprzedniej próbie zaliczyłeś test oraz
-                      zapisałeś krok, możesz nadal przejść do kolejnego etapu.
-                    </h3>
+                      zapisałeś krok.
+                    </p>
                   ) : (
-                    <h3>
+                    <p>
                       Niestety nie uzyskałeś(aś) minimalnych 75% z quizu. Aby
                       przejść do kolejnego etapu wykonaj test jeszcze raz.
-                    </h3>
+                    </p>
                   )}
 
                   {/* <button onClick={() => saveQuiz()}>Zapisz wyniki quizu</button> */}
-                  <button onClick={() => restartQuiz()}>
-                    Wykonaj test od nowa
-                  </button>
+                  <button onClick={() => restartQuiz()}>Powtórz test</button>
                 </div>
               )}
-            </div>
+            </>
           ) : (
             <div className="question-card">
               <p>{question.text}</p>
@@ -208,7 +200,7 @@ export const QuestionCard = ({
               </AnswersContainer>
             </div>
           )}
-        </div>
+        </>
       ) : (
         <div className="start-quiz">
           <p>
@@ -247,6 +239,6 @@ export const QuestionCard = ({
           <button onClick={() => startQuizFn()}>Rozpocznij quiz</button>
         </div>
       )}
-    </div>
+    </>
   );
 };
