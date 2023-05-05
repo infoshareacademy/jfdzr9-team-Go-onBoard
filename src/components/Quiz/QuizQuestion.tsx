@@ -2,12 +2,27 @@ import { QuestionProps, UserActivitiesCollection } from "./ModelsQuizTypes";
 import { useState, useEffect, useMemo } from "react";
 import { AnswersContainer } from "./Answers.Container.styled";
 import { Answer } from "./Answers.styled";
-import { collection, doc, onSnapshot, query, setDoc, updateDoc, where } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  onSnapshot,
+  query,
+  setDoc,
+  updateDoc,
+  where,
+} from "firebase/firestore";
 import { database } from "../../utils/firebase/firebase.config";
 import { useUser } from "../RequireAuth/context/AuthContext";
 import { useFirebaseFetch } from "../hooks/useFirebaseFetch";
 
-export const QuestionCard = ({ question, currentQuestion, lengthOfQuestions, setQuestionIndex, etapId, currentActivityId }: QuestionProps) => {
+export const QuestionCard = ({
+  question,
+  currentQuestion,
+  lengthOfQuestions,
+  setQuestionIndex,
+  etapId,
+  currentActivityId,
+}: QuestionProps) => {
   const userName = useUser();
   const [showResults, setShowResults] = useState(false);
   const [score, setScore] = useState(0);
@@ -50,13 +65,20 @@ export const QuestionCard = ({ question, currentQuestion, lengthOfQuestions, set
   }, [score, question.options.length]);
 
   const userQuizPointsCollection = collection(database, "user_quiz_points");
-  const userActivitiesCollection = useFirebaseFetch<UserActivitiesCollection>("user_activities");
-  const currentUserActivity = userActivitiesCollection.find((currentId) => currentId?.user_activity_id === currentActivityId);
+  const userActivitiesCollection =
+    useFirebaseFetch<UserActivitiesCollection>("user_activities");
+  const currentUserActivity = userActivitiesCollection.find(
+    (currentId) => currentId?.user_activity_id === currentActivityId
+  );
 
   useEffect(() => {
     if (quizEnded) {
       // check if there is already a document for a given user and stage
-      const etapIdQuery = query(collection(database, "user_quiz_points"), where("etap_id", "==", etapId), where("user_id", "==", userName?.uid));
+      const etapIdQuery = query(
+        collection(database, "user_quiz_points"),
+        where("etap_id", "==", etapId),
+        where("user_id", "==", userName?.uid)
+      );
       const unsubscribe = onSnapshot(etapIdQuery, (snapshot) => {
         if (snapshot.empty) {
           // if don't exist create new
@@ -75,7 +97,10 @@ export const QuestionCard = ({ question, currentQuestion, lengthOfQuestions, set
           const docId = snapshot.docs[0].id;
           updateDoc(doc(userQuizPointsCollection, docId), {
             result: userResult,
-            save_quiz: currentUserActivity?.user_activity_id === currentActivityId ? true : null,
+            save_quiz:
+              currentUserActivity?.user_activity_id === currentActivityId
+                ? true
+                : null,
             user_activity_id: currentActivityId,
           })
             .then(() => {})
@@ -84,7 +109,11 @@ export const QuestionCard = ({ question, currentQuestion, lengthOfQuestions, set
       });
       return () => unsubscribe();
     } else {
-      const etapIdQuery = query(userQuizPointsCollection, where("etap_id", "==", etapId), where("user_id", "==", userName?.uid));
+      const etapIdQuery = query(
+        userQuizPointsCollection,
+        where("etap_id", "==", etapId),
+        where("user_id", "==", userName?.uid)
+      );
       const unsubscribe = onSnapshot(etapIdQuery, (snapshot) => {
         if (!snapshot.empty) {
           // if exist update the document
@@ -112,27 +141,48 @@ export const QuestionCard = ({ question, currentQuestion, lengthOfQuestions, set
               </h2>
               {quizResult >= 75 ? (
                 <div className="save-quiz">
-                  {currentUserResult && currentUserResult < 75 && currentUserActivity?.user_activity_id === currentActivityId ? (
-                    <h3>Brawo zaliczyłeś(aś) quiz. Przy poprzedniej próbie takze zaliczyłeś test i zapisałeś ten krok. Mozesz przejść do kolejnego etapu.</h3>
+                  {currentUserResult &&
+                  currentUserResult < 75 &&
+                  currentUserActivity?.user_activity_id ===
+                    currentActivityId ? (
+                    <h3>
+                      Brawo zaliczyłeś(aś) quiz. Przy poprzedniej próbie takze
+                      zaliczyłeś test i zapisałeś ten krok. Mozesz przejść do
+                      kolejnego etapu.
+                    </h3>
                   ) : (
-                    <h3>Brawo zaliczyłeś(aś) quiz. Mozesz przejść do kolejnego etapu lub wykonać test kolejny raz.</h3>
+                    <h3>
+                      Brawo zaliczyłeś(aś) quiz. Mozesz przejść do kolejnego
+                      etapu lub wykonać test kolejny raz.
+                    </h3>
                   )}
 
-                  <button onClick={() => restartQuiz()}>Wykonaj test od nowa</button>
+                  <button onClick={() => restartQuiz()}>
+                    Wykonaj test od nowa
+                  </button>
                 </div>
               ) : (
                 <div className="save-quiz">
-                  {currentUserResult && currentUserResult < 75 && currentUserActivity?.user_activity_id === currentActivityId ? (
+                  {currentUserResult &&
+                  currentUserResult < 75 &&
+                  currentUserActivity?.user_activity_id ===
+                    currentActivityId ? (
                     <h3>
-                      Niestety nie uzyskałeś(aś) minimalnych 75% z quizu. Natomiast przy poprzedniej próbie zaliczyłeś test oraz zapisałeś krok, mozesz nadal przejść do kolejnego
-                      etapu.
+                      Niestety nie uzyskałeś(aś) minimalnych 75% z quizu.
+                      Natomiast przy poprzedniej próbie zaliczyłeś test oraz
+                      zapisałeś krok, możesz nadal przejść do kolejnego etapu.
                     </h3>
                   ) : (
-                    <h3>Niestety nie uzyskałeś(aś) minimalnych 75% z quizu. Aby przejść do kolejnego etapu wykonaj test jeszcze raz.</h3>
+                    <h3>
+                      Niestety nie uzyskałeś(aś) minimalnych 75% z quizu. Aby
+                      przejść do kolejnego etapu wykonaj test jeszcze raz.
+                    </h3>
                   )}
 
                   {/* <button onClick={() => saveQuiz()}>Zapisz wyniki quizu</button> */}
-                  <button onClick={() => restartQuiz()}>Wykonaj test od nowa</button>
+                  <button onClick={() => restartQuiz()}>
+                    Wykonaj test od nowa
+                  </button>
                 </div>
               )}
             </div>
@@ -147,7 +197,9 @@ export const QuestionCard = ({ question, currentQuestion, lengthOfQuestions, set
               <AnswersContainer>
                 {question.options.map((option) => {
                   return (
-                    <Answer key={option.id} onClick={() => optionClicked(option.isCorrect)}>
+                    <Answer
+                      key={option.id}
+                      onClick={() => optionClicked(option.isCorrect)}>
                       {option.text}
                     </Answer>
                   );
@@ -158,18 +210,23 @@ export const QuestionCard = ({ question, currentQuestion, lengthOfQuestions, set
         </div>
       ) : (
         <div className="start-quiz">
-          <h3>
-            Witaj, ponizej znajduje się przycisk rozpoczynający quiz, klikając w niego zobaczysz pierwsze pytanie. Aby zaliczyć tą aktywność nalezy zdać test na minimum 75% oraz
-            kliknąć przycisk "zapisz krok", powodzenia!
+          <p>
+            {/* Witaj, poniżej znajduje się przycisk rozpoczynający quiz, klikając w niego zobaczysz pierwsze pytanie. Aby zaliczyć tę aktywność należy zdać test na minimum 75% oraz kliknąć przycisk "zapisz krok", powodzenia! */}
             {currentUserResult !== undefined ? (
               <p>
                 Ostatni wynik Twojego quizu to{" "}
                 {currentUserActivity?.user_activity_id === currentActivityId ? (
                   <>
                     {currentUserResult >= 75 ? (
-                      <>{`${currentUserResult}%. Jeśli chcesz mozesz wykonać quiz jeszcze raz, ale kliknąłeś juz przycisk "zapisz krok" więc ten etap masz juz zaliczony!`}</>
+                      <>
+                        <strong>{`${currentUserResult}%`}</strong>
+                        {`. Jeśli chcesz mozesz wykonać quiz jeszcze raz, ale kliknąłeś juz przycisk "zapisz krok" więc ten etap masz juz zaliczony!`}
+                      </>
                     ) : (
-                      <>{`${currentUserResult}%. Jeśli chcesz mozesz wykonać quiz jeszcze raz, ale przy poprzednich próbach juz zaliczyłeś test i kliknąłeś juz przycisk "zapisz krok" więc ten etap masz juz zaliczony!`}</>
+                      <>
+                        <strong>{`${currentUserResult}%`}</strong>
+                        {`. Jeśli chcesz mozesz wykonać quiz jeszcze raz, ale przy poprzednich próbach juz zaliczyłeś test i kliknąłeś juz przycisk "zapisz krok" więc ten etap masz juz zaliczony!`}
+                      </>
                     )}
                   </>
                 ) : (
@@ -185,7 +242,7 @@ export const QuestionCard = ({ question, currentQuestion, lengthOfQuestions, set
             ) : (
               <p></p>
             )}
-          </h3>
+          </p>
           <button onClick={() => startQuizFn()}>Rozpocznij quiz</button>
         </div>
       )}

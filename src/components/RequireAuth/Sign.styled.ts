@@ -63,6 +63,8 @@ export const LinkName = styled.p`
 export const ImgMain = styled.img`
   width: 40rem;
   height: 40rem;
+  position: relative;
+  top: 5rem;
 `;
 
 export const TextString = styled.p`
@@ -98,7 +100,7 @@ export const Card2 = styled.div`
 
 export const Cards = styled.div`
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 20px auto;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
   gap: 1rem;
