@@ -8,13 +8,16 @@ import {
   Card,
   Card2,
   Cards,
+  Footer,
   FormSign,
   ImgMain,
   Input,
   Label,
   LinkName,
   LogoImg,
+  LogoImgFooter,
   LogoName,
+  LogoNameFooter,
   NamePage,
   TextString,
 } from "./Sign.styled";
@@ -54,14 +57,10 @@ export const Signpassword = () => {
     <>
       <Cards>
         <Card2>
-          <ImgMain
-            src={imgProgrammer}
-            alt="programista"></ImgMain>
+          <ImgMain src={imgProgrammer} alt="programista"></ImgMain>
         </Card2>
         <Card>
-          <LogoImg
-            src={imgLogo}
-            alt="logo"></LogoImg>
+          <LogoImg src={imgLogo} alt="logo"></LogoImg>
 
           <LogoName>
             <b>GO!</b> onBoard
@@ -73,13 +72,7 @@ export const Signpassword = () => {
             <div>
               <Label>Email</Label>
               <br></br>
-              <Input
-                type="email"
-                name="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Wpisz swój email"
-              />
+              <Input type="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Wpisz swój email" />
               <TextString>{error}</TextString>
             </div>
             <Button type="submit">Wyślij</Button>
@@ -94,6 +87,13 @@ export const Signpassword = () => {
           </div>
         </Card>
       </Cards>
+      <Footer>
+        <LogoImgFooter src={imgLogo} alt="logo"></LogoImgFooter>
+        <LogoNameFooter>
+          <b>GO!</b> onBoard
+        </LogoNameFooter>
+        <p>Design © Grupa2 2023</p>
+      </Footer>
     </>
   );
 };

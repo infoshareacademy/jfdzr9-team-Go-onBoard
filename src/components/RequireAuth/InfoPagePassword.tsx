@@ -2,17 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState, FormEvent } from "react";
 import { auth } from "../../utils/firebase/firebase.config";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import {
-  Card,
-  Card2,
-  Cards,
-  ImgMain,
-  LinkName,
-  LogoImg,
-  LogoName,
-  NamePage,
-  TextString,
-} from "./Sign.styled";
+import { Card, Card2, Cards, ImgMain, LinkName, LogoImg, LogoName, NamePage, TextString } from "./Sign.styled";
 
 export const InfoPagePassword = () => {
   return (
@@ -28,9 +18,7 @@ export const InfoPagePassword = () => {
             <b>GO!</b> onBoard
           </LogoName>
           <NamePage>Hasło zrestartowane</NamePage>
-          <TextString>
-            Na Twój adres e-mail wysłaliśmy link resetujący hasło
-          </TextString>
+          <TextString>Na Twój adres e-mail wysłaliśmy link resetujący hasło</TextString>
           <p>
             <LinkName>
               <a href="/">Logowanie</a>

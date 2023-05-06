@@ -8,25 +8,23 @@ import {
   Card,
   Card2,
   Cards,
+  Footer,
   FormSign,
   ImgMain,
   Input,
   Label,
   LinkName,
   LogoImg,
+  LogoImgFooter,
   LogoName,
+  LogoNameFooter,
   NamePage,
   TextString,
 } from "./Sign.styled";
 import imgProgrammer from "../../assets/signin/Chlopak.png";
 import imgLogo from "../../assets/signin/Logo.png";
 
-type FirebaseErrorCode =
-  | "auth/email-already-in-use"
-  | "auth/invalid-email"
-  | "auth/user-not-found"
-  | "auth/wrong-password"
-  | "auth/weak-password";
+type FirebaseErrorCode = "auth/email-already-in-use" | "auth/invalid-email" | "auth/user-not-found" | "auth/wrong-password" | "auth/weak-password";
 
 type FirebaseErrorMessages = {
   [key in FirebaseErrorCode]: string;
@@ -66,14 +64,10 @@ export const Signin = () => {
     <>
       <Cards>
         <Card2>
-          <ImgMain
-            src={imgProgrammer}
-            alt="programista"></ImgMain>
+          <ImgMain src={imgProgrammer} alt="programista"></ImgMain>
         </Card2>
         <Card>
-          <LogoImg
-            src={imgLogo}
-            alt="logo"></LogoImg>
+          <LogoImg src={imgLogo} alt="logo"></LogoImg>
 
           <LogoName>
             <b>GO!</b> onBoard
@@ -84,20 +78,12 @@ export const Signin = () => {
             <div>
               <Label>Email</Label>
               <br />
-              <Input
-                onChange={(e) => setEmail(e.target.value)}
-                type="email"
-                placeholder="Wpisz swój email"
-              />
+              <Input onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Wpisz swój email" />
             </div>
             <div>
               <Label>Hasło</Label>
               <br />
-              <Input
-                onChange={(e) => setPassword(e.target.value)}
-                type="password"
-                placeholder="Wpisz swoje hasło"
-              />
+              <Input onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Wpisz swoje hasło" />
               <TextString>{error}</TextString>
             </div>
             <div>
@@ -114,6 +100,13 @@ export const Signin = () => {
           </div>
         </Card>
       </Cards>
+      <Footer>
+        <LogoImgFooter src={imgLogo} alt="logo"></LogoImgFooter>
+        <LogoNameFooter>
+          <b>GO!</b> onBoard
+        </LogoNameFooter>
+        <p>Design © Grupa2 2023</p>
+      </Footer>
     </>
   );
 };

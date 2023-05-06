@@ -6,13 +6,14 @@ export const LogoName = styled.p`
   font-weight: 300;
   text-align: center;
   padding: 0px 0px 50px 0px;
+  line-height: 5px;
 `;
 
 export const NamePage = styled.h1`
   font-weight: 500;
   font-size: 180%;
   text-align: center;
-  padding-bottom: 25px;
+  padding-bottom: 5px;
 `;
 
 export const LogoImg = styled.img`
@@ -112,4 +113,32 @@ export const Cards = styled.div`
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
   }
+`;
+
+export const Footer = styled.footer`
+  text-align: center;
+  color: #020246;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 5px;
+  padding-bottom: 30px;
+`;
+
+export const LogoImgFooter = styled.img`
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 39px;
+  width: 55px;
+  height: 69.95px;
+`;
+
+export const LogoNameFooter = styled.p`
+  font-size: 24px;
+  font-weight: 300;
+  text-align: center;
+
+  line-height: 5px;
 `;

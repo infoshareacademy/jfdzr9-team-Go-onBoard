@@ -1,32 +1,23 @@
 import { useState, FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  createUserWithEmailAndPassword,
-  signOut,
-  getAuth,
-  updateProfile,
-} from "firebase/auth";
+import { createUserWithEmailAndPassword, signOut, getAuth, updateProfile } from "firebase/auth";
 import { auth, database } from "../../utils/firebase/firebase.config";
-import {
-  collection,
-  query,
-  where,
-  getDocs,
-  doc,
-  setDoc,
-} from "firebase/firestore";
+import { collection, query, where, getDocs, doc, setDoc } from "firebase/firestore";
 import {
   Button,
   Card,
   Card2,
   Cards,
+  Footer,
   FormSign,
   ImgMain,
   Input,
   Label,
   LinkName,
   LogoImg,
+  LogoImgFooter,
   LogoName,
+  LogoNameFooter,
   NamePage,
   TextString,
 } from "./Sign.styled";
@@ -37,12 +28,7 @@ interface CreateUserError {
   message: string;
 }
 
-type FirebaseErrorCode =
-  | "auth/email-already-in-use"
-  | "auth/invalid-email"
-  | "auth/user-not-found"
-  | "auth/wrong-password"
-  | "auth/weak-password";
+type FirebaseErrorCode = "auth/email-already-in-use" | "auth/invalid-email" | "auth/user-not-found" | "auth/wrong-password" | "auth/weak-password";
 
 type FirebaseErrorMessages = {
   [key in FirebaseErrorCode]: string;
@@ -78,11 +64,7 @@ export const Signup = () => {
           const { gender, id_course, role, name } = docSnapshot.data();
 
           try {
-            const userCredential = await createUserWithEmailAndPassword(
-              auth,
-              email,
-              password
-            );
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const uid = userCredential.user.uid;
             const usersRef = collection(database, "users");
             const newUser = {
@@ -123,9 +105,7 @@ export const Signup = () => {
           }
         });
       } else {
-        setError(
-          "E-mail, nie moze zostać zrejestrowany. Jeśli opłaciłeś kurs, skontaktuj się z działem Sprzedaż. "
-        );
+        setError("E-mail, nie moze zostać zrejestrowany. Jeśli opłaciłeś kurs, skontaktuj się z działem Sprzedaż. ");
       }
     } catch (e: any) {
       setError("Wystąpił błąd podczas weryfikowania e-mail.");
@@ -137,14 +117,10 @@ export const Signup = () => {
     <>
       <Cards>
         <Card2>
-          <ImgMain
-            src={imgProgrammer}
-            alt="programista"></ImgMain>
+          <ImgMain src={imgProgrammer} alt="programista"></ImgMain>
         </Card2>
         <Card>
-          <LogoImg
-            src={imgLogo}
-            alt="logo"></LogoImg>
+          <LogoImg src={imgLogo} alt="logo"></LogoImg>
 
           <LogoName>
             <b>GO!</b> onBoard
@@ -154,29 +130,17 @@ export const Signup = () => {
             <div>
               <Label>Imię</Label>
               <br />
-              <Input
-                onChange={(e) => setProfileName(e.target.value)}
-                type="name"
-                placeholder="Wpisz swóje imię"
-              />
+              <Input onChange={(e) => setProfileName(e.target.value)} type="name" placeholder="Wpisz swóje imię" />
             </div>
             <div>
               <Label>Email</Label>
               <br />
-              <Input
-                onChange={(e) => setEmail(e.target.value)}
-                type="email"
-                placeholder="Wpisz swój email"
-              />
+              <Input onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Wpisz swój email" />
             </div>
             <div>
               <Label>Hasło</Label>
               <br />
-              <Input
-                onChange={(e) => setPassword(e.target.value)}
-                type="password"
-                placeholder="Wpisz swoje hasło"
-              />
+              <Input onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Wpisz swoje hasło" />
             </div>
             <TextString>{error}</TextString>
             <div>
@@ -193,6 +157,13 @@ export const Signup = () => {
           </div>
         </Card>
       </Cards>
+      <Footer>
+        <LogoImgFooter src={imgLogo} alt="logo"></LogoImgFooter>
+        <LogoNameFooter>
+          <b>GO!</b> onBoard
+        </LogoNameFooter>
+        <p>Design © Grupa2 2023</p>
+      </Footer>
     </>
   );
 };
