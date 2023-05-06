@@ -8,7 +8,8 @@ import "../../index.css";
 import { StagesContext, StagesContextValue } from "./Context/StagesContext";
 import { useUser } from "../RequireAuth/context/AuthContext";
 import ProgressEtap from "../activities/ProgressEtap";
-import { EtapsContainer, EtapsIcon } from "../activities/ProgressEtap.styled";
+import { EtapsContainer, EtapsIcon, HeadEtaps, LogoImgHeader, TitleEtaps } from "../activities/ProgressEtap.styled";
+import imgLogo from "../../assets/signin/Logo.png";
 import { ThreeDots } from "react-loader-spinner";
 import { Loader } from "../Loader/Loader";
 
@@ -128,9 +129,15 @@ function Etaps() {
 
   return (
     <StagesContext.Provider value={stagesContextValue}>
-      <Link to={`/dashboard/${user?.uid}`}>
-        <button>Powrót</button>
-      </Link>
+      <HeadEtaps>
+        <Link to={`/dashboard/${user?.uid}`}>
+          <LogoImgHeader src={imgLogo} alt="logo" />
+        </Link>
+        <TitleEtaps>
+          GO! <span style={{ fontWeight: 400 }}>onBoard</span>
+        </TitleEtaps>
+      </HeadEtaps>
+
       <EtapsContainer>
         <ProgressEtap />
         <div className="contentWrap">

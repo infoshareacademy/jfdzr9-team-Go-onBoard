@@ -6,6 +6,7 @@ import { collection, query, where, getDocs, doc, setDoc } from "firebase/firesto
 import { Button, Card, Card2, Cards, FormSign, ImgMain, Input, Label, LinkName, LogoImg, LogoName, NamePage, TextString } from "./Sign.styled";
 import imgProgrammer from "../../assets/signin/Chlopak.png";
 import imgLogo from "../../assets/signin/Logo.png";
+import { FooterMain } from "./Footer";
 
 interface CreateUserError {
   message: string;

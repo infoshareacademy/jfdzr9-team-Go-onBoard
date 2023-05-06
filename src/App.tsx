@@ -13,36 +13,72 @@ import { InfoPagePassword } from "./components/RequireAuth/InfoPagePassword";
 import PanelAdmin from "./pages/PanelAdmin";
 import ProtectedRoute from "./components/RequireAuth/ProtectedRoute";
 import NotFoundPage from "./pages/NotFoundPage";
+import { FooterMain } from "./components/RequireAuth/Footer";
+import { GlobalStyles } from "./components/RequireAuth/Sign.styled";
 
 function App() {
   return (
-    <AuthContextProvider>
-      <Routes>
-        <Route path="/" element={<Signin />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/signin" element={<Signin />} />
-        <Route path="/signpassword" element={<Signpassword />} />
-        <Route path="emulator/action" element={<PasswordReset />} />
-        <Route path="/InfoPagePassword" element={<InfoPagePassword />} />
-        <Route element={<RequireAuth />}>
-          <Route path="/dashboard/*" element={<HomePageLayout />}>
-            <Route path=":id" element={<HomePageLayout />} />
-          </Route>
-          <Route path="/etaps/*" element={<Etaps />}>
-            <Route path=":id" element={<Activities />} />
+    <GlobalStyles>
+      <AuthContextProvider>
+        <Routes>
+          <Route
+            path="/"
+            element={<Signin />}
+          />
+          <Route
+            path="/signup"
+            element={<Signup />}
+          />
+          <Route
+            path="/signin"
+            element={<Signin />}
+          />
+          <Route
+            path="/signpassword"
+            element={<Signpassword />}
+          />
+          <Route
+            path="emulator/action"
+            element={<PasswordReset />}
+          />
+          <Route
+            path="/InfoPagePassword"
+            element={<InfoPagePassword />}
+          />
+          <Route element={<RequireAuth />}>
+            <Route
+              path="/dashboard/*"
+              element={<HomePageLayout />}>
+              <Route
+                path=":id"
+                element={<HomePageLayout />}
+              />
+            </Route>
+            <Route
+              path="/etaps/*"
+              element={<Etaps />}>
+              <Route
+                path=":id"
+                element={<Activities />}
+              />
+            </Route>
+            <Route
+              path="/panelAdmina"
+              element={
+                <ProtectedRoute requiredRole="admin">
+                  <PanelAdmin />
+                </ProtectedRoute>
+              }
+            />
           </Route>
           <Route
-            path="/panelAdmina"
-            element={
-              <ProtectedRoute requiredRole="admin">
-                <PanelAdmin />
-              </ProtectedRoute>
-            }
+            path="*"
+            element={<NotFoundPage />}
           />
-        </Route>
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
-    </AuthContextProvider>
+        </Routes>
+      </AuthContextProvider>
+      <FooterMain />
+    </GlobalStyles>
   );
 }
 
