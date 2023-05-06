@@ -31,6 +31,7 @@
   --secondary-2: #d3d3d3;
   --secondary-3: #4a4a7b;
   --active: #46ad2c;
+  --white: #fff;
 
   background-color: var(--secondary-1);
 }
@@ -70,7 +71,7 @@ button {
   font-weight: 500;
   font-family: inherit;
   background-color: var(--primary-1);
-  color: var(--primary-2);
+  color: var(--white);
   cursor: pointer;
   transition: border-color 0.25s;
 }
@@ -128,6 +129,10 @@ button:hover {
   gap: 2rem;
   flex-wrap: nowrap;
   align-items: flex-start;
+
+  @media (max-width: 830px) {
+    align-items: center;
+  }
 }
 
 .detailsContent {
@@ -216,7 +221,7 @@ img {
   justify-content: space-between;
   align-items: center;
   padding: 0px 32px;
-  margin: 5px;
+  margin: 7px;
   /* width: 646px; */
   height: 58px;
 

@@ -6,12 +6,16 @@ export const CalendarBlock = styled.div`
   align-content: center;
   align-items: center;
   max-width: 400px;
-  height: 300px;
+  height: 340px;
   box-shadow: rgb(0 0 0 / 15%) 4px 5px 10px;
   border-radius: 31.2294px;
   background-color: #ffffff;
   padding: 15px;
   margin: 10px;
+
+  @media (max-width: 1005px) {
+    max-width: 770px;
+  }
 `;
 
 export const UserInfo = styled.span`

@@ -16,7 +16,7 @@ export const GreetingBlock = styled.div`
   flex: 1;
   max-width: 770px;
   min-width: 385px;
-  min-height: 300px;
+  min-height: 340px;
   margin: 10px;
   /* height: 300px; */
 `;

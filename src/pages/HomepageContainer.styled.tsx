@@ -2,6 +2,9 @@ import styled from "styled-components";
 
 export const DashboardContainer = styled.div`
   margin: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 `;
 
 export const RowContainer = styled.div`
@@ -13,6 +16,10 @@ export const RowContainer = styled.div`
   gap: 40px;
   margin-top: 30px;
   width: 100%;
-  /* height: 320px; */
   flex-wrap: wrap;
+
+  @media (max-width: 1005px) {
+    flex-direction: column;
+    align-items: stretch;
+  }
 `;
