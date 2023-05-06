@@ -105,6 +105,8 @@ export const Cards = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
   gap: 1rem;
 
+  flex: 1;
+
   @media (max-width: 1200px) {
     justify-items: center;
   }
@@ -127,6 +129,7 @@ export const Footer = styled.footer`
   padding-bottom: 20px;
   background-color: #ffffff;
   width: 100%;
+  margin-top: 2rem;
 `;
 
 export const LogoImgFooter = styled.img`
@@ -151,4 +154,10 @@ export const LeftFoot = styled.div`
 
 export const RightFoot = styled.div`
   padding: 35px 0px 0px 0px;
+`;
+
+export const GlobalStyles = styled.div`
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 `;
