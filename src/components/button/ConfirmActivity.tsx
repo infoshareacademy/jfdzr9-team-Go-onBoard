@@ -153,12 +153,6 @@ const ConfirmActivity: React.FC<ConfirmActivityProps> = (props) => {
       ) {
         setIsDisabled(true);
       }
-
-      console.log(userPoints);
-      console.log(props.currentActivityy?.test);
-      console.log(props.currentActivityy?.id);
-      console.log(currentUserActivity?.user_id);
-      console.log(activiti);
     });
 
     return () => {

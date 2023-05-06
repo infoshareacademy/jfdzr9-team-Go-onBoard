@@ -21,6 +21,21 @@ import {
 import imgProgrammer from "../../assets/signin/Chlopak.png";
 import imgLogo from "../../assets/signin/Logo.png";
 
+type FirebaseErrorCode =
+  | "auth/invalid-email"
+  | "auth/user-not-found"
+  | "auth/missing-email";
+
+type FirebaseErrorMessages = {
+  [key in FirebaseErrorCode]: string;
+};
+
+const firebaseErrors: FirebaseErrorMessages & { [key: string]: string } = {
+  "auth/missing-email": "Wpisz email w puste pole",
+  "auth/invalid-email": "Wprowdź poprawny e-mail",
+  "auth/user-not-found": "E-mail nie został zarejestrowany",
+};
+
 export const Signpassword = () => {
   const [email, setEmail] = useState("");
   const [emailMessage, setEmailMessage] = useState(false);
@@ -41,13 +56,11 @@ export const Signpassword = () => {
       navigate("/InfoPagePassword");
     } catch (error: any) {
       console.log({ error });
-
-      if (error.code === "auth/user-not-found") {
-        setError(
-          "Nie znaleźliśmy podanego adresu e-mail w bazie danych. Upewnij się, że wprowadziłeś poprawny adres e-mail lub skontaktuj się z naszym działem wsparcia w celu uzyskania dalszej pomocy."
-        );
-        setEmail("");
-      }
+      const errorMessage =
+        firebaseErrors[error.code as FirebaseErrorCode] ||
+        "Wystąpił nieznany błąd. Spróbuj ponownie.";
+      setError(errorMessage);
+      setEmail("");
     }
   };
   return (
