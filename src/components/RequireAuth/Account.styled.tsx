@@ -1,9 +1,9 @@
 import styled from "styled-components";
+import logoutImgUrl from "../../assets/pliki-svg-dashboard/logout-svgrepo-com.svg";
 
 export const AccountContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: min-content;
 `;
 
 export const LogOutBlock = styled.div`
@@ -14,7 +14,7 @@ export const LogOutBlock = styled.div`
 `;
 
 export const BtnLogOut = styled.button`
-  background-image: url("/src/assets/pliki-svg-dashboard/logout-svgrepo-com.svg");
+  background-image: url(${logoutImgUrl});
   background-size: cover;
   background-color: white;
   width: 40px;
@@ -29,7 +29,7 @@ export const AccountBlock = styled.div`
   justify-content: center;
   align-items: center;
   gap: 20px;
-  width: 387px;
+  width: 385px;
 `;
 
 export const AccountInfo = styled.p`
