@@ -70,6 +70,7 @@ export const ImgMain = styled.img`
 export const TextString = styled.p`
   text-align: center;
   color: red;
+  width: 85%;
 `;
 
 export const Card = styled.div`
