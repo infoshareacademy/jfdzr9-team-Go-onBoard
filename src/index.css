@@ -31,6 +31,7 @@
   --secondary-2: #d3d3d3;
   --secondary-3: #4a4a7b;
   --active: #46ad2c;
+  --white: #fff;
 
   background-color: var(--secondary-1);
 }
@@ -53,11 +54,7 @@ body {
 
 html {
   height: 100%;
-  background: radial-gradient(
-    50% 66.49% at 50% 50%,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(0, 255, 194, 0.15) 100%
-  );
+  background: radial-gradient(50% 66.49% at 50% 50%, rgba(255, 255, 255, 0) 0%, rgba(0, 255, 194, 0.15) 100%);
 }
 
 h1 {
@@ -74,7 +71,7 @@ button {
   font-weight: 500;
   font-family: inherit;
   background-color: var(--primary-1);
-  color: var(--primary-2);
+  color: var(--white);
   cursor: pointer;
   transition: border-color 0.25s;
 }
@@ -88,7 +85,7 @@ button:hover {
   width: 126px;
   border-radius: 8px;
   padding: 0.6em 1.2em;
-  /* font-size: 1em; */
+  font-size: 1em;
   font-weight: 500;
   font-family: inherit;
   background-color: var(--primary-1);
@@ -110,7 +107,6 @@ button:hover {
 
 .stages-links:disabled {
   border-color: var(--secondary-1);
-
   cursor: not-allowed;
 }
 
@@ -133,6 +129,10 @@ button:hover {
   gap: 2rem;
   flex-wrap: nowrap;
   align-items: flex-start;
+
+  @media (max-width: 830px) {
+    align-items: center;
+  }
 }
 
 .detailsContent {
@@ -204,51 +204,8 @@ button:disabled {
   filter: none;
 }
 
-.greeting-block {
-  height: auto;
-}
-
-.dashboard-greeting {
-  height: auto;
-}
-
-.buddy {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 39px 0px;
-  gap: 23px;
-  width: 387px;
-  height: fit-content;
-  box-shadow: rgb(0 0 0 / 15%) 4px 5px 10px;
-  border-radius: 31.2294px;
-  flex: none;
-  order: 1;
-  flex-grow: 0;
-  background-color: #ffffff;
-}
-
 h2 {
   text-align: end;
-}
-
-.stages-container {
-  border-radius: 31.2294px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 0px;
-  gap: 14px;
-  width: 696px;
-  height: fit-content;
-  flex: none;
-  order: 0;
-  flex-grow: 0;
-}
-
-.stages-bloks {
-  display: flex;
-  flex-direction: column;
 }
 
 img {
@@ -264,9 +221,9 @@ img {
   justify-content: space-between;
   align-items: center;
   padding: 0px 32px;
-  margin: 10px;
-  width: 596px;
-  height: 28px;
+  margin: 7px;
+  /* width: 646px; */
+  height: 58px;
 
   background: #ffffff;
   color: white;
@@ -279,6 +236,7 @@ img {
   background: none;
   border-radius: none;
   box-shadow: none;
+  color: #fff;
 }
 
 .confirmButton {

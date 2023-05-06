@@ -1,6 +1,8 @@
 import "../../index.css";
 import { useUser } from "../RequireAuth/context/AuthContext";
 import { useFirebaseFetch } from "../hooks/useFirebaseFetch";
+import manLogoUrl from "../../assets/pliki-svg-dashboard/man_10 1.svg";
+import { DashboardGreeting, GreetingBlock, GreetingName, ImgBlock } from "./WelcomeContainer.styled";
 export interface IUser {
   email: string;
   name: string;
@@ -37,14 +39,14 @@ export const WelcomeContainer = () => {
   const filteredCourse = courses.find((course) => course.id_course === idCourse);
 
   return (
-    <div className="greetingsContainer">
-      <div className="img-block">
-        <img src="/src/assets/pliki-svg-dashboard/man_10 1.svg" className="man-greetins-logo"></img>
-      </div>
-      <div className="greeting-block">
+    <GreetingBlock>
+      <ImgBlock>
+        <img src={manLogoUrl} alt="man-greeting-logo" className="man-greetins-logo"></img>
+      </ImgBlock>
+      <GreetingName>
         <h2>Hej,{userName?.displayName}!</h2>
-        <div className="dashboard-greeting">{filteredCourse?.greeting}</div>
-      </div>
-    </div>
+        <DashboardGreeting>{filteredCourse?.greeting}</DashboardGreeting>
+      </GreetingName>
+    </GreetingBlock>
   );
 };

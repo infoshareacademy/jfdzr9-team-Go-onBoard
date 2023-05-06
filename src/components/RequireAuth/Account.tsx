@@ -5,7 +5,6 @@ import AvatarUploader from "../HomePageComponents/AvatarUploader";
 import { useFirebaseFetch } from "../hooks/useFirebaseFetch";
 import { Courses, IUser } from "../HomePageComponents/WelcomeContainer";
 import { AccountBlock, AccountContainer, AccountInfo, LogOutBlock } from "./Account.styled";
-import { UserInfo } from "../HomePageComponents/Calendar.styled";
 
 const Account = () => {
   const user = useUser();
