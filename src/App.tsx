@@ -14,10 +14,11 @@ import PanelAdmin from "./pages/PanelAdmin";
 import ProtectedRoute from "./components/RequireAuth/ProtectedRoute";
 import NotFoundPage from "./pages/NotFoundPage";
 import { FooterMain } from "./components/RequireAuth/Footer";
+import { GlobalStyles } from "./components/RequireAuth/Sign.styled";
 
 function App() {
   return (
-    <>
+    <GlobalStyles>
       <AuthContextProvider>
         <Routes>
           <Route
@@ -77,7 +78,7 @@ function App() {
         </Routes>
       </AuthContextProvider>
       <FooterMain />
-    </>
+    </GlobalStyles>
   );
 }
 

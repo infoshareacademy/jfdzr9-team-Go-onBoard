@@ -129,7 +129,7 @@ export const Footer = styled.footer`
   padding-bottom: 20px;
   background-color: #ffffff;
   width: 100%;
-  margin-top: 3.3rem;
+  margin-top: 2rem;
 `;
 
 export const LogoImgFooter = styled.img`
@@ -154,4 +154,10 @@ export const LeftFoot = styled.div`
 
 export const RightFoot = styled.div`
   padding: 35px 0px 0px 0px;
+`;
+
+export const GlobalStyles = styled.div`
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 `;
