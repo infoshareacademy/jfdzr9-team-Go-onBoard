@@ -22,7 +22,6 @@ const RequireAuth = () => {
 
       if (docSnap.exists()) {
         const userData = docSnap.data();
-        console.log(userData.role);
         if (userData.role === "admin") {
           setIsAdmin(true);
         }
