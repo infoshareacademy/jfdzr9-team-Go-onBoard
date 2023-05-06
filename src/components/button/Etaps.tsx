@@ -1,9 +1,9 @@
-import { useState, useEffect, createContext } from "react";
+import { useState, useEffect } from "react";
 import { database } from "../../utils/firebase/firebase.config"; // import storage
 import { collection, getDocs } from "firebase/firestore";
 import { ref, getDownloadURL, getStorage } from "firebase/storage";
 import { getApp } from "firebase/app";
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useLocation } from "react-router-dom";
 import "../../index.css";
 import { StagesContext, StagesContextValue } from "./Context/StagesContext";
 import { useUser } from "../RequireAuth/context/AuthContext";
@@ -98,6 +98,15 @@ function Etaps() {
     getEtaps();
   }, []);
 
+  const location = useLocation();
+
+  useEffect(() => {
+    const currentEtapId = location.pathname.split("/").pop();
+    if (currentEtapId && etaps.some((etap) => etap.id === currentEtapId)) {
+      setSelectedEtapId(currentEtapId);
+    }
+  }, [location.pathname, etaps]);
+
   //props to confirm button-after confirm check status to show etpas when all activ in etap are completed
 
   const handleActivityConfirmation = (newActivityId: string) => {
@@ -157,7 +166,7 @@ function Etaps() {
                           ? "var(--active)"
                           : enableLink
                           ? ""
-                          : "var(--primary-2)", // Kolor dla etapów niedostępnych
+                          : "var(--primary-2)",
                     }}>
                     {etap.icon && (
                       <EtapsIcon
