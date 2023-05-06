@@ -1,11 +1,13 @@
 import "../../index.css";
 import { useUser } from "../RequireAuth/context/AuthContext";
 import { useFirebaseFetch } from "../hooks/useFirebaseFetch";
-
 import { Timestamp } from "firebase/firestore";
 import { FieldValue } from "firebase/firestore";
 import Account from "../RequireAuth/Account";
 import { CalendarBlock, CourseDetails, UserInfo, UserInfoClock, UserInfoImgGift, UserInfoResult } from "./Calendar.styled";
+import giftImgUrl from "../../assets/pliki-svg-dashboard/prezent.svg";
+import clockImgUrl from "../../assets/pliki-svg-dashboard/zegarek.svg";
+import resultImgUrl from "../../assets/pliki-svg-dashboard/Najlepszy wynik.svg";
 
 interface IUser {
   uid: string;
@@ -102,16 +104,25 @@ function Calendar() {
       <Account />
       <CourseDetails>
         <UserInfo>
-          <UserInfoImgGift src="/src/assets/pliki-svg-dashboard/prezent.svg" />{" "}
-          {daysUntilStart === 0 ? "Kurs się rozpoczął" : `Kurs rozpocznie się za: ${daysUntilStart} ${daysUntilStart === 1 ? "dzień" : "dni"}!`}
+          <UserInfoImgGift src={giftImgUrl} alt="prezent" />{" "}
+          {daysUntilStart === 0 ? (
+            "Kurs się rozpoczął"
+          ) : (
+            <>
+              Kurs rozpocznie się za:{" "}
+              <span style={{ fontWeight: "bold" }}>
+                &nbsp;{daysUntilStart} {daysUntilStart === 1 ? "dzień" : "dni"}!
+              </span>
+            </>
+          )}
         </UserInfo>
         <UserInfo>
-          <UserInfoResult src="/src/assets/pliki-svg-dashboard/Najlepszy wynik.svg" />
+          <UserInfoResult src={resultImgUrl} alt="najlepszy-wynik" />
           Dni pracy pod rząd:
           <span style={{ fontWeight: "bold" }}>&nbsp; {consecutiveActivities}</span>
         </UserInfo>
         <UserInfo>
-          <UserInfoClock src="/src/assets/pliki-svg-dashboard/zegarek.svg" />
+          <UserInfoClock src={clockImgUrl} alt="zegarek" />
           Najlepszy wynik: <span style={{ fontWeight: "bold" }}>&nbsp; {bestStreak}</span>
         </UserInfo>
       </CourseDetails>

@@ -7,6 +7,11 @@ import { doc, getDoc } from "firebase/firestore";
 import Introduction from "../components/HomePageComponents/Introduction";
 import { database } from "../utils/firebase/firebase.config";
 import Calendar from "../components/HomePageComponents/Calendar";
+import { BuddyContainer, BuddyImg, BuddyImgContainer, BuddyNameBlock } from "../components/HomePageComponents/Buddy.styled";
+import buddyImgUrl from "../assets/pliki-svg-dashboard/buddy.svg";
+import "../index.css";
+import { RowContainer } from "./HomepageContainer.styled";
+import { DashboardContainer } from "./HomepageContainer.styled";
 
 export const HomePageLayout = () => {
   const user = useUser();
@@ -27,25 +32,25 @@ export const HomePageLayout = () => {
   }, [user]);
 
   return (
-    <>
+    <DashboardContainer>
       {showIntroduction && <Introduction />}
-      <div className="up-container">
+      <RowContainer>
         <WelcomeContainer />
         <Calendar />
-      </div>
-      <div className="middle-container">
-        <p className="title-etaps">
-          <span>Dział</span>
-          <span>Realizacja</span>
-          <span>Wykonano</span>
-        </p>
-      </div>
-      <div className="down-container">
+      </RowContainer>
+      <RowContainer>
         <StagesContainer />
-        <div className="buddy">
-          <h1>Buddy acess under construction</h1>
-        </div>
-      </div>
-    </>
+        <BuddyContainer>
+          <BuddyNameBlock>
+            <h4>Buddy</h4>
+          </BuddyNameBlock>
+          <BuddyImgContainer>
+            <BuddyImg src={buddyImgUrl} alt="buddy" />
+            <p style={{ marginBottom: "2px", fontSize: "13px" }}>FrontEnd Senior</p>
+            <p style={{ marginTop: "2px", fontSize: "13px" }}>trener@infoShare.pl</p>
+          </BuddyImgContainer>
+        </BuddyContainer>
+      </RowContainer>
+    </DashboardContainer>
   );
 };

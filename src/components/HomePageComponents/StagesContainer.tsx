@@ -8,6 +8,7 @@ import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { useFirebaseFetch } from "../hooks/useFirebaseFetch";
 import { Link } from "react-router-dom";
 import { useUser } from "../RequireAuth/context/AuthContext";
+import { StagesBlocks, StagesDescription, StagesDetails } from "./StagesContainer.styled";
 
 interface Stage {
   id: string;
@@ -164,30 +165,41 @@ export const StagesContainer = () => {
 
   return (
     <>
-      <div className="stages-container">
-        <div className="stages-bloks">
-          {sortedStages.map(({ id, icon, name }) => {
-            const imageUrlForStage = imageUrl[stagesName.findIndex((stage) => stage.id === id)];
-            return (
-              <span key={id} className="stages-span">
-                <Link
-                  className="etaps"
-                  to={disabledMap[id] ? `/etaps/${id}` : "#"}
-                  style={{
-                    pointerEvents: disabledMap[id] ? "auto" : "auto",
-                    opacity: disabledMap[id] ? 1 : 0.5,
-                    cursor: disabledMap[id] ? "pointer" : "not-allowed",
-                  }}>
-                  <img src={imageUrlForStage} alt={icon} className="icons" />
-                  <span>{name}</span>
-                  <span>{averagesByEtapId[id]}%</span>
-                  <span>{checkDatesByEtapId[id]}</span>
-                </Link>
-              </span>
-            );
-          })}
-        </div>
-      </div>
+      <StagesBlocks>
+        <StagesDescription>
+          <span style={{ width: "30px" }}></span>
+          <span style={{ color: "#020246", width: "90px", textAlign: "center" }}>Dział</span>
+          <span style={{ color: "#020246", width: "90px", textAlign: "center" }}>Realizacja</span>
+          <span style={{ color: "#020246", width: "90px", textAlign: "center" }}>Wykonano</span>
+        </StagesDescription>
+        {sortedStages.map(({ id, icon, name }) => {
+          const imageUrlForStage = imageUrl[stagesName.findIndex((stage) => stage.id === id)];
+          return (
+            <Link
+              key={id}
+              className="etaps"
+              to={disabledMap[id] ? `/etaps/${id}` : "#"}
+              style={{
+                pointerEvents: disabledMap[id] ? "auto" : "auto",
+                backgroundColor: disabledMap[id] ? "white" : "rgba(10, 10, 10, 0.575)",
+                cursor: disabledMap[id] ? "pointer" : "not-allowed",
+              }}>
+              <img
+                src={imageUrlForStage}
+                alt={icon}
+                style={{
+                  filter: disabledMap[id]
+                    ? "brightness(0) saturate(100%) invert(9%) sepia(34%) saturate(5579%) hue-rotate(234deg) brightness(90%) contrast(121%)"
+                    : "brightness(0) saturate(100%) invert(97%) sepia(97%) saturate(0%) hue-rotate(46deg) brightness(102%) contrast(105%)",
+                }}
+              />
+              <StagesDetails style={{ color: disabledMap[id] ? "#020246" : "white" }}>{name}</StagesDetails>
+              <StagesDetails style={{ color: disabledMap[id] ? "#020246" : "white" }}>{averagesByEtapId[id]}%</StagesDetails>
+              <StagesDetails style={{ color: disabledMap[id] ? "#020246" : "white" }}>{checkDatesByEtapId[id]}</StagesDetails>
+            </Link>
+          );
+        })}
+      </StagesBlocks>
     </>
   );
 };

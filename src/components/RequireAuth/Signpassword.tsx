@@ -3,28 +3,12 @@ import React, { useState, FormEvent } from "react";
 import { auth, passwordReset } from "../../utils/firebase/firebase.config";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { log } from "console";
-import {
-  Button,
-  Card,
-  Card2,
-  Cards,
-  FormSign,
-  ImgMain,
-  Input,
-  Label,
-  LinkName,
-  LogoImg,
-  LogoName,
-  NamePage,
-  TextString,
-} from "./Sign.styled";
+import { Button, Card, Card2, Cards, FormSign, ImgMain, Input, Label, LinkName, LogoImg, LogoName, NamePage, TextString } from "./Sign.styled";
 import imgProgrammer from "../../assets/signin/Chlopak.png";
 import imgLogo from "../../assets/signin/Logo.png";
+import { FooterMain } from "./Footer";
 
-type FirebaseErrorCode =
-  | "auth/invalid-email"
-  | "auth/user-not-found"
-  | "auth/missing-email";
+type FirebaseErrorCode = "auth/invalid-email" | "auth/user-not-found" | "auth/missing-email";
 
 type FirebaseErrorMessages = {
   [key in FirebaseErrorCode]: string;
@@ -56,9 +40,7 @@ export const Signpassword = () => {
       navigate("/InfoPagePassword");
     } catch (error: any) {
       console.log({ error });
-      const errorMessage =
-        firebaseErrors[error.code as FirebaseErrorCode] ||
-        "Wystąpił nieznany błąd. Spróbuj ponownie.";
+      const errorMessage = firebaseErrors[error.code as FirebaseErrorCode] || "Wystąpił nieznany błąd. Spróbuj ponownie.";
       setError(errorMessage);
       setEmail("");
     }
@@ -67,14 +49,10 @@ export const Signpassword = () => {
     <>
       <Cards>
         <Card2>
-          <ImgMain
-            src={imgProgrammer}
-            alt="programista"></ImgMain>
+          <ImgMain src={imgProgrammer} alt="programista"></ImgMain>
         </Card2>
         <Card>
-          <LogoImg
-            src={imgLogo}
-            alt="logo"></LogoImg>
+          <LogoImg src={imgLogo} alt="logo"></LogoImg>
 
           <LogoName>
             <b>GO!</b> onBoard
@@ -86,13 +64,7 @@ export const Signpassword = () => {
             <div>
               <Label>Email</Label>
               <br></br>
-              <Input
-                type="email"
-                name="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Wpisz swój email"
-              />
+              <Input type="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Wpisz swój email" />
               <TextString>{error}</TextString>
             </div>
             <Button type="submit">Wyślij</Button>
