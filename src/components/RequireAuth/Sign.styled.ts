@@ -5,7 +5,6 @@ export const LogoName = styled.p`
   font-size: 24px;
   font-weight: 300;
   text-align: center;
-  padding: 0px 0px 50px 0px;
 `;
 
 export const NamePage = styled.h1`
@@ -49,7 +48,7 @@ export const FormSign = styled.form`
 `;
 
 export const Button = styled.button`
-  margin-top: 79px;
+  margin-top: 30px;
   width: 161px;
   height: 48px;
   box-shadow: 8px 8px 24px rgba(2, 2, 70, 0.15);
@@ -74,13 +73,14 @@ export const TextString = styled.p`
 `;
 
 export const Card = styled.div`
-  padding: 1rem;
-  min-height: 839px;
+  padding: 0px 1rem;
+  display: flex;
   height: auto;
-
   box-shadow: rgba(2, 2, 70, 0.05) 8px 8px 24px;
   border-radius: 31.2294px;
   background-color: white;
+  flex-direction: column;
+  justify-content: space-around;
   @media (max-width: 1200px) {
     width: 470px;
   }
@@ -91,7 +91,7 @@ export const Card = styled.div`
 
 export const Card2 = styled.div`
   padding: 1rem;
-  min-height: 839px;
+  min-height: 700px;
   height: auto;
 
   @media (max-width: 1200px) {

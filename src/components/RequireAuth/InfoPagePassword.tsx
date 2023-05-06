@@ -1,7 +1,3 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useState, FormEvent } from "react";
-import { auth } from "../../utils/firebase/firebase.config";
-import { signInWithEmailAndPassword } from "firebase/auth";
 import {
   Card,
   Card2,
@@ -13,16 +9,22 @@ import {
   NamePage,
   TextString,
 } from "./Sign.styled";
+import imgProgrammer from "../../assets/signin/Chlopak.png";
+import imgLogo from "../../assets/signin/Logo.png";
 
 export const InfoPagePassword = () => {
   return (
     <>
       <Cards>
         <Card2>
-          <ImgMain src="/assets/Chlopak.png"></ImgMain>
+          <ImgMain
+            src={imgProgrammer}
+            alt="programista"></ImgMain>
         </Card2>
         <Card>
-          <LogoImg src="/assets/Asset.png"></LogoImg>
+          <LogoImg
+            src={imgLogo}
+            alt="logo"></LogoImg>
 
           <LogoName>
             <b>GO!</b> onBoard
