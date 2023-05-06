@@ -29,7 +29,7 @@ export const AccountBlock = styled.div`
   justify-content: center;
   align-items: center;
   gap: 20px;
-  width: 385px;
+  width: 355px;
 `;
 
 export const AccountInfo = styled.p`

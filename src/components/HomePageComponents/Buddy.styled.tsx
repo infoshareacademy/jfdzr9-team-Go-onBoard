@@ -16,15 +16,24 @@ export const BuddyContainer = styled.div`
 
   @media (max-width: 1005px) {
     max-width: 770px;
-    margin-top: 10px;
     align-items: stretch;
+    flex-grow: 1;
+  }
+
+  @media (max-width: 865px) {
+    margin-top: 10px;
+  }
+
+  @media (max-width: 415px) {
+    padding: 10px;
+    margin: 20px;
   }
 `;
 
 export const BuddyNameBlock = styled.div`
   display: flex;
   align-items: flex-start;
-  width: 385px;
+  width: 355px;
 
   @media (max-width: 1005px) {
     max-width: 770px;

@@ -6,7 +6,7 @@ export const CalendarBlock = styled.div`
   align-content: center;
   align-items: center;
   max-width: 400px;
-  height: 340px;
+  height: 365px;
   box-shadow: rgb(0 0 0 / 15%) 4px 5px 10px;
   border-radius: 31.2294px;
   background-color: #ffffff;
@@ -15,6 +15,12 @@ export const CalendarBlock = styled.div`
 
   @media (max-width: 1005px) {
     max-width: 770px;
+    flex-grow: 1;
+  }
+
+  @media (max-width: 415px) {
+    padding: 10px;
+    margin: 20px;
   }
 `;
 
