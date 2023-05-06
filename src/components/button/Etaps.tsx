@@ -9,6 +9,8 @@ import { StagesContext, StagesContextValue } from "./Context/StagesContext";
 import { useUser } from "../RequireAuth/context/AuthContext";
 import ProgressEtap from "../activities/ProgressEtap";
 import { EtapsContainer, EtapsIcon } from "../activities/ProgressEtap.styled";
+import { ThreeDots } from "react-loader-spinner";
+import { Loader } from "../Loader/Loader";
 
 interface Etap {
   id: string;
@@ -117,7 +119,11 @@ function Etaps() {
   const sortedEtaps = [...etaps].sort((a, b) => a.sort - b.sort);
 
   if (isLoading) {
-    return <div>Ładowanie...</div>; // Show a loading indicator while fetching data
+    return (
+      <Loader>
+        <ThreeDots height="80" width="80" radius="9" color="#4fa94d" ariaLabel="three-dots-loading" wrapperStyle={{}} visible={true} />
+      </Loader>
+    ); // Show a loading indicator while fetching data
   }
 
   return (
