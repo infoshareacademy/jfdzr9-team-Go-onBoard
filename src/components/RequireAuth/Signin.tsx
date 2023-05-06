@@ -105,6 +105,9 @@ export const Signin = () => {
         <LogoNameFooter>
           <b>GO!</b> onBoard
         </LogoNameFooter>
+        <a href="https://mail.google.com/mail/u/0/#inbox?compose=GTvVlcRzDDHzcpblDzkgQvCFwsgbGgZWNZmQvQHdVkVXTQCpztCghcmgVsNkDkRjlVBpkZkGBtCXw">
+          Kontakt z supportem
+        </a>
         <p>Design © Grupa2 2023</p>
       </Footer>
     </>
