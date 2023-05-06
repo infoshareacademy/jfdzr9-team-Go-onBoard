@@ -26,7 +26,8 @@ function ProgressUser() {
   useEffect(() => {
     const getUsers = async () => {
       const usersRef = collection(database, "users");
-      const usersData = await getDocs(usersRef);
+      const q = query(usersRef, where("role", "==", "user"));
+      const usersData = await getDocs(q);
       const usersArray: User[] = [];
       usersData.forEach((doc) => {
         usersArray.push({

@@ -7,6 +7,7 @@ import {
   Timestamp,
   FieldValue,
 } from "firebase/firestore";
+import { EtapsContainer } from "../components/activities/ProgressEtap.styled";
 
 interface User {
   email: string;
@@ -50,7 +51,7 @@ function AddUser() {
   }
 
   return (
-    <div>
+    <EtapsContainer>
       <p>Dodaj użytkownika do bazy</p>
       <form
         onSubmit={onSubmit}
@@ -96,7 +97,7 @@ function AddUser() {
         <button type="submit">Submit</button>
       </form>
       {message && <p>{message}</p>}
-    </div>
+    </EtapsContainer>
   );
 }
 

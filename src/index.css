@@ -44,20 +44,12 @@ a {
 a:hover {
   font-weight: 800;
 }
-
+/* 
 body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* padding: 0px 89px; */
-  /* gap: 3px; */
-  /* position: absolute; */
-  /* width: 100vh; */
-  /* height: 100%; */
-  /* top: 31px; */
-  /* background: radial-gradient(50% 66.49% at 50% 50%, rgba(255, 255, 255, 0) 0%, rgba(0, 255, 194, 0.15) 100%); */
-  margin: 0px;
-}
+} */
 
 html {
   height: 100%;
@@ -104,12 +96,12 @@ button:hover {
   justify-content: space-between;
   align-items: center;
   filter: none;
+  box-shadow: 4px 4px 10px rgb(0 0 0 / 25%);
 }
 
 .stages-links:hover {
   opacity: 0.7;
-  /* filter: brightness(0) saturate(100%) invert(5%) sepia(80%) saturate(6202%)
-    hue-rotate(240deg) brightness(74%) contrast(105%); */
+  box-shadow: 2px 2px 2px rgb(0 0 0 / 65%);
 }
 
 .stages-links:disabled {
@@ -125,8 +117,9 @@ button:hover {
 .listEtaps {
   display: flex;
   flex-direction: row;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   gap: 2rem;
+  justify-content: center;
 }
 
 .contentWrap {
@@ -141,6 +134,7 @@ button:hover {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  padding: 2rem;
 }
 
 button:disabled {
@@ -149,20 +143,55 @@ button:disabled {
   cursor: not-allowed;
 }
 
-/* @media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #020246;
-    color: white;
-  }
+.up-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 40px;
+  margin-top: 30px;
+  width: 1223px;
+  height: 320px;
+}
 
-} */
+.down-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 60px;
+
+  width: 1223px;
+  height: fit-content;
+}
+
+.middle-container {
+  display: flex;
+  justify-content: flex-start;
+  width: 1223px;
+  margin-top: 40px;
+  padding-top: 30px;
+}
+
+.greetingsContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 12px;
+  gap: 30px;
+  width: 696px;
+  height: fit-content;
+  background: linear-gradient(89.82deg, #687ec9 1.25%, #5971c3 98.38%);
+  color: #ffffff;
+  box-shadow: 8px 8px 24px rgba(2, 2, 70, 0.05);
+  border-radius: 31.2294px;
+  /* overflow: hidden; */
+}
+
+.img-block {
+  width: fit-content;
+  display: flex;
+}
 
 .man-greetins-logo {
   width: 244px;
@@ -177,13 +206,11 @@ h2 {
 img {
   width: 30px;
   height: 30px;
-  cursor: pointer;
-  /* filter: invert(93%) sepia(10%) saturate(5630%) hue-rotate(246deg) brightness(40%) contrast(148%) hue-rotate(246deg); */
+  color: crimson;
 }
 
 .etaps,
 .title-etaps {
-  /* cursor: pointer; */
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -194,9 +221,7 @@ img {
   height: 58px;
 
   background: #ffffff;
-  color: var(--primary-1);
-
-  /* Shadow field */
+  color: white;
 
   box-shadow: rgb(0 0 0 / 15%) 4px 5px 10px;
   border-radius: 31.2294px;
@@ -207,10 +232,6 @@ img {
   border-radius: none;
   box-shadow: none;
   color: #fff;
-}
-
-.stages-links[style*="background-color: var(--primary-2)"] .title-etaps {
-  color: var(--primary-1);
 }
 
 .confirmButton {
@@ -236,6 +257,17 @@ img {
   transform: translate(-50%, -50%);
 }
 
+.modalContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  background-color: #ffffff;
+  padding: 75px;
+  box-shadow: 8px 9px 18px -4px rgba(66, 68, 90, 0.7);
+  border-radius: 20px;
+}
+
 .ModalIntro {
   display: flex;
   background-color: white;
@@ -258,26 +290,9 @@ img {
   z-index: 5;
 }
 
-@media only screen and (max-width: 1160px) {
+@media only screen and (max-width: 830px) {
   .confirmButton {
     width: 35%;
-  }
-
-  .listEtaps {
-    gap: 1rem;
-  }
-
-  .stages-links {
-    width: 70px;
-  }
-
-  .title-etaps {
-    padding: 2px;
-    margin: 4px;
-  }
-
-  .contentWrap {
-    align-items: center;
   }
 }
 
@@ -285,26 +300,10 @@ img {
   .confirmButton {
     width: 55%;
   }
+}
 
+@media only screen and (max-width: 740px) {
   .listEtaps {
-    gap: 0.5rem;
-  }
-
-  .stages-links {
-    width: 70px;
-
-    padding-left: 0.2em;
-    padding-right: 1em;
-    padding-top: 0.2em;
-    padding-bottom: 0.2em;
-  }
-
-  .title-etaps {
-    padding: 2px;
-    margin: 4px;
-  }
-
-  .contentWrap {
-    align-items: center;
+    gap: 1rem;
   }
 }

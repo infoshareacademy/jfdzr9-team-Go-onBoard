@@ -17,18 +17,21 @@ import {
 } from "firebase/firestore";
 import {
   Button,
+  Card,
+  Card2,
+  Cards,
+  FormSign,
   ImgMain,
   Input,
   Label,
   LinkName,
   LogoImg,
   LogoName,
-  MainImg,
-  MainInfo,
   NamePage,
-  PageInfo,
   TextString,
 } from "./Sign.styled";
+import imgProgrammer from "../../assets/signin/Chlopak.png";
+import imgLogo from "../../assets/signin/Logo.png";
 
 interface CreateUserError {
   message: string;
@@ -132,18 +135,22 @@ export const Signup = () => {
 
   return (
     <>
-      <PageInfo>
-        <MainImg>
-          <ImgMain src="/assets/Chlopak.png"></ImgMain>
-        </MainImg>
-        <MainInfo>
-          <LogoImg src="/assets/Asset.png"></LogoImg>
+      <Cards>
+        <Card2>
+          <ImgMain
+            src={imgProgrammer}
+            alt="programista"></ImgMain>
+        </Card2>
+        <Card>
+          <LogoImg
+            src={imgLogo}
+            alt="logo"></LogoImg>
 
           <LogoName>
             <b>GO!</b> onBoard
           </LogoName>
           <NamePage>Zarejestruj się</NamePage>
-          <form onSubmit={handleSubmit}>
+          <FormSign onSubmit={handleSubmit}>
             <div>
               <Label>Imię</Label>
               <br />
@@ -170,12 +177,12 @@ export const Signup = () => {
                 type="password"
                 placeholder="Wpisz swoje hasło"
               />
-              <TextString>{error}</TextString>
             </div>
+            <TextString>{error}</TextString>
             <div>
               <Button type="submit">Zarejestruj</Button>
             </div>
-          </form>
+          </FormSign>
           <div>
             <LinkName>
               <Link to="/signin">Logowanie</Link>
@@ -184,8 +191,8 @@ export const Signup = () => {
               <a href="/signpassword">Nie pamiętam hasła</a>
             </LinkName>
           </div>
-        </MainInfo>
-      </PageInfo>
+        </Card>
+      </Cards>
     </>
   );
 };

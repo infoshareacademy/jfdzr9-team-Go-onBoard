@@ -8,7 +8,9 @@ export const Quiz = ({ etapIdForQuiz }: EtapIdProps) => {
   const [quizIndex, setQuizIndex] = useState("");
   const [questionIndex, setQuestionIndex] = useState(0);
   const quizes = useFirebaseFetch<QuestionesData>("quiz");
-  const currentQuiz = quizes.find((quizByEtapId) => quizByEtapId.etap_id === quizIndex);
+  const currentQuiz = quizes.find(
+    (quizByEtapId) => quizByEtapId.etap_id === quizIndex
+  );
 
   useEffect(() => {
     setQuizIndex(etap_id);
@@ -26,7 +28,6 @@ export const Quiz = ({ etapIdForQuiz }: EtapIdProps) => {
 
   return (
     <div>
-      <h1>Quiz</h1>
       <QuestionCard
         currentQuestion={questionIndex}
         question={currentQuestion}

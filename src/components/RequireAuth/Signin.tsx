@@ -2,9 +2,31 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState, FormEvent } from "react";
 import { auth } from "../../utils/firebase/firebase.config";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { Button, ImgMain, Input, Label, LinkName, LogoImg, LogoName, MainImg, MainInfo, NamePage, PageInfo, TextString } from "./Sign.styled";
 
-type FirebaseErrorCode = "auth/email-already-in-use" | "auth/invalid-email" | "auth/user-not-found" | "auth/wrong-password" | "auth/weak-password";
+import {
+  Button,
+  Card,
+  Card2,
+  Cards,
+  FormSign,
+  ImgMain,
+  Input,
+  Label,
+  LinkName,
+  LogoImg,
+  LogoName,
+  NamePage,
+  TextString,
+} from "./Sign.styled";
+import imgProgrammer from "../../assets/signin/Chlopak.png";
+import imgLogo from "../../assets/signin/Logo.png";
+
+type FirebaseErrorCode =
+  | "auth/email-already-in-use"
+  | "auth/invalid-email"
+  | "auth/user-not-found"
+  | "auth/wrong-password"
+  | "auth/weak-password";
 
 type FirebaseErrorMessages = {
   [key in FirebaseErrorCode]: string;
@@ -42,33 +64,46 @@ export const Signin = () => {
 
   return (
     <>
-      <PageInfo>
-        <MainImg>
-          <ImgMain src="/assets/Chlopak.png"></ImgMain>
-        </MainImg>
-        <MainInfo>
-          <LogoImg src="/assets/Asset.png"></LogoImg>
+      <Cards>
+        <Card2>
+          <ImgMain
+            src={imgProgrammer}
+            alt="programista"></ImgMain>
+        </Card2>
+        <Card>
+          <LogoImg
+            src={imgLogo}
+            alt="logo"></LogoImg>
 
           <LogoName>
             <b>GO!</b> onBoard
           </LogoName>
           <NamePage>Zaloguj się</NamePage>
-          <form onSubmit={handleSubmit}>
+
+          <FormSign onSubmit={handleSubmit}>
             <div>
               <Label>Email</Label>
               <br />
-              <Input onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Wpisz swój email" />
+              <Input
+                onChange={(e) => setEmail(e.target.value)}
+                type="email"
+                placeholder="Wpisz swój email"
+              />
             </div>
             <div>
               <Label>Hasło</Label>
               <br />
-              <Input onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Wpisz swoje hasło" />
+              <Input
+                onChange={(e) => setPassword(e.target.value)}
+                type="password"
+                placeholder="Wpisz swoje hasło"
+              />
               <TextString>{error}</TextString>
             </div>
             <div>
               <Button type="submit">Zaloguj</Button>
             </div>
-          </form>
+          </FormSign>
           <div>
             <LinkName>
               <Link to="/signup">Zarejestruj się</Link>
@@ -77,8 +112,8 @@ export const Signin = () => {
               <a href="/signpassword">Nie pamiętam hasła</a>
             </LinkName>
           </div>
-        </MainInfo>
-      </PageInfo>
+        </Card>
+      </Cards>
     </>
   );
 };

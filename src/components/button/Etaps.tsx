@@ -1,14 +1,14 @@
-import { useState, useEffect, createContext } from "react";
+import { useState, useEffect } from "react";
 import { database } from "../../utils/firebase/firebase.config"; // import storage
 import { collection, getDocs } from "firebase/firestore";
 import { ref, getDownloadURL, getStorage } from "firebase/storage";
 import { getApp } from "firebase/app";
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useLocation } from "react-router-dom";
 import "../../index.css";
 import { StagesContext, StagesContextValue } from "./Context/StagesContext";
 import { useUser } from "../RequireAuth/context/AuthContext";
 import ProgressEtap from "../activities/ProgressEtap";
-import { EtapsIcon, StagesLinks } from "../activities/ProgressEtap.styled";
+import { EtapsContainer, EtapsIcon } from "../activities/ProgressEtap.styled";
 
 interface Etap {
   id: string;
@@ -94,6 +94,15 @@ function Etaps() {
     getEtaps();
   }, []);
 
+  const location = useLocation();
+
+  useEffect(() => {
+    const currentEtapId = location.pathname.split("/").pop();
+    if (currentEtapId && etaps.some((etap) => etap.id === currentEtapId)) {
+      setSelectedEtapId(currentEtapId);
+    }
+  }, [location.pathname, etaps]);
+
   //props to confirm button-after confirm check status to show etpas when all activ in etap are completed
 
   const handleActivityConfirmation = (newActivityId: string) => {
@@ -116,51 +125,53 @@ function Etaps() {
       <Link to={`/dashboard/${user?.uid}`}>
         <button>Powrót</button>
       </Link>
-      <ProgressEtap />
-      <div className="contentWrap">
-        <>
-          <div className="listEtaps">
-            {sortedEtaps.map((etap, index) => {
-              //check previous etap if all activities are completed, next etap is enable
-              const isPreviousEtapCompleted =
-                index === 0 ||
-                (index > 0 &&
-                  activitiesByEtap[sortedEtaps[index - 1].id]?.length ===
-                    userActivityIds.filter((activityId) => activitiesByEtap[sortedEtaps[index - 1].id].some((activity) => activity.id === activityId)).length);
+      <EtapsContainer>
+        <ProgressEtap />
+        <div className="contentWrap">
+          <>
+            <div className="listEtaps">
+              {sortedEtaps.map((etap, index) => {
+                //check previous etap if all activities are completed, next etap is enable
+                const isPreviousEtapCompleted =
+                  index === 0 ||
+                  (index > 0 &&
+                    activitiesByEtap[sortedEtaps[index - 1].id]?.length ===
+                      userActivityIds.filter((activityId) => activitiesByEtap[sortedEtaps[index - 1].id].some((activity) => activity.id === activityId)).length);
 
-              const enableLink = isPreviousEtapCompleted;
-              return (
-                <Link
-                  className="stages-links"
-                  to={enableLink ? `/etaps/${etap.id}` : "#"}
-                  key={etap.id}
-                  onClick={() => {
-                    setEtapId(etap.id);
-                    setSelectedEtapId(etap.id);
-                  }}
-                  style={{
-                    pointerEvents: enableLink ? "auto" : "none",
-                    backgroundColor: etap.id === selectedEtapId ? "var(--active)" : enableLink ? "" : "var(--primary-2)", // Kolor dla etapów niedostępnych
-                  }}>
-                  {etap.icon && (
-                    <EtapsIcon
-                      src={etap.icon}
-                      alt={etap.name}
-                      style={{
-                        filter: enableLink
-                          ? "brightness(0) saturate(100%) invert(97%) sepia(97%) saturate(0%) hue-rotate(46deg) brightness(102%) contrast(105%)"
-                          : "brightness(0) saturate(100%) invert(9%) sepia(34%) saturate(5579%) hue-rotate(234deg) brightness(90%) contrast(121%)",
-                      }}
-                    />
-                  )}
-                  <span className="title-etaps">{etap.name}</span>
-                </Link>
-              );
-            })}
-          </div>
-          <Outlet />
-        </>
-      </div>
+                const enableLink = isPreviousEtapCompleted;
+                return (
+                  <Link
+                    className="stages-links"
+                    to={enableLink ? `/etaps/${etap.id}` : "#"}
+                    key={etap.id}
+                    onClick={() => {
+                      setEtapId(etap.id);
+                      setSelectedEtapId(etap.id);
+                    }}
+                    style={{
+                      pointerEvents: enableLink ? "auto" : "none",
+                      backgroundColor: etap.id === selectedEtapId ? "var(--active)" : enableLink ? "" : "var(--primary-2)",
+                    }}>
+                    {etap.icon && (
+                      <EtapsIcon
+                        src={etap.icon}
+                        alt={etap.name}
+                        style={{
+                          filter: enableLink
+                            ? "brightness(0) saturate(100%) invert(97%) sepia(97%) saturate(0%) hue-rotate(46deg) brightness(102%) contrast(105%)"
+                            : "brightness(0) saturate(100%) invert(9%) sepia(34%) saturate(5579%) hue-rotate(234deg) brightness(90%) contrast(121%)",
+                        }}
+                      />
+                    )}
+                    <span className="title-etaps">{etap.name}</span>
+                  </Link>
+                );
+              })}
+            </div>
+            <Outlet />
+          </>
+        </div>
+      </EtapsContainer>
     </StagesContext.Provider>
   );
 }

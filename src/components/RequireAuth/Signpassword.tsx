@@ -3,7 +3,38 @@ import React, { useState, FormEvent } from "react";
 import { auth, passwordReset } from "../../utils/firebase/firebase.config";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { log } from "console";
-import { Button, ImgMain, Input, Label, LinkName, LogoImg, LogoName, MainImg, MainInfo, NamePage, PageInfo, TextString } from "./Sign.styled";
+import {
+  Button,
+  Card,
+  Card2,
+  Cards,
+  FormSign,
+  ImgMain,
+  Input,
+  Label,
+  LinkName,
+  LogoImg,
+  LogoName,
+  NamePage,
+  TextString,
+} from "./Sign.styled";
+import imgProgrammer from "../../assets/signin/Chlopak.png";
+import imgLogo from "../../assets/signin/Logo.png";
+
+type FirebaseErrorCode =
+  | "auth/invalid-email"
+  | "auth/user-not-found"
+  | "auth/missing-email";
+
+type FirebaseErrorMessages = {
+  [key in FirebaseErrorCode]: string;
+};
+
+const firebaseErrors: FirebaseErrorMessages & { [key: string]: string } = {
+  "auth/missing-email": "Wpisz email w puste pole",
+  "auth/invalid-email": "Wprowdź poprawny e-mail",
+  "auth/user-not-found": "E-mail nie został zarejestrowany",
+};
 
 export const Signpassword = () => {
   const [email, setEmail] = useState("");
@@ -25,23 +56,25 @@ export const Signpassword = () => {
       navigate("/InfoPagePassword");
     } catch (error: any) {
       console.log({ error });
-
-      if (error.code === "auth/user-not-found") {
-        setError(
-          "Nie znaleźliśmy podanego adresu e-mail w bazie danych. Upewnij się, że wprowadziłeś poprawny adres e-mail lub skontaktuj się z naszym działem wsparcia w celu uzyskania dalszej pomocy."
-        );
-        setEmail("");
-      }
+      const errorMessage =
+        firebaseErrors[error.code as FirebaseErrorCode] ||
+        "Wystąpił nieznany błąd. Spróbuj ponownie.";
+      setError(errorMessage);
+      setEmail("");
     }
   };
   return (
     <>
-      <PageInfo>
-        <MainImg>
-          <ImgMain src="/assets/Chlopak.png"></ImgMain>
-        </MainImg>
-        <MainInfo>
-          <LogoImg src="/assets/Asset.png"></LogoImg>
+      <Cards>
+        <Card2>
+          <ImgMain
+            src={imgProgrammer}
+            alt="programista"></ImgMain>
+        </Card2>
+        <Card>
+          <LogoImg
+            src={imgLogo}
+            alt="logo"></LogoImg>
 
           <LogoName>
             <b>GO!</b> onBoard
@@ -49,14 +82,21 @@ export const Signpassword = () => {
 
           <NamePage>Przypomnij hasło</NamePage>
 
-          <form onSubmit={handleSubmit}>
+          <FormSign onSubmit={handleSubmit}>
             <div>
               <Label>Email</Label>
-              <Input type="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Wpisz swój email" />
+              <br></br>
+              <Input
+                type="email"
+                name="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Wpisz swój email"
+              />
               <TextString>{error}</TextString>
             </div>
             <Button type="submit">Wyślij</Button>
-          </form>
+          </FormSign>
           <div>
             <LinkName>
               <Link to="/signup">Rejestracja</Link>
@@ -65,8 +105,8 @@ export const Signpassword = () => {
               <a href="/">Logowanie</a>
             </LinkName>
           </div>
-        </MainInfo>
-      </PageInfo>
+        </Card>
+      </Cards>
     </>
   );
 };

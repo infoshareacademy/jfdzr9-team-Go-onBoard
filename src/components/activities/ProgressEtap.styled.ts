@@ -20,10 +20,25 @@ export const DonutChart = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  z-index: 1;
+  width: 70px;
+  height: 70px;
+`;
+
+export const NumberChart = styled.div`
+  z-index: 3;
+  position: absolute;
+  font-weight: 700;
 `;
 
 export const EtapsIcon = styled.img`
   filter: brightness(0) saturate(100%) invert(97%) sepia(97%) saturate(0%) hue-rotate(46deg) brightness(102%) contrast(105%);
+`;
+
+export const EtapsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 export const StagesLinks = styled(Link)<StagesLinksProps>`
