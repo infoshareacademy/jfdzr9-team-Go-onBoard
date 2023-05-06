@@ -32,7 +32,8 @@ export const NumberChart = styled.div`
 `;
 
 export const EtapsIcon = styled.img`
-  filter: brightness(0) saturate(100%) invert(97%) sepia(97%) saturate(0%) hue-rotate(46deg) brightness(102%) contrast(105%);
+  filter: brightness(0) saturate(100%) invert(97%) sepia(97%) saturate(0%)
+    hue-rotate(46deg) brightness(102%) contrast(105%);
 `;
 
 export const EtapsContainer = styled.div`
@@ -62,4 +63,32 @@ export const StagesLinks = styled(Link)<StagesLinksProps>`
 
 export const StagesSrc = styled.a`
   color: var(--secondary-2);
+`;
+
+export const HeadEtaps = styled.a`
+  color: var(--primary-1);
+
+  display: flex;
+  flex-direction: row;
+  -webkit-box-align: center;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+
+  gap: 3rem;
+
+  @media screen and (max-width: 450px) {
+    flex-direction: column;
+    gap: 0rem;
+  }
+`;
+
+export const LogoImgHeader = styled.img`
+  width: auto;
+  height: auto;
+`;
+
+export const TitleEtaps = styled.div`
+  font-size: 3rem;
+  font-weight: 700;
 `;

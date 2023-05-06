@@ -105,6 +105,8 @@ export const Cards = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
   gap: 1rem;
 
+  flex: 1;
+
   @media (max-width: 1200px) {
     justify-items: center;
   }
@@ -127,6 +129,7 @@ export const Footer = styled.footer`
   padding-bottom: 20px;
   background-color: #ffffff;
   width: 100%;
+  margin-top: 3.3rem;
 `;
 
 export const LogoImgFooter = styled.img`

@@ -19,6 +19,14 @@
   line-height: 1.5;
   font-weight: 400;
 
+  min-height: 100vh;
+
+  /* Zaktualizowana wartość właściwości display */
+  display: flex;
+
+  flex-direction: column;
+  margin: 0px;
+
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -47,11 +55,16 @@ a:hover {
 }
 
 body {
+  margin: 0;
 }
 
 html {
   height: 100%;
-  background: radial-gradient(50% 66.49% at 50% 50%, rgba(255, 255, 255, 0) 0%, rgba(0, 255, 194, 0.15) 100%);
+  background: radial-gradient(
+    50% 66.49% at 50% 50%,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(0, 255, 194, 0.15) 100%
+  );
 }
 
 h1 {
