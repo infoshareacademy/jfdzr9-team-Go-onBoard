@@ -46,6 +46,7 @@ Aby skonfigurować aplikację, wykonaj poniższe kroki:
 ### Jak to działa?
 
 Aby użytkownik mógł korzystać z kursu, musi przejść przez proces rejestracji. Poniżej przedstawione są wymagane dane do podania podczas rejestracji:
+![GO! onBoard](/Readme/Rejestracja.png)
 
 - Login: [wprowadź login użytkownika]
 - Hasło: [wprowadź hasło użytkownika]
@@ -54,6 +55,7 @@ Aby użytkownik mógł korzystać z kursu, musi przejść przez proces rejestrac
 Te dane będą używane do logowania się do aplikacji.
 
 ## Logowanie
+![GO! onBoard](/Readme/logowanie.png)
 
 Aby zalogować się do aplikacji, wykonaj poniższe kroki:
 
@@ -66,6 +68,7 @@ Po pomyślnym zalogowaniu użytkownik będzie mógł przejść dalej i korzysta�
 ## Brak rejestracji
 
 Jeśli użytkownik nie posiada jeszcze konta, pojawi się powiadomienie o konieczności rejestracji. Aby zarejestrować się, wykonaj poniższe kroki:
+![GO! onBoard](/Readme/email-nie-zostal.png)
 
 1. Na stronie logowania, znajdź opcję "Zarejestruj się" 
 2. Kliknij na tę opcję, aby przejść do formularza rejestracji.
@@ -76,6 +79,7 @@ Po poprawnej rejestracji użytkownik będzie mógł zalogować się i korzystać
 ## Resetowanie hasła
 
 Nasza aplikacja umożliwia użytkownikowi zresetowanie hasła w przypadku jego zapomnienia. Aby zresetować hasło, postępuj zgodnie z poniższymi krokami:
+![GO! onBoard](/Readme/przypomnij-haslo.png)
 
 1. Na stronie logowania, znajdź opcję "nie pamiętam hasła".
 2. Kliknij na tę opcję, aby przejść do formularza resetowania hasła.
@@ -88,10 +92,11 @@ Po złożeniu prośby o resetowanie hasła, użytkownik otrzyma wiadomość e-ma
 
 
 ## Po prawidłowym zalogowaniu użytkownika powita go moduł, który zaprosi go do kursu.
+![GO! onBoard](/Readme/powitanie.png)
 
 
 ## Nauka
-
+![GO! onBoard](/Readme/zadania.png)
 Przejdźmy teraz do najważniejszej części naszej aplikacji - nauki. Nasza platforma e-learningowa oferuje szeroki zakres kursów i materiałów edukacyjnych, które pomogą Ci w doskonaleniu umiejętności.
 
 Aby rozpocząć naukę, postępuj zgodnie z poniższymi krokami:
@@ -104,16 +109,18 @@ Aby rozpocząć naukę, postępuj zgodnie z poniższymi krokami:
 6. Wybierz lekcję, która Cię interesuje i rozpocznij naukę.
 
 
-## Użytkownik może swobodnie przechodzić między danymi kursami - dzieki przyciskom, które są umieszczone 
-
 # Dodawanie filmu do kursu
+![GO! onBoard](/Readme/filmm.png)
 
+
+# Po przycisnięciu przycisku "obejrzyj film" pojawi się moduł z filmem
+![GO! onBoard](/Readme/modul-filmowy.png)
 W każdym kursie, administrator ma możliwość dodania filmu, który kursanci będą mieli możliwość obejrzenia. Film może pełnić rolę materiału wprowadzającego, prezentacji tematu lub praktycznego przykładu.
 
 # Zapisywanie notatek
 
 Możliwość zapisywania notatek jest jedną z funkcji dostępnych w naszej aplikacji. Pisanie notatek podczas nauki, spotkań czy czytania artykułów może mieć wiele korzyści. Oto dlaczego warto zapisywać notatki:
-
+![GO! onBoard](/Readme/notatka.png)
 - Skupienie: Pisząc notatki, skupiamy się bardziej na przekazywanych informacjach, co pomaga nam zredukować rozpraszające czynniki i zwiększyć koncentrację.
 - Zapamiętywanie: Pisanie notatek pozwala nam przetworzyć i ułożyć informacje w naszej głowie, co ułatwia zapamiętywanie treści.
 - Organizacja: Notatki umożliwiają nam uporządkowanie i strukturyzację informacji, dzięki czemu łatwiej jest je odnaleźć i przypomnieć sobie w przyszłości.
