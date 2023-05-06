@@ -4,6 +4,12 @@ import logoutImgUrl from "../../assets/pliki-svg-dashboard/logout-svgrepo-com.sv
 export const AccountContainer = styled.div`
   display: flex;
   flex-direction: column;
+  /* width: 355px; */
+
+  @media (max-width: 875px) {
+    max-width: 770px;
+    align-items: center;
+  }
 `;
 
 export const LogOutBlock = styled.div`
@@ -11,6 +17,27 @@ export const LogOutBlock = styled.div`
   justify-content: flex-end;
   margin-bottom: 5px;
   height: 60px;
+  flex-grow: 1;
+  width: 365px;
+
+  @media (max-width: 875px) {
+    max-width: 670px;
+    align-items: stretch;
+    align-content: stretch;
+    width: 665px;
+  }
+
+  @media (max-width: 725px) {
+    width: 565px;
+  }
+
+  @media (max-width: 630px) {
+    width: 465px;
+  }
+
+  @media (max-width: 530px) {
+    width: 355px;
+  }
 `;
 
 export const BtnLogOut = styled.button`
@@ -30,6 +57,10 @@ export const AccountBlock = styled.div`
   align-items: center;
   gap: 20px;
   width: 355px;
+
+  @media (max-width: 875px) {
+    max-width: 770px;
+  }
 `;
 
 export const AccountInfo = styled.p`

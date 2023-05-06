@@ -18,6 +18,12 @@ export const CalendarBlock = styled.div`
     flex-grow: 1;
   }
 
+  @media (max-width: 875px) {
+    max-width: 770px;
+    align-items: stretch;
+    justify-content: space-evenly;
+  }
+
   @media (max-width: 415px) {
     padding: 10px;
     margin: 20px;
