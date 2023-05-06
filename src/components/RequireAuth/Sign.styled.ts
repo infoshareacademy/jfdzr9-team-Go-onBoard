@@ -116,14 +116,18 @@ export const Cards = styled.div`
 `;
 
 export const Footer = styled.footer`
+  display: flex;
+  justify-content: center;
   text-align: center;
   color: #020246;
   font-family: "Inter";
   font-style: normal;
   font-weight: 400;
-  font-size: 18px;
+  font-size: 13px;
   line-height: 5px;
   padding-bottom: 30px;
+  background-color: #ffffff;
+  border-radius: 5px;
 `;
 
 export const LogoImgFooter = styled.img`
@@ -131,14 +135,22 @@ export const LogoImgFooter = styled.img`
   margin-left: auto;
   margin-right: auto;
   padding-top: 39px;
-  width: 55px;
-  height: 69.95px;
+  width: 45px;
+  height: 59.95px;
 `;
 
 export const LogoNameFooter = styled.p`
-  font-size: 24px;
+  font-size: 13px;
   font-weight: 300;
   text-align: center;
 
   line-height: 5px;
+`;
+
+export const LeftFoot = styled.div`
+  padding: 0px 15px 0px 0px;
+`;
+
+export const RightFoot = styled.div`
+  padding: 35px 0px 0px 0px;
 `;
