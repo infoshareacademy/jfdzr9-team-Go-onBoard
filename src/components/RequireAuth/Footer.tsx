@@ -1,4 +1,10 @@
-import { Footer, LeftFoot, LogoImgFooter, LogoNameFooter, RightFoot } from "./Sign.styled";
+import {
+  Footer,
+  LeftFoot,
+  LogoImgFooter,
+  LogoNameFooter,
+  RightFoot,
+} from "./Sign.styled";
 import imgLogo from "../../assets/signin/Logo.png";
 
 export const FooterMain = () => {
@@ -6,7 +12,9 @@ export const FooterMain = () => {
     <>
       <Footer>
         <LeftFoot>
-          <LogoImgFooter src={imgLogo} alt="logo"></LogoImgFooter>
+          <LogoImgFooter
+            src={imgLogo}
+            alt="logo"></LogoImgFooter>
         </LeftFoot>
         <RightFoot>
           <LogoNameFooter>
