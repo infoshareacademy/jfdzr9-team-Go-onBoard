@@ -44,10 +44,13 @@ function AddUser() {
     };
     addDoc(usersRef, newUser)
       .then(() => {
-        setMessage("Dodano użytownika");
+        setMessage("User added successfully");
         setTimeout(() => setMessage(null), 2000); // clear message after 2 seconds
       })
-      .catch(() => setMessage("Error"));
+      .catch((error) => {
+        console.error(error);
+        setMessage("Error adding user");
+      });
   }
 
   return (
