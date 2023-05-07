@@ -3,6 +3,8 @@ import { getDoc, doc } from "firebase/firestore";
 import { Outlet, useNavigate, Navigate } from "react-router-dom";
 import { useUser } from "./context/AuthContext";
 import { database } from "../../utils/firebase/firebase.config";
+import { ThreeDots } from "react-loader-spinner";
+import { Loader } from "../Loader/Loader";
 
 const RequireAuth = () => {
   const user = useUser();
@@ -39,7 +41,11 @@ const RequireAuth = () => {
   }, [isAdmin, navigate]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <Loader>
+        <ThreeDots height="80" width="80" radius="9" color="#4fa94d" ariaLabel="three-dots-loading" wrapperStyle={{}} visible={true} />
+      </Loader>
+    );
   } else {
     return user ? <Outlet /> : <Navigate to={"/signin"} />;
   }

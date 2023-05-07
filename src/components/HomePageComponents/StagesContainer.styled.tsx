@@ -6,6 +6,7 @@ export const StagesBlocks = styled.div`
   position: relative;
   flex: 1;
   max-width: 770px;
+  min-width: 355px;
   padding: 15px;
   margin: 10px;
 `;
