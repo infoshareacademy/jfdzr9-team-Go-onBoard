@@ -1,12 +1,8 @@
-import {
-  ReactNode,
-  useContext,
-  createContext,
-  useEffect,
-  useState,
-} from "react";
+import { ReactNode, useContext, createContext, useEffect, useState } from "react";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "../../../utils/firebase/firebase.config";
+import { ThreeDots } from "react-loader-spinner";
+import { Loader } from "../../Loader/Loader";
 
 interface IUserContext {
   user: null | User;
@@ -31,12 +27,14 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   if (isLoading) {
-    return <div>Ładowanie...</div>;
+    return (
+      <Loader>
+        <ThreeDots height="80" width="80" radius="9" color="#4fa94d" ariaLabel="three-dots-loading" wrapperStyle={{}} visible={true} />
+      </Loader>
+    );
   }
 
-  return (
-    <UserContext.Provider value={{ user }}>{children}</UserContext.Provider>
-  );
+  return <UserContext.Provider value={{ user }}>{children}</UserContext.Provider>;
 };
 
 export const useUser = () => useContext(UserContext).user;

@@ -45,7 +45,7 @@ export const Signup = () => {
 
       if (snapshot.size > 0) {
         snapshot.docs.forEach(async (docSnapshot) => {
-          const { gender, id_course, role, name } = docSnapshot.data();
+          const { gender, id_course, role, name, start_course } = docSnapshot.data();
 
           try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -57,6 +57,7 @@ export const Signup = () => {
               id_course: id_course,
               role: role,
               name: name,
+              start_course: start_course,
             };
             try {
               const userDocRef = doc(usersRef, uid);
