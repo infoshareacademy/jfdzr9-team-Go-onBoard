@@ -60,7 +60,6 @@ export const StagesContainer = () => {
 
   //stage sorting by "sort" key in firebase//
   const sortedStages = [...stagesName].sort((a, b) => a.sort - b.sort);
-  console.log(stagesName);
   //ganing access to id of stages in each activities and user_activities collections ( by used hook useFirebase) - needed to calculations the average of activities in each stages for log in user//
 
   interface Users {

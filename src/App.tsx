@@ -21,46 +21,18 @@ function App() {
     <GlobalStyles>
       <AuthContextProvider>
         <Routes>
-          <Route
-            path="/"
-            element={<Signin />}
-          />
-          <Route
-            path="/signup"
-            element={<Signup />}
-          />
-          <Route
-            path="/signin"
-            element={<Signin />}
-          />
-          <Route
-            path="/signpassword"
-            element={<Signpassword />}
-          />
-          <Route
-            path="emulator/action"
-            element={<PasswordReset />}
-          />
-          <Route
-            path="/InfoPagePassword"
-            element={<InfoPagePassword />}
-          />
+          <Route path="/" element={<Signin />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/signin" element={<Signin />} />
+          <Route path="/signpassword" element={<Signpassword />} />
+          <Route path="emulator/action" element={<PasswordReset />} />
+          <Route path="/InfoPagePassword" element={<InfoPagePassword />} />
           <Route element={<RequireAuth />}>
-            <Route
-              path="/dashboard/*"
-              element={<HomePageLayout />}>
-              <Route
-                path=":id"
-                element={<HomePageLayout />}
-              />
+            <Route path="/dashboard/*" element={<HomePageLayout />}>
+              <Route path=":id" element={<HomePageLayout />} />
             </Route>
-            <Route
-              path="/etaps/*"
-              element={<Etaps />}>
-              <Route
-                path=":id"
-                element={<Activities />}
-              />
+            <Route path="/etaps/*" element={<Etaps />}>
+              <Route path=":id" element={<Activities />} />
             </Route>
             <Route
               path="/panelAdmina"
@@ -71,10 +43,7 @@ function App() {
               }
             />
           </Route>
-          <Route
-            path="*"
-            element={<NotFoundPage />}
-          />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </AuthContextProvider>
       <FooterMain />
